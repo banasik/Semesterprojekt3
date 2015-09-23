@@ -1,0 +1,156 @@
+\chapter{Kravspecifikation}
+
+\begin{longtabu} to \linewidth{@{}l l l X[j]@{}}
+    Version &    Dato &    Ansvarlig &    Beskrivelse\\[-1ex]
+    \midrule
+    1.0 &    21-09-2015 &    XXX &    Påbegyndt tilrettelse af UC1 og UC2
+    
+\label{version_Systemark}
+\end{longtabu}
+
+
+\section{Indledning}
+
+
+\section{Funktionelle krav}
+ 
+
+\subsection{Aktør-kontekstdiagram}
+
+\begin{figure}[htb]
+	\centering
+	%\includegraphics[width=1\textwidth]{Figurer/Snip20150409_30}
+	\caption{Aktør-kontekstdiagram}
+	\label{fig:aktoerbeskrivelse}
+\end{figure}
+
+
+
+\subsection{Aktørbeskrivelse}
+
+\begin{table}[H]
+\begin{tabularx}{\textwidth}{l l X}
+     Aktørnavn  & Type      & Beskrivelse \\ \midrule
+     Bruger   & Primær    & Brugeren er den aktør, der ønsker at foretage målingerne, som omfatter EKG samt diagnosticering af artieflimmer. Brugeren er en person, der har kendskab til EKG-systemet. Fx sundhedsfaglig personale \\ 						  									  \addlinespace[2mm]
+     
+   
+     \bottomrule                                                                                                                   
+    \end{tabularx}
+    \caption {Aktørbeskrivelse}
+    \label{tab:aktoerbeskrivelse}
+	
+\end{table}
+
+\subsection{Use case-diagram}
+
+\begin{figure}[H]
+	\centering
+	%\includegraphics[width=1\textwidth]{Figurer/Snip20150518_11}
+	\caption{Use case-diagram}
+	\label{fig:Use Cases}
+\end{figure}
+
+
+
+\subsection{Use Cases}
+
+\begin{longtabu} to \linewidth{@{}l r X[j]@{}} %UC1%
+    {\large \textbf{Use Case 1}} && \\
+    \toprule
+    Scenarie && Hovedscenarie\\
+    Navn && Start Måling\\
+    Mål && At få foretaget en blodtryksmåling\\
+    Initiering && Startes af Forsker\\
+    Aktører && Forsker (primær), Patient(sekundær)\\
+    Referencer && ???\\
+    Samtidige forekomster  && Én patient pr. måling\\
+    Forudsætninger && Alle systemer kører og Patient er klar til at få foretaget en måling\\ 
+    Resultat && Patientens systole, diastole og puls bliver vist på GUI\\ \midrule
+    Hovedscenarie &    1. &		Forsker indtaster patientoplysninger:\\[-1ex] 
+   & &	a. Patient ID\\[-1ex]
+   & &  b. Køn\\[-1ex]
+   & &  c. Fødselsår\\[-1ex]				 	
+                &    2. & Forsker trykker på Start-knap på GUI\\[-1ex]
+                &    3. & Systolisk og diastolisk blodtryksmåling bliver vist kontinuerligt i GUI\\[-1ex]
+                &    4. & Puls bliver vist i GUI\\ \midrule
+                
+    Undtagelser &    & \\ \bottomrule
+\caption{Fully dressed Use Case 1.}
+\label{UC1}
+\end{longtabu}
+
+\begin{longtabu} to \linewidth{@{}l r X[j]@{}} %UC2%
+    {\large \textbf{Use Case 2}} && \\
+    \toprule
+    Scenarie && Hovedscenarie\\
+    Navn && Analysér\\
+    Mål && At vide om signalerne ligger inden for grænseværdierne\\
+    Initiering && Startes af Forsker\\
+    Aktører && Forsker (primær)\\
+    Referencer && Use Case 1\\
+    Samtidige forekomster  && Én patient pr. måling\\
+    Forudsætninger && Use Case 1 er kørt succesfuldt\\
+    Resultat && Patientens systoliske og diastoliske blodtryk og puls er blevet analyseret indenfor grænseværdierne\\ \midrule
+    Hovedscenarie &    1. &		Forsker trykker på Analysér-knap\\[-1ex] 
+                  &    2. &     Besked udskrives på GUI, hvis signalerne falder udenfor grænseværdierne\\ \midrule	 	
+ Undtagelser &    & \\ \bottomrule
+\caption{Fully dressed Use Case 2.}
+\label{UC2}
+\end{longtabu}
+
+\begin{longtabu} to \linewidth{@{}l r X[j]@{}} %UC2%
+    {\large \textbf{Use Case 3}} && \\
+    \toprule
+    Scenarie && Hovedscenarie\\
+    Navn && Gam data\\
+    Mål && At slutte og gemme data\\
+    Initiering && Startes af Forsker\\
+    Aktører && Forsker (primær), Database(sekundær)\\
+    Referencer && Use Case 1\\
+    Samtidige forekomster  && Én patient pr. måling\\
+    Forudsætninger && Use Case 1 er kørt succesfuldt\\
+    Resultat && Patientens systoliske og diastoliske blodtryk, puls og patientoplysninger er blevet gemt i en Database\\ \midrule
+    Hovedscenarie &    3. &		Forsker trykker på Gem-knap\\[-1ex] 
+                  &    4. &     Patientens systoliske og diastoliske blodtryk, puls og patientoplysninger er blevet gemt i en Database\\
+                    &    5. &     5.	Det fremgår af GUI at data er gemt\\ \midrule	 	
+ Undtagelser &    & \\ \bottomrule
+
+\end{longtabu}
+
+
+\section{Ikke-funktionelle krav}
+
+
+\subsection{(F)URPS+}
+MoSCoW er angivet i parentes med hhv. M, S, C eller W.
+
+\textbf{Usability}
+
+
+\textbf{Reliability}
+
+				\begin{align}
+					Availability = \frac{MTBF}{MTBF+MTTR} = \frac{20}{20+1} = 0,952 = 95,2 \%
+				\end{align}
+
+
+
+\textbf{Performance}
+
+\textbf{Supportability}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
