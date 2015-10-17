@@ -1,37 +1,68 @@
 \chapter{Kravspecifikation}
 
+
+\section{Versionshistorik}
 \begin{longtabu} to \linewidth{@{}l l l X[j]@{}}
-    Version &    Dato &    Ansvarlig &    Beskrivelse\\[-1ex]
+    Version 	&    Dato 		&    Ansvarlig 	&    Beskrivelse\\[-1ex]
     \midrule
-    1.0 &    21-09-2015 &    XXX &    Påbegyndt tilrettelse af UC1 og UC2
+    0.1 		&  	21-09-2015 	&   MHNK og MB 	&   Oprettelse og udfyldning af kravspecifikation \\
+	0.2			&	24-09-2015	&	DHC og ABH	&	Omskrivning af UC1 - UC5 \\
+	0.3			&	28-09-2015	&	ABH			&	Ikke-funktionelle krav \\
+	0.4			&	08-10-2015	&	Alle		&	Tilrette efter review med Grp. 1 \\
     
 \label{version_Systemark}
 \end{longtabu}
 
+\section{Godkendelsesformular}
+\begin{longtabu} to \linewidth{@{}l X[j]@{}}
+	Forfattere	&	Anne Hoelgaard, Ditte Heebøll, Martin Banasik, Albert Fredshavn, Mathias Munk og Mette Hammer Nielsen-Kudsk \\
+	\midrule
+	Godkendes af & Peter Johansen \\
+	Antal sider & ??? \\
+	Kunde	&	IHA \\
+\end{longtabu}
 
+Ved underskrivelse af dette dokument accepteres det af begge parter, som værende kravene til udviklingen af det ønskede system.
+\\
+\\
+\\
+\\
+\noindent \begin{tabular}{lll} 
+	& 	\makebox[2.5in]{\hrulefill} 	& 	\makebox[2.5in]{\hrulefill}\\
+	&	Sted						&	Dato\\[7ex]
+	& 	\makebox[2.5in]{\hrulefill} 	& 	\makebox[2.5in]{\hrulefill}\\
+	& 	Kundens underskrift 		& 	Leverandørens underskrift\\[7ex]
+
+\end{tabular}
 \section{Indledning}
+På baggrund af krav fra kunden samt hvad leverandøren finder muligt, er denne kravspecifikation blevet udarbejdet. Denne kravspecifikation har til formål at specificere kravene til produktet. Dette projekt tager udgangspunkt i en blodtryksmåler, hvortil der er en række aktører, som interagerer med et system, der er beskrevet yderligere nedenfor.
 
+\section{Systembeskrivelse}
+Blodtryksmåler apparatet ønskes udviklet således at systolisk og diastolisk blodtryk samt puls kan bestemmes ud fra en invasiv ateriel blodtryksmåling. Der udvikles instrumentering til den udleverede transducer som hardware og et software-program til visning af målt blodtryk. Disse to dele udgør til sammen vores system. 
 
 \section{Funktionelle krav}
  
 
 \subsection{Aktør-kontekstdiagram}
 
+
 \begin{figure}[htb]
 	\centering
-	%\includegraphics[width=1\textwidth]{Figurer/Snip20150409_30}
+	\graphicspath[width=1\textwidth]{Aktør_kontekst/Aktør_kontekst_diagram}
 	\caption{Aktør-kontekstdiagram}
 	\label{fig:aktoerbeskrivelse}
 \end{figure}
-
+Af dette diagram ses vores aktører til at være: Forsker, Måleobjekt og Database. Herunder er der en detaljeret beskrivelse af hver aktør.
 
 
 \subsection{Aktørbeskrivelse}
 
 \begin{table}[H]
 \begin{tabularx}{\textwidth}{l l X}
-     Aktørnavn  & Type      & Beskrivelse \\ \midrule
-     Bruger   & Primær    & Brugeren er den aktør, der ønsker at foretage målingerne, som omfatter EKG samt diagnosticering af artieflimmer. Brugeren er en person, der har kendskab til EKG-systemet. Fx sundhedsfaglig personale \\ 						  									  \addlinespace[2mm]
+     Aktørnavn	&	Type		&	Beskrivelse \\ \midrule
+     Forsker   	& 	Primær  	& 	Forskeren er aktøren, der starter og giver besked om at data ønskes gemt samt afslutter fysisk måling af blodtryk. \\ 			  \addlinespace[2mm]
+     Database	&	Sekundær	&	Databasen er aktøren, hvori måledata bliver gemt. \\   \addlinespace[2mm]
+     Måleobjekt	&	Sekundær	&	Måleobjekt er aktøren, hvorfra signalet og måledata indhentes. Dette kan være In Vitro maskinen, som findes i Cave Lab. Under løbende test i udviklingsprocessen benyttes Analog Discovery og PhysioNet. \\   \addlinespace[2mm]
      
    
      \bottomrule                                                                                                                   
@@ -50,6 +81,10 @@
 	\label{fig:Use Cases}
 \end{figure}
 
+Diagrammet ovenfor viser at systemet har fem Use Cases: Foretag nulpunktsjustering, Foretag kalibrering, Start måling, Gem data og Afslut måling. Herunder følger en nærmere beskrivelse af de enkelte Use Cases, gennem et fully-dressed Use Case skema. 
+Systemet består af en computer, hvor vores software er placeret, en NI-DAQ, en Analog Discovery samt en transducer med tilhørende implementering. 
+Brugergrænseflade er det som forsker initierer med, altså herfra hvor systemet aktiveres. Det forkortes til GUI. Grænseværdierne: SKAL SKRIVES UDFØRLIGT ET ANDET STED…..TILGÅR!
+
 
 
 \subsection{Use Cases}
@@ -57,22 +92,22 @@
 \begin{longtabu} to \linewidth{@{}l r X[j]@{}} %UC1%
 	{\large \textbf{Use Case 1}} && \\
 	\toprule
-	Scenarie && Hovedscenarie\\
-	Navn && Foretag nulpunktsjustering\\
-	Mål && At få foretaget en nulpunktsjustering\\
-	Initiering && Startes af Forsker\\
-	Aktører && Forsker (primær)\\
-	Referencer && \\
-	Samtidige forekomster  && En nulpunktsjustering pr. kørsel \\
-	Forudsætninger && Alle systemer er ledige og operationel\\ 
-	Resultat && Bliver foretaget nulpunktsjustering efter ønske\\ \midrule
-	Hovedscenarie &    1. &		Popup vindue for nulpunktsjustering er åbent.\\				 	
-	&    2. & Forsker trykker på:\\ 
-	& &	a. Ja-knap for at starte en nulpunktsjustering.\\[-1ex]
-	& &		 i. Nulpunktsjustering foretages og vinduet lukker efter endt justering.\\[-1ex]
-	& &  b. Nej-knap for ikke at få foretaget en nulpunktsjustering.\\[-1ex]
-	& &   ii. Vinduet lukker.\\[-1ex]	
-	Undtagelser && -  \\ \bottomrule
+	Scenarie 				&&	Hovedscenarie\\
+	Navn 					&& 	Foretag nulpunktsjustering\\
+	Mål 					&& 	At få foretaget en nulpunktsjustering\\
+	Initiering 				&& 	Startes af Forsker\\
+	Aktører 				&& 	Forsker (primær)\\
+	Referencer 				&& 	\\
+	Samtidige forekomster  	&& 	En nulpunktsjustering pr. kørsel \\
+	Forudsætninger 			&&	Alle systemer er ledige og operationel\\ 
+	Resultat 				&& 	Bliver foretaget nulpunktsjustering efter ønske\\ \midrule
+	Hovedscenarie 			&    1. 	&	Popup vindue for nulpunktsjustering er åbent.\\				 	
+							&    2. 	& 	Forsker trykker på:\\ 
+							& 			&	a. Ja-knap for at starte en nulpunktsjustering.\\[-1ex]
+							& 			&		 i. Nulpunktsjustering foretages og vinduet lukker efter endt justering.\\[-1ex]
+							& 			&  	b. Nej-knap for ikke at få foretaget en nulpunktsjustering.\\[-1ex]
+							& 			&   ii. Vinduet lukker.\\[-1ex]	
+	Undtagelser 			&			& 	-  \\ \bottomrule
 	
 	\caption{Fully dressed Use Case 1}
 	\label{UC1}
