@@ -3,143 +3,406 @@
 \begin{longtabu} to \linewidth{@{}l l l X[j]@{}}
     Version &    Dato &    Ansvarlig &    Beskrivelse\\[-1ex]
     \midrule
-    0.1 &    21-09-2015 &    MHNK og MB &    Oprettelse og udfyldelse af Accepttest. \\
+    0.1 &    28-09-2015 &    ABH &    Oprettelse og udfyldelse af Accepttest \\[-1ex]
+    0.2 &    30-09-2015 &    ABH &    Tilrette accepttest  \\[-1ex]
+    0.3 &    08-10-2015 &    Alle &    Tilrette efter review med Grp. 1 \\[-1ex]
+    
 \label{version_Systemark}
 \end{longtabu}
 
 \section{Accepttest af Use Cases}
 
+\section{Indledning}
+Accepttestene skal vise om produktet lever op til de standarder vi har sat op for, at den aktivt kan indgå i en forskningssituation. 
+Accepttesten er en opfølgning af vores kravspecifikation, som har til formål at sikre at alle kravene er overholdt. Der vil blive testet både på hovedscenarier samt på undtagelser. Det er målsætningen, at disse test sikrer produktets kvalitet, idet produktet vil blive afprøvet før det tages i brug. Derfor er det accepttestens ansvarsfunktion at godkende de opsatte delmål for produktet hvad angår både funktionalitet samt ikke funktionelle krav.
+Dataene der benyttes til målingerne fås fra In Vitro der i form af tryk genererer et fysiologisk tryk. Brugergrænsefladen er det forskeren initierer med, altså hvorfra systemet aktiveres. Brugergrænsefladen forkortes til GUI. Den benyttede database er en lokal database. 
+Når der i feltet Godkendt er et flueben, betyder det at testen er godkendt. Hvis der er et flueben i parenteser, betyder det at den er delvis godkendt. 
+
 
 %Use case 1 acceptest
 \subsection{Use Case 1}
-\textbf{Log ind}
+Indsæt beskrivelse og figurer med NI-DAQ, Analog discovery og transduceren.
+Det forventes for den følgende Use Case (Use Case 1), at forskeren har fået påmonteres det væskefyldte kateter samt tændt for apparaturet. 
+
+\begin{longtabu} to \linewidth{@{}l r X[j]@{}} %UC1%
+	\toprule
+	Test af Use Case 1  				&&	Foretag nulpunktsjustering\\
+	Scenarie 							&&	Hovedscenarie\\
+	Prækondition 						&&	Blodtryksmålesystemet er monteret korrekt.
+Forskeren har tændt for Blodtryksmåleren og pop-up vindue for nulpunktsjustering er åbent\\ \midrule
+\end{longtabu}
 
 \begin{longtabu} to \linewidth{@{} c X[j] X[j] X[j] l@{}}
-    ~ &	Test &    Forventet resultat &		Faktiske observationer &    Godkendt\\[-1ex]
+    ~ &	\textbf{Handling} &    \textbf{Forventet observation/resultat} &		\textbf{Faktisk observation/resultat} &    \textbf{Godkendt}\\[-1ex]
     \midrule
     ~ &\textit{Hovedscenarie} & ~ & ~ &
     \\ \midrule
-    1. &Indtast username "moh04" samt password; 1234 &   Username- og passwordboks bliver udfyldt  &   Som forventet  &		{\Huge \checkmark}
+    1. & Forsker trykker på Ja-knap for at starte en nulpunktsjustering &   Systemet foretager nulpunktsjustering, hvorefter vinduet lukker &       &		%{\Huge \checkmark}
     \\
-    2. &Tryk på "Login"\--knappen  &    Login bliver godkendt. Login-vinduet lukkes ned mens CPR-vinduet åbnes  &    Som forventet &		{\Huge \checkmark}
-	\\ \midrule
-	~ &\textit{Exentions} & ~ & ~ & 
-	\\ \midrule	
-    2a. &	Username eller password er forkert &    Besked vises på skærmen med tekst, der informerer om, at brugernavn eller password er forkert  &   Som forventet  &		{\Huge \checkmark}
+    2. & Forsker trykker på Nej-knap for ikke at få foretaget en nulpunktsjustering  &    Vinduet lukker &   &		%{\Huge \checkmark}
+	
  \\ \bottomrule
  
-\caption{Accepttest af Use Case 1.}\\
+\caption{Accepttest af Use Case 1}\\
 \label{AT_UC1}
 \end{longtabu}
 
-%Use case 2 acceptest 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Use Case 2}
-\textbf{Vis EKG}
-
-\begin{longtabu} to \linewidth{@{} c X[j] X[j] X[j] l@{}}
-	& Test	& Forventet resultat		& Faktiske observationer		& Godkendt\\[-1ex] 
-	\midrule
-	&\textit{Hovedscenarie} & & & 
-	\\ \midrule
-	1. &Indtast virtuel patients CPR-nummer; 123456-7890 & CPR-nummerboks bliver udfyldt & Som forventet& {\Huge \checkmark}
-	\\
-	2. & Tryk på "Ok"\--knappen & CPR er gyldig. CPR-vinduet lukkes ned mens EKG-vinduet åbnes & Som forventet& {\Huge \checkmark}
-	\\
-	3. & Tryk på "Start ny måling" & Målingen startes i EKG-vinduet & Som forventet & {\Huge \checkmark}
-	\\
-	4. & EKG-data illustreres på en graf & En analyserebar graf fremvises i EKG-vinduet & Graf vises efter ca. 20 sekunder & {\Huge \checkmark}
-	\\ \midrule
-	2.a & CPR-nummeret findes ikke. Besked vises med tekst, der informerer om, at CPR-nummeret ikke er gyldigt & Nyt CPR-nummer indtastes & Som forventet & {\Huge \checkmark}
-	\\ \bottomrule
-
-\caption{Accepttest af Use Case 2.}\\
-\label{AT_UC2}	
+\begin{longtabu} to \linewidth{@{}l r X[j]@{}} %UC2%
+	\toprule
+	Test af Use Case 2  				&&	Foretag kalibrering\\
+	Scenarie 							&&	Hovedscenarie\\
+	Prækondition 						&&	Blodtryksmålesystemet er monteret korrekt. 
+Forskeren har tændt for Blodtryksmåleren og pop-up vindue for kalibrering er åbent. UC1 er kørt succesfuldt.
+\\ \midrule
 \end{longtabu}
 
-%Use Case 3 acceptest
-
-\subsection{Use Case 3}
-\textbf{Evaluer EKG}
 
 \begin{longtabu} to \linewidth{@{} c X[j] X[j] X[j] l@{}}
-    ~ &	Test &    Forventet resultat &		Faktiske observationer &    Godkendt\\[-1ex]
+    ~ &	\textbf{Handling} &    \textbf{Forventet observation/resultat} &		\textbf{Faktisk observation/resultat} &    \textbf{Godkendt}\\[-1ex]
     \midrule
     ~ &\textit{Hovedscenarie} & ~ & ~ &
     \\ \midrule
-    1. & Validere programmets analyse af EKG-signalet &    Det er muligt at se små fluktuationer, som kan aflæses på EKG-grafen  &    Grafen er analyserbar, dog er det ikke de små fluktuationer som analyseres, se fejlrapport i bilag&		{\Huge (\checkmark)}
+   	1. 	& 	Forsker trykker på Ja-knap for at starte en kalibrering	&   Systemet foretager kalibrering, hvorefter vinduet lukker. &       &		%{\Huge \checkmark}
     \\
-    2. &Stil diagnosen atrieflimmer	 &    Atrieflimmer kan aflæses ud fra EKG-grafen  &     Som forventet &		{\Huge \checkmark}
-	\\ \midrule
-	~ &\textit{Exentions} & ~ & ~ & 
-	\\ \midrule	
-    2a. &	Atriefrekvensen er ikke i intervallet 220-300 pr. minut &    Det er ikke muligt at diagnosticere atrieflimmer ud fra EKG-grafen   &   Hvis ikke atrieflimmer er diagnostiseret, vises besked om sundt EKG. Dog skyldes det ikke atriefrekvensen, se fejlrapport i bilag &		{\Huge (\checkmark)}
+    2. & Forsker trykker på Nej-knap for ikke at få foretaget en kalibrering   &    Vinduet lukker &   &		%{\Huge \checkmark}
+	
  \\ \bottomrule
  
-\caption{Accepttest af Use Case 3.}\\
+\caption{Accepttest af Use Case 2}\\
+\label{AT_UC2}
+\end{longtabu}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Use Case 3}
+\begin{longtabu} to \linewidth{@{}l r X[j]@{}} %UC2%
+	\toprule
+	Test af Use Case 3  				&&	Start måling\\
+	Scenarie 							&&	Hovedscenarie\\
+	Prækondition 						&&	Blodtryksmålesystemet er monteret korrekt.
+Forskeren har tændt for Blodtryksmåleren. UC1 - 2 er kørt succesfuldt.
+
+\\ \midrule
+\end{longtabu}
+
+
+\begin{longtabu} to \linewidth{@{} c X[j] X[j] X[j] l@{}}
+    ~ &	\textbf{Handling} &    \textbf{Forventet observation/resultat} &		\textbf{Faktisk observation/resultat} &    \textbf{Godkendt}\\[-1ex]
+    \midrule
+    ~ &\textit{Hovedscenarie} & ~ & ~ &
+    \\ \midrule
+    1. & Forsker indtaster Forsøgsnavn. &   Systemet godkender Forsøgsnummeret og tilgængeliggør Start-knap  &       &		%{\Huge \checkmark}
+    \\
+    2. & Filteret signal er valgt per default af systemet &    Radiobutton til filtret signal er checket af.  &   &		%{\Huge \checkmark}
+    \\
+    3. & Forsker trykker på Start-knap på GUI.  &    GUI skriver at Start-knappen er blevet trykket.   &   &		%{\Huge \checkmark}
+    \\
+    4. & Signal for blodtryk vises på GUI. &    GUI viser blodtryksmåling kontinuerligt.   &   &		%{\Huge \checkmark}
+    \\
+    5. & Systolisk og diastolisk blodtryk samt puls bliver vist i bokse på GUI. &    GUI udskriver systoliske, diastoliske og puls værdier.  &   &		%{\Huge \checkmark}
+    \\
+	
+ \\ \bottomrule
+ 
+\caption{Accepttest af Use Case 3}\\
 \label{AT_UC3}
 \end{longtabu}
 
-%Use Case 4 acceptest
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\subsection{Use Case 4}
-\textbf{Gem EKG}
+\subsection{Use Case 3 - Undtagelse 1}
+\begin{longtabu} to \linewidth{@{}l r X[j]@{}} %UC2%
+	\toprule
+	Test af Use Case 3  				&&	Start måling\\
+	Scenarie 							&&	Undtagelse 1\\
+	Prækondition 						&&	Blodtryksmålesystemet er monteret korrekt.
+Forskeren har tændt for Blodtryksmåleren. UC1 - 2 er kørt succesfuldt.
+
+\\ \midrule
+\end{longtabu}
+
 
 \begin{longtabu} to \linewidth{@{} c X[j] X[j] X[j] l@{}}
-    ~ &	Test &    Forventet resultat &		Faktiske observationer &    Godkendt\\[-1ex]
+    ~ &	\textbf{Handling} &    \textbf{Forventet observation/resultat} &		\textbf{Faktisk observation/resultat} &    \textbf{Godkendt}\\[-1ex]
     \midrule
     ~ &\textit{Hovedscenarie} & ~ & ~ &
     \\ \midrule
-    1. &Tryk på "Gem-ny-måling"\--knappen. &    Messagebox kommer frem med besked om at målingen er gemt  &    Som forventet &		{\Huge \checkmark}
+    1. & Forsker indtaster Forsøgsnavn. &   Systemet godkender Forsøgsnummeret og tilgængeliggør Start-knap  &       &		%{\Huge \checkmark}
     \\
-    2. & Tryk på "Ok"\--knappen	 &   Målingen er gemt, vinduet lukkes og EKG-vinduet vises igen &     Som forventet &		{\Huge \checkmark}
+    2. & Forsker vælger ufiltreret signal &    Radiobutton til ufiltreret signal er checket af.  &   &		%{\Huge \checkmark}
     \\
-	\\ \midrule
-	~ &\textit{Exentions} & ~ & ~ & 
-	\\ \midrule	
+    3. & Forsker trykker på Start-knap på GUI.  &    GUI skriver at Start-knappen er blevet trykket.   &   &		%{\Huge \checkmark}
+    \\
+    4. & Signal for blodtryk vises på GUI. &    GUI viser blodtryksmåling kontinuerligt.   &   &		%{\Huge \checkmark}
+    \\
+    5. & Systolisk og diastolisk blodtryk samt puls bliver vist i bokse på GUI. &    GUI udskriver systoliske, diastoliske og puls værdier.  &   &		%{\Huge \checkmark}
+    \\
+	
  \\ \bottomrule
  
-\caption{Accepttest af Use Case 4.}\\
+\caption{Accepttest af Use Case 3 - Undtagelse 1}\\
+\label{AT_UC3}
+\end{longtabu}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Use Case 4}
+\begin{longtabu} to \linewidth{@{}l r X[j]@{}} %UC2%
+	\toprule
+	Test af Use Case 4  				&&	Gem data\\
+	Scenarie 							&&	Hovedscenarie\\
+	Prækondition 						&&	Blodtryksmålesystemet er monteret korrekt.
+Forskeren har tændt for Blodtryksmåleren. Use Case 1 og 2 er kørt succesfuldt, Use Case 3 kører.
+
+
+\\ \midrule
+\end{longtabu}
+
+
+\begin{longtabu} to \linewidth{@{} c X[j] X[j] X[j] l@{}}
+    ~ &	\textbf{Handling} &    \textbf{Forventet observation/resultat} &		\textbf{Faktisk observation/resultat} &    \textbf{Godkendt}\\[-1ex]
+    \midrule
+    ~ &\textit{Hovedscenarie} & ~ & ~ &
+    \\ \midrule
+    1. & Forsker trykker på Gem-knappen.  &   Systemet viser at Gem-knappen er blevet trykket.  &       &		%{\Huge \checkmark}
+    \\
+    2. & Systemet gemmer det fremadrettede ufiltreret signal i Database &    Ufiltreret signal er blevet gemt i Database  &   &		%{\Huge \checkmark}
+    \\
+    3. & Forsker trykker på Gem-knap for at stoppe med at gemme.  &    Det fremgår af GUI at data er gemt i Database.   &   &		%{\Huge \checkmark}
+    \\
+    
+	
+ \\ \bottomrule
+ 
+\caption{Accepttest af Use Case 4}\\
 \label{AT_UC4}
 \end{longtabu}
 
-%Use Case 5 acceptest
 
-\subsection{Use Case 5}
-\textbf{Log ud}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Use Case 4 - Undtagelse 1}
+\begin{longtabu} to \linewidth{@{}l r X[j]@{}} %UC2%
+	\toprule
+	Test af Use Case 3  				&&	Gem data\\
+	Scenarie 							&&	Undtagelse 1\\
+	Prækondition 						&&	Blodtryksmålesystemet er monteret korrekt.
+Forskeren har tændt for Blodtryksmåleren. Use Case 1 og 2 er kørt succesfuldt, Use Case 3 kører.
+
+
+\\ \midrule
+\end{longtabu}
+
 
 \begin{longtabu} to \linewidth{@{} c X[j] X[j] X[j] l@{}}
-    ~ &	Test &    Forventet resultat &		Faktiske observationer &    Godkendt\\[-1ex]
+    ~ &	\textbf{Handling} &    \textbf{Forventet observation/resultat} &		\textbf{Faktisk observation/resultat} &    \textbf{Godkendt}\\[-1ex]
     \midrule
     ~ &\textit{Hovedscenarie} & ~ & ~ &
     \\ \midrule
-    1. & Tryk på "log ud"\--knappen &    EKG-vinduet lukkes ned, mens login-vinduet fremkommer &    Som forventet &		{\Huge \checkmark}
-   	\\ \midrule
-	~ &\textit{Exentions} & ~ & ~ & 
-	\\ \midrule	
+    1. & Forsker trykker på Gem-knappen.  &   Systemet viser at Gem-knappen er blevet trykket.  &       &		%{\Huge \checkmark}
+    \\
+    2. & Systemet gemmer det fremadrettede ufiltreret signal i Database &    Ufiltreret signal er blevet gemt i Database  &   &		%{\Huge \checkmark}
+    \\
+    3. & Forsker trykker på Afslut-knap  &    Systemet stopper med at gemme, hvorefter systemet lukker.   &   &		%{\Huge \checkmark}
+    \\
+    
+	
  \\ \bottomrule
  
-\caption{Accepttest af Use Case 5.}\\
+\caption{Accepttest af Use Case 4 - Undtagelse 1}\\
+\label{AT_UC4}
+\end{longtabu}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Use Case 5}
+\begin{longtabu} to \linewidth{@{}l r X[j]@{}} %UC2%
+	\toprule
+	Test af Use Case 4  				&&	Afslut måling\\
+	Scenarie 							&&	Hovedscenarie\\
+	Prækondition 						&&	Blodtryksmålesystemet er monteret korrekt.
+Forskeren har tændt for Blodtryksmåleren. Use Case 1 og 2 er kørt succesfuldt, Use Case 3 kører.
+
+\\ \midrule
+\end{longtabu}
+
+
+\begin{longtabu} to \linewidth{@{} c X[j] X[j] X[j] l@{}}
+    ~ &	\textbf{Handling} &    \textbf{Forventet observation/resultat} &		\textbf{Faktisk observation/resultat} &    \textbf{Godkendt}\\[-1ex]
+    \midrule
+    ~ &\textit{Hovedscenarie} & ~ & ~ &
+    \\ \midrule
+    1. & Forsker trykker på Afslut-knappen.  &   Måling stopper, hvorefter systemet lukker ned.  &       &		%{\Huge \checkmark}
+    \\
+    
+ \\ \bottomrule
+ 
+\caption{Accepttest af Use Case 5}\\
 \label{AT_UC5}
 \end{longtabu}
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+\newpage
 \section{Accepttest af ikke-funktionelle krav}
 
 \begin{longtabu} to \linewidth{@{} c X[j] X[j] X[j] X[j] l@{}}
-	& Ikke-funktionelt krav & Test/handling & Forventet resultat & Faktiske observationer & Godkendt
+	Krav nr. & Krav & Test & Forventet resultat & Resultat & Godkendt
 	\\[-1ex] \midrule
-	&  \textit{Usability} &  &  & & \\ \midrule
-	& Brugeren skal kunne starte en default-måling maksimalt 20 sekunder efter opstart af program & Start programmet, hvorefter der vha. stopur måles opstartstiden & At programmet er startet op indenfor 20 sekunder & Programmet er startet op efter 14 sekunder & {\Huge \checkmark}\\ \midrule
-	& Login-vinduet skal indholde en "login"\--knap til at logge på og få vist EKG-vinduet & "login"\--knappen er synlig i GUI, og ved tryk på knappen vises EKG-vinduet & At EKG-vinduet vises & Som forventet & {\Huge \checkmark}\\ \midrule 
-	& EKG-vinduet skal indeholde en "start"\--knap til at igangsætte målingen & "Start"\--knappen er synlig i GUI, og ved tryk på knap igangsættes målingen & At målingen igangsættes & Som forventet& {\Huge \checkmark}\\ \midrule
-	& EKG-vinduet skal indeholde en "gem"\--knap til at gemme målingerne & "Gem"\--knappen er synlig i GUI, og ved tryk på knappen gemmes måling i database & Messageboks vises på skærmen med teksten "Måling er gemt" og kan findes i databasen & Som forventet & {\Huge \checkmark}\\ \midrule
-	& EKG-vinduet skal indeholde en "log ud"\--knap til at logge ud & "log ud"\--knappen er synlig i GUI, og ved tryk på knap lukkes EKG-vinduet og login-vinduet vises & Login-vinduet vises & Som forventet & {\Huge \checkmark}\\ \midrule
-	& \textit{Reliability} & & & & \\ \midrule
-	& Systemet skal have en effektiv MTBF på 20 minutter og MTTR på 1 minut & Køre programmet i 20 minutter. Genstart derefter programmet, hvor der tages tid med et stopur & Programmet har kørt i 20 minutter og genstartes indenfor 1 minut  & Som forventet & {\Huge \checkmark}\\ \midrule
-	& \textit{Performance} & & & & \\ \midrule
-	& Der skal vises en EKG-graf i interfacet, hvor spænding vises op ad y-aksen (-1V til 1V) og tiden på x-aksen & Gennemfør en måling & At spændingen for EKG-signalet er op ad y-aksen, samt tiden hen ad x-aksen & Spændingen er op ad y aksen og tiden i sekunder hen ad x-aksen. Dog er intervallet ikke -1V til 1V, se fejlrapport i bilag & {\Huge \ding{55}}\\ \midrule
-	& Det skal være muligt at kunne scrolle igennem målingerne hen ad x-aksen & Der gennemføres en måling hvorefter der scrolles hen ad x-aksen & At der ved scrolling kan ses forskellige dele af EKG-signalet hen ad x-aksen & & {\Huge \checkmark}\\ \midrule
-	& \textit{Supportability} & & & & \\ \midrule
-	& Softwaren er opbygget af trelagsmodellen & Kig i koden efter data-lag, logik-lag og GUI-lag & At koden indeholder et data-lag, et logik-lag og et GUI-lag & Som forventet & {\Huge \checkmark}\\ \bottomrule
+	
+	1. & Blodtryks-måleren skal indeholde en Start-knap til at igangsætte målingerne & Åbn systemet og kør Use Case 1 og Use Case 2 & Start-knap er på GUI && %{\Huge \checkmark}
+	\\ 
+	\midrule
+	
+	2. & Blodtryks-måleren skal indeholde en Afslut-knap hvor fra måling kan stoppes. & Åbn systemet og kør Use Case 1 og Use Case 2 & Afslut-knap er på GUI && %{\Huge \checkmark}
+	\\ 
+	\midrule
+	
+	3. & Blodtryks-måleren skal indeholde en Gem-knap til at gemme målingerne i Databasen.& Åbn systemet og kør Use Case 1 og Use Case 2 & Gem-knap er på GUI && %{\Huge \checkmark}
+	\\ 
+	\midrule
+	
+	
+	4. & Blodtryks-måleren skal indeholde en tekstboks til forsøgsnavn, hvori forsker indtaster det pågældende forsøgsnavn. & Åbn systemet og kør Use Case 1 og Use Case 2 & Tekstboks til forsøgsnavn er på GUI && %{\Huge \checkmark}
+	\\ 
+	\midrule
+	
+	
+	
+	5. & Blodtryks-måleren skal indeholde radiobutton til filtreret signal, denne skal være default valget. & Åbn systemet og kør Use Case 1 og Use Case 2 & Radiobutton til filtreret signal er på GUI && %{\Huge \checkmark}
+	\\ 
+	\midrule
+	
+	
+	
+	6. & Blodtryks-måleren skal indeholde radiobutton til ufiltreret signal. & Åbn systemet og kør Use Case 1 og Use Case 2 & Radiobutton til ufiltreret signal er på GUI && %{\Huge \checkmark}
+	\\ 
+	\midrule
+	
+	
+	
+	7. & Blodtryks-måleren skal indeholde tekstbokse til puls, systolisk og diastolisk blodtryk som vises med op til tre cifre. & Åbn systemet og kør Use Case 1 og Use Case 2 & Systolisk-boks, diastolisk-boks og puls-boks er på GUI && %{\Huge \checkmark}
+	\\ 
+	\midrule
+	
+	
+	
+	8. & GUI’en skal se ud som på figur xxx i KS & GUI’en ser ud som figur xxx i KS & GUI’en ser ud som figur xxx i KS && %{\Huge \checkmark}
+	\\ 
+	\midrule
+	
+	
+	
+	9. & Forskeren skal kunne starte en default-måling maksimalt 30 sekunder efter systemet er startet & Systemet åbnet samtidig med at der startes et stopur. Når måling er startet stoppes uret. & Måling er startet og stopuret viser mindre end 30 sekunder. && %{\Huge \checkmark}
+	\\ 
+	\midrule
+	
+	
+	
+	10. & Det skal maksimalt tage 5 timer at gendanne systemet (MTTR - Mean Time To Restore) & & Kan ikke testes på prototypen && %{\Huge \checkmark}
+	\\ 
+	\midrule
+	
+	
+	
+	11. & Systemet skal have en oppetid uden nedbrud på minimum 1 måned (720 timer) (MTBF - Mean Time Between Failure). & & Kan ikke testes på prototypen && %{\Huge \checkmark}
+	\\ 
+	\midrule
+	
+	
+	
+	12. & Systemet skal have en oppetid/køretid på: $\frac{MTBF}{MTBF+MTTR}*100=99,31\%$ & & Kan ikke testes på prototypen && %{\Huge \checkmark}
+	\\ 
+	\midrule
+	
+	
+	13. & Blodtryks-måleren skal, indenfor 3 sekunder, kunne vise systolisk og diastolisk blodtryk via graf. Dette accepteres med en tolerance på +/- 15 \%. & Use Case 1 - 2 køres. Der trykkes på Start-knappen samtidig med at et stopur startes. Når måling vises i graf stoppes uret. & Stopuret viser mellem 2.55 - 3.45 sekunder.  && %{\Huge \checkmark}
+	\\ 
+	\midrule
+	
+	
+	
+	14. & Blodtryks-måleren skal, inden for måleperioden, kunne alarmere hvis patienten har forhøjet eller for lavt blodtryk. Defineres efter grænseværdier beskrevet i… xxxx… & Use Case 1 - 2 køres. Indsend et signal i systemet der indeholder værdier uden for grænseværdierne. Der trykkes på Start-knappen samtidig med at et stopur startes. Når alarm starter stoppet uret.
+Måleperiode: 30 sek. & Alarm er startet og stopuret viser mindre end 30 sekunder. && %{\Huge \checkmark}
+	\\ 
+	\midrule
+	
+	
+	
+	15. & Blodtryks-måleren skal, indenfor 30 sekunder fra der er trykket på Gem-knap, kunne gemme målingerne i Databasen.  Dette accepteres med en tolerance på +/- 15 \%. & Use Case 1 - 3 køres. Der trykkes på Gem-knappen samtidig med at et stopur startes. Når målingerne er gemt i Database stoppes uret. & Stopuret viser mellem 25.5 - 34.5 sekunder. && %{\Huge \checkmark}
+	\\ 
+	\midrule
+	
+	
+	
+	16. & Grafen vises i ét vindue, hvor y-aksen måles i mmHg og x-aksen i tid pr. sekund. & Use Case 1 - 3 køres. & På GUI er y-aksen målt i mmHg og x-aksen i tid pr. sekund. && %{\Huge \checkmark}
+	\\ 
+	\midrule
+	
+	
+	
+	
+	17. & Hver 7 sekund skal værdier for systolisk og diastolisk blodtryk samt puls opdateres. Dette accepteres med en tolerance på +/- 15 \%. & Use Case 1 - 2 køres. Forsøgsnummer indtastes og der trykkes på Start-knappen samtidig med at et stopur startes. Når værdier i bokse vises stoppes uret. & Stopuret viser mellem 5.95 - 8.05 sekunder. && %{\Huge \checkmark}
+	\\ 
+	\midrule
+	
+	
+	
+	
+	18. & Graf for blodtryk skal kører kontinuerligt i GUI efter princip beskrevet i KS & Use Case 1 - 3 køres. & Grafen i GUI kører kontinuerligt efter beskrevet princip i KS && %{\Huge \checkmark}
+	\\ 
+	\midrule
+	
+	
+	
+	
+	19. &Når der trykkes på Gem-knap gemmes det ufiltrerede signal under det indtastede forsøgsnavn og et autogenereret nr. ”forsøgsnavn\_nr” & Use Case 1 - 4 køres. & Data er blevet gemt i Databasen under filnavnet ”forsøgsnavn\_nr” && %{\Huge \checkmark}
+	\\ 
+	\midrule
+	
+	
+	
+	20. & Systemet skal kunne måle blodtryksværdier fra 0 til 250 mmHg. & Use Case 1 - 3 køres. & Det indhentede signals blodtryksværdier er indenfor 0 til 250 mmHg på grafens y-akse. && %{\Huge \checkmark}
+	\\ 
+	\midrule
+	
+	
+	
+	21. & Forskeren skal kunne udskifte hardwaren på 10 minutter. & Udskiftning af hardware påbegyndes samtidig med at stopur startes. Når hardware er udskiftet stoppes uret. & Stopuret viser mindre end 10 minutter.  && %{\Huge \checkmark}
+	\\ 
+	\midrule
+	
+	
+	
+	22. & Softwaren skal opbygges med lav kobling.  & Åbn systemets programkode. & Koden er opbygget med lav kobling.  && %{\Huge \checkmark}
+	\\ 
+	\bottomrule
 \caption{Accepttest af Ikke-funktionelle krav}
 \end{longtabu}
 
+\newpage
+\section{Godkendelsesformular}
+\begin{longtabu} to \linewidth{@{}l X[j]@{}}
+	
+	\midrule
+	Godkendes af & Peter Johansen \\
+	Kunde	&	IHA \\
+	Dato for test & \makebox[1.5in]{\hrulefill} \\
+\end{longtabu}
+
+Ved underskrivelse af dette dokument godkendes den kørte accepttest. 
+\\
+\\
+\\
+\\
+\noindent \begin{tabular}{lll} 
+	& 	\makebox[2.5in]{\hrulefill} 	& 	\makebox[2.5in]{\hrulefill}\\
+	&	Sted						&	Dato\\[7ex]
+	& 	\makebox[2.5in]{\hrulefill} 	& 	\makebox[2.5in]{\hrulefill}\\
+	& 	Kundens underskrift 		& 	Leverandørens underskrift\\[7ex]
+
+\end{tabular}
