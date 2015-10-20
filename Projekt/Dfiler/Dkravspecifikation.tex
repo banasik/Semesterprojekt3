@@ -9,6 +9,8 @@
 	0.2			&	24-09-2015	&	DHC og ABH	&	Omskrivning af UC1 - UC5 \\
 	0.3			&	28-09-2015	&	ABH			&	Ikke-funktionelle krav \\
 	0.4			&	08-10-2015	&	Alle		&	Tilrette efter review med Grp. 1 \\
+	0.5			&	15-10-2015	&	MB			&	Indskrevet i LaTex \\
+	0.6			&	20-10-2015	&	MHNK		&	Tilretning \\
     
 \label{version_Systemark}
 \end{longtabu}
@@ -96,17 +98,17 @@ Brugergrænseflade er det som forsker initierer med, altså herfra hvor systemet
 	Navn 					&& 	Foretag nulpunktsjustering\\
 	Mål 					&& 	At få foretaget en nulpunktsjustering\\
 	Initiering 				&& 	Startes af Forsker\\
-	Aktører 				&& 	Forsker (primær)\\
+	Aktører 				&& 	Forsker (primær), Måleobjekt (sekundær)\\
 	Referencer 				&& 	\\
-	Samtidige forekomster  	&& 	En nulpunktsjustering pr. kørsel \\
-	Forudsætninger 			&&	Alle systemer er ledige og operationel\\ 
-	Resultat 				&& 	Bliver foretaget nulpunktsjustering efter ønske\\ \midrule
-	Hovedscenarie 			&    1. 	&	Popup vindue for nulpunktsjustering er åbent.\\				 	
+	Samtidige forekomster  	&& 	Én nulpunktsjustering pr. kørsel \\
+	Forudsætninger 			&&	Alle systemer er ledige og operationelle\\ 
+	Resultat 				&& 	Nulpunktsjustering er blevet fortaget efter ønske\\ \midrule
+	Hovedscenarie 			&    1. 	&	Pop-up vindue for nulpunktsjustering er åbent\\				 	
 							&    2. 	& 	Forsker trykker på:\\ 
-							& 			&	a. Ja-knap for at starte en nulpunktsjustering.\\[-1ex]
-							& 			&		 i. Nulpunktsjustering foretages og vinduet lukker efter endt justering.\\[-1ex]
-							& 			&  	b. Nej-knap for ikke at få foretaget en nulpunktsjustering.\\[-1ex]
-							& 			&   ii. Vinduet lukker.\\[-1ex]	
+							& 			&	a. Ja-knap for at starte en nulpunktsjustering\\[-1ex]
+							& 			&		 i. Nulpunktsjustering foretages og vinduet lukker efter endt justering\\[-1ex]
+							& 			&  	b. Nej-knap for ikke at få foretaget en nulpunktsjustering\\[-1ex]
+							& 			&   ii. Vinduet lukker\\[-1ex]	
 	Undtagelser 			&			& 	-  \\ \bottomrule
 	
 	\caption{Fully dressed Use Case 1}
@@ -122,15 +124,15 @@ Brugergrænseflade er det som forsker initierer med, altså herfra hvor systemet
 	Initiering && Startes af Forsker\\
 	Aktører && Forsker (primær), Måleobjekt (sekundær)\\
 	Referencer && Use Case 1\\
-	Samtidige forekomster  && En kalibrering pr. kørsel \\
+	Samtidige forekomster  && Én kalibrering pr. kørsel \\
 	Forudsætninger && Alle systemer er ledige og operationelle\\ 
 	Resultat && Kalibrering er blevet foretaget efter ønske \\ \midrule
-	Hovedscenarie &    1. &		Popup vindue for kalibrering er åbent.\\				 	
+	Hovedscenarie &    1. &		Pop-up vindue for kalibrering er åbent\\				 	
 	&    2. & Forsker trykker på:\\ 
-	& &	a. Ja-knap for at starte en kalibrering.\\[-1ex]
-	& &		 i. Kalibrering foretages og vinduet lukker efter endt kalibrering.\\[-1ex]
-	& &  b. Nej-knap for ikke at få foretaget en kalibrering.\\[-1ex]
-	& &   ii. Vinduet lukker.\\[-1ex]	
+	& &	a. Ja-knap for at starte en kalibrering\\[-1ex]
+	& &		 i. Kalibrering foretages og vinduet lukker efter endt kalibrering\\[-1ex]
+	& &  b. Nej-knap for ikke at få foretaget en kalibrering\\[-1ex]
+	& &   ii. Vinduet lukker\\[-1ex]	
 	Undtagelser && -  \\ \bottomrule
 	
 	\caption{Fully dressed Use Case 2}
@@ -145,9 +147,9 @@ Brugergrænseflade er det som forsker initierer med, altså herfra hvor systemet
     Mål && At få foretaget en blodtryksmåling\\
     Initiering && Startes af Forsker\\
     Aktører && Forsker (primær), Måleobjekt (sekundær)\\
-    Referencer && Use Case 1, Use Case 2\\
+    Referencer && Use Case 1 og Use Case 2\\
     Samtidige forekomster  && Ét signal pr. måling\\
-    Forudsætninger && Use Case 1 og Use Case 2 er kørt succesfuldt, samt alle systemer kører og er klar til at foretage en måling.\\ 
+    Forudsætninger && Use Case 1 og Use Case 2 er kørt succesfuldt, samt alle systemer kører og er klar til at foretage en måling\\ 
     Resultat && Systolisk-, diastolisk blodtryk samt puls bliver vist på GUI\\ \midrule
     Hovedscenarie &    1. &		Forsker indtaster Forsøgsnavn\\[-1ex]
     &     2. & 	Filteret signal er valgt per default af systemet\\	 	
@@ -156,7 +158,7 @@ Brugergrænseflade er det som forsker initierer med, altså herfra hvor systemet
                 &    4. & Signal for blodtryk vises på GUI\\[-1ex] 
                 &    5. & Systolisk og diastolisk blodtryk samt puls bliver vist i bokse på GUI\\ \midrule
                 
-    Undtagelser && [\textit{Undtagelse 1}]	Forsker vælger ufiltreret signal.\\ 
+    Undtagelser && [\textit{Undtagelse 1}]	Forsker vælger ufiltreret signal\\ 
     &	a. & Use Case fortsættes fra punkt 3\\ 
     \bottomrule
 \caption{Fully dressed Use Case 3}
@@ -178,7 +180,7 @@ Brugergrænseflade er det som forsker initierer med, altså herfra hvor systemet
     Resultat && Systolisk- og diastolisk blodtryk samt puls er blevet gemt i en Database under Forsøgsnavn\\ \midrule
     Hovedscenarie &    1. &		Forsker trykker på Gem-knap\\[-1ex] 
     &	2. & Systemet gemmer det fremadrettede ufiltreret signal i Database\\
-                  &    3. &  Forsker trykker på Gem-knap for at stoppe med at gemme.\\
+                  &    3. &  Forsker trykker på Gem-knap for at stoppe med at gemme\\
     &	&			[\textit{Undtagelse 1:}] Forsker trykker på Afslut-knap\\
                     &    4. &   Det fremgår af GUI at data er gemt\\ \midrule	 	
  Undtagelser &    & [\textit{Undtagelse 1:}] Forsker trykker på Afslut-knap\\
@@ -249,9 +251,9 @@ Brugergrænseflade er det som forsker initierer med, altså herfra hvor systemet
 \item Blodtryksmåleren skal, inden for måleperioden, kunne alarmere hvis patienten har forhøjet eller for lavt blodtryk. Defineres efter grænseværdier beskrevet i… xxxx…
 \item Blodtryksmåleren skal, indenfor 30 sekunder fra der er trykket på Gem-knap, kunne gemme målingerne i Databasen.  Dette accepteres med en tolerance på +/- 15 \%.
 \item Grafen vises i ét vindue, hvor y-aksen måles i mmHg (millimeter kviksølv) og x-aksen i tid pr. sekund. 
-\item Hver 7 sekund skal værdier for systolisk og diastolisk blodtryk samt puls opdateres. Dette accepteres med en tolerance på +/- 15 \%.
+\item Hvert 7. sekund skal værdier for systolisk og diastolisk blodtryk samt puls opdateres. Dette accepteres med en tolerance på +/- 15 \%.
 \item Graf for blodtryk skal køre kontinuerligt i GUI efter følgende princip: \textbf{INDSÆT FIGUR og beskrivelse AF GRAF!}
-\item Når der trykkes på Gem-knap gemmes det ufiltrerede signal under det indtastede forsøgsnavn og et autogenereret nr. forsøgsnavn\_nr
+\item Når der trykkes på Gem-knap gemmes det ufiltrerede signal under det indtastede forsøgsnavn og et autogenereret nr. \textit{"forsøgsnavn\_nr"}
 \item Systemet skal kunne måle blodtryksværdier fra 0 til 250 mmHg.
 \end{enumerate}
 
