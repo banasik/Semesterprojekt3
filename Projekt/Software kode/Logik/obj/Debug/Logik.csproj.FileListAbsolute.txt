@@ -1,0 +1,12 @@
+C:\Users\matim_000\Documents\Semesterprojekt3\Projekt\Software kode\Logik\bin\Debug\Logik.dll
+C:\Users\matim_000\Documents\Semesterprojekt3\Projekt\Software kode\Logik\bin\Debug\Logik.pdb
+C:\Users\matim_000\Documents\Semesterprojekt3\Projekt\Software kode\Logik\bin\Debug\DatabaseAdgang.dll
+C:\Users\matim_000\Documents\Semesterprojekt3\Projekt\Software kode\Logik\bin\Debug\IndhentData.dll
+C:\Users\matim_000\Documents\Semesterprojekt3\Projekt\Software kode\Logik\bin\Debug\NationalInstruments.DAQmx.dll
+C:\Users\matim_000\Documents\Semesterprojekt3\Projekt\Software kode\Logik\bin\Debug\NationalInstruments.Common.Native.dll
+C:\Users\matim_000\Documents\Semesterprojekt3\Projekt\Software kode\Logik\bin\Debug\DatabaseAdgang.pdb
+C:\Users\matim_000\Documents\Semesterprojekt3\Projekt\Software kode\Logik\bin\Debug\IndhentData.pdb
+C:\Users\matim_000\Documents\Semesterprojekt3\Projekt\Software kode\Logik\bin\Debug\NationalInstruments.DAQmx.xml
+C:\Users\matim_000\Documents\Semesterprojekt3\Projekt\Software kode\Logik\obj\Debug\Logik.csprojResolveAssemblyReference.cache
+C:\Users\matim_000\Documents\Semesterprojekt3\Projekt\Software kode\Logik\obj\Debug\Logik.dll
+C:\Users\matim_000\Documents\Semesterprojekt3\Projekt\Software kode\Logik\obj\Debug\Logik.pdb

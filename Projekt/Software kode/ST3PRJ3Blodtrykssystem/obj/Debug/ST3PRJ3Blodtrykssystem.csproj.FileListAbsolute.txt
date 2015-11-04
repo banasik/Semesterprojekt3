@@ -28,3 +28,23 @@ C:\Users\Anne\SkyDrive\Sundhedsteknologi AU\3. Semester\ST3PRJ3 - Semesterprojek
 C:\Users\matim_000\Dropbox\ST\Projekt\3. Semester\ST3PRJ3Blodtrykssystem - 04.11.15\ST3PRJ3Blodtrykssystem\bin\Debug\ST3PRJ3Blodtrykssystem.exe.config
 C:\Users\matim_000\Dropbox\ST\Projekt\3. Semester\ST3PRJ3Blodtrykssystem - 04.11.15\ST3PRJ3Blodtrykssystem\obj\Debug\ST3PRJ3Blodtrykssystem.exe
 C:\Users\matim_000\Dropbox\ST\Projekt\3. Semester\ST3PRJ3Blodtrykssystem - 04.11.15\ST3PRJ3Blodtrykssystem\obj\Debug\ST3PRJ3Blodtrykssystem.pdb
+C:\Users\matim_000\Documents\Semesterprojekt3\Projekt\Software kode\ST3PRJ3Blodtrykssystem\bin\Debug\ST3PRJ3Blodtrykssystem.exe.config
+C:\Users\matim_000\Documents\Semesterprojekt3\Projekt\Software kode\ST3PRJ3Blodtrykssystem\obj\Debug\ST3PRJ3Blodtrykssystem.exe
+C:\Users\matim_000\Documents\Semesterprojekt3\Projekt\Software kode\ST3PRJ3Blodtrykssystem\obj\Debug\ST3PRJ3Blodtrykssystem.pdb
+C:\Users\matim_000\Documents\Semesterprojekt3\Projekt\Software kode\ST3PRJ3Blodtrykssystem\bin\Debug\ST3PRJ3Blodtrykssystem.exe
+C:\Users\matim_000\Documents\Semesterprojekt3\Projekt\Software kode\ST3PRJ3Blodtrykssystem\bin\Debug\ST3PRJ3Blodtrykssystem.pdb
+C:\Users\matim_000\Documents\Semesterprojekt3\Projekt\Software kode\ST3PRJ3Blodtrykssystem\bin\Debug\IndhentData.dll
+C:\Users\matim_000\Documents\Semesterprojekt3\Projekt\Software kode\ST3PRJ3Blodtrykssystem\bin\Debug\NationalInstruments.DAQmx.dll
+C:\Users\matim_000\Documents\Semesterprojekt3\Projekt\Software kode\ST3PRJ3Blodtrykssystem\bin\Debug\NationalInstruments.Common.Native.dll
+C:\Users\matim_000\Documents\Semesterprojekt3\Projekt\Software kode\ST3PRJ3Blodtrykssystem\bin\Debug\IndhentData.pdb
+C:\Users\matim_000\Documents\Semesterprojekt3\Projekt\Software kode\ST3PRJ3Blodtrykssystem\bin\Debug\NationalInstruments.DAQmx.xml
+C:\Users\matim_000\Documents\Semesterprojekt3\Projekt\Software kode\ST3PRJ3Blodtrykssystem\obj\Debug\ST3PRJ3Blodtrykssystem.csprojResolveAssemblyReference.cache
+C:\Users\matim_000\Documents\Semesterprojekt3\Projekt\Software kode\ST3PRJ3Blodtrykssystem\obj\Debug\ST3PRJ3Blodtrykssystem.Form1.resources
+C:\Users\matim_000\Documents\Semesterprojekt3\Projekt\Software kode\ST3PRJ3Blodtrykssystem\obj\Debug\ST3PRJ3Blodtrykssystem.Kalibrering.resources
+C:\Users\matim_000\Documents\Semesterprojekt3\Projekt\Software kode\ST3PRJ3Blodtrykssystem\obj\Debug\ST3PRJ3Blodtrykssystem.Nulpunktsjustering.resources
+C:\Users\matim_000\Documents\Semesterprojekt3\Projekt\Software kode\ST3PRJ3Blodtrykssystem\obj\Debug\ST3PRJ3Blodtrykssystem.Properties.Resources.resources
+C:\Users\matim_000\Documents\Semesterprojekt3\Projekt\Software kode\ST3PRJ3Blodtrykssystem\obj\Debug\ST3PRJ3Blodtrykssystem.csproj.GenerateResource.Cache
+C:\Users\matim_000\Documents\Semesterprojekt3\Projekt\Software kode\ST3PRJ3Blodtrykssystem\bin\Debug\Logik.dll
+C:\Users\matim_000\Documents\Semesterprojekt3\Projekt\Software kode\ST3PRJ3Blodtrykssystem\bin\Debug\DatabaseAdgang.dll
+C:\Users\matim_000\Documents\Semesterprojekt3\Projekt\Software kode\ST3PRJ3Blodtrykssystem\bin\Debug\Logik.pdb
+C:\Users\matim_000\Documents\Semesterprojekt3\Projekt\Software kode\ST3PRJ3Blodtrykssystem\bin\Debug\DatabaseAdgang.pdb

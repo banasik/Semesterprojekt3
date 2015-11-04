@@ -101,6 +101,10 @@
       <Project>{b4aa30b0-e052-45b0-9e00-777950924acc}</Project>
       <Name>IndhentData</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Logik\Logik.csproj">
+      <Project>{3e4141db-e957-4335-afa7-98638c45c9be}</Project>
+      <Name>Logik</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

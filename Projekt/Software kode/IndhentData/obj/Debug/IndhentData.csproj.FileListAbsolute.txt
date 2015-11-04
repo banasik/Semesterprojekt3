@@ -6,3 +6,11 @@ C:\Users\Anne\SkyDrive\Sundhedsteknologi AU\3. Semester\ST3PRJ3 - Semesterprojek
 C:\Users\Anne\SkyDrive\Sundhedsteknologi AU\3. Semester\ST3PRJ3 - Semesterprojekt, blodtryksmåler\ST3PRJ3Blodtrykssystem - Kopi\IndhentData\obj\Debug\IndhentData.csprojResolveAssemblyReference.cache
 C:\Users\Anne\SkyDrive\Sundhedsteknologi AU\3. Semester\ST3PRJ3 - Semesterprojekt, blodtryksmåler\ST3PRJ3Blodtrykssystem - Kopi\IndhentData\obj\Debug\IndhentData.dll
 C:\Users\Anne\SkyDrive\Sundhedsteknologi AU\3. Semester\ST3PRJ3 - Semesterprojekt, blodtryksmåler\ST3PRJ3Blodtrykssystem - Kopi\IndhentData\obj\Debug\IndhentData.pdb
+C:\Users\matim_000\Documents\Semesterprojekt3\Projekt\Software kode\IndhentData\bin\Debug\IndhentData.dll
+C:\Users\matim_000\Documents\Semesterprojekt3\Projekt\Software kode\IndhentData\bin\Debug\IndhentData.pdb
+C:\Users\matim_000\Documents\Semesterprojekt3\Projekt\Software kode\IndhentData\bin\Debug\NationalInstruments.DAQmx.dll
+C:\Users\matim_000\Documents\Semesterprojekt3\Projekt\Software kode\IndhentData\bin\Debug\NationalInstruments.Common.Native.dll
+C:\Users\matim_000\Documents\Semesterprojekt3\Projekt\Software kode\IndhentData\bin\Debug\NationalInstruments.DAQmx.xml
+C:\Users\matim_000\Documents\Semesterprojekt3\Projekt\Software kode\IndhentData\obj\Debug\IndhentData.csprojResolveAssemblyReference.cache
+C:\Users\matim_000\Documents\Semesterprojekt3\Projekt\Software kode\IndhentData\obj\Debug\IndhentData.dll
+C:\Users\matim_000\Documents\Semesterprojekt3\Projekt\Software kode\IndhentData\obj\Debug\IndhentData.pdb

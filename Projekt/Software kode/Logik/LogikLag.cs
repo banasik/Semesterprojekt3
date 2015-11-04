@@ -13,14 +13,14 @@ namespace Logik
         private DBAdgang Database = new DBAdgang();
         private IndhentDataDAQ DAQdata = new IndhentDataDAQ();
 
-        public void isRunningLogik()
+        public bool isRunningLogik()
         {
-            DAQdata.IsRunning();
+            return DAQdata.IsRunning();
         }
 
-        public void getListLogik()
+        public List<double> getListLogik()
         {
-            DAQdata.getList();
+            return DAQdata.getList();
         }
 
         public void indhentDataLogik()
@@ -38,4 +38,4 @@ namespace Logik
             Database.gemData(forsøgsnavn, autogenereretNR, samplelist);
         }
     }
-}
+} 
