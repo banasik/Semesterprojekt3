@@ -1,23 +1,58 @@
 
 \chapter{Hardware}
-
 \section{Design}
+\begin{longtabu} to \linewidth{@{}l l l X[l]@{}}
+	
+	
+	Version &    Dato &    Ansvarlig &    Beskrivelse\\[-1ex]
+	\midrule
+	0.1 &    03-11-2015 &    MB &    Oprettelse \\[-1ex]
+	0.2 &    10-11-2015 &    DHC, MB &    Start af skrivning, indsætning af billeder  \\[-1ex]
+	0.3 &     &     &     \\[-1ex]
+	
+	
+	\label{version_Systemark}
+\end{longtabu}
+
+
 \subsection{Forstærkning}
+Transduceren måler en tryk
+
 \subsection{Lavpas}
-I projektet skal der laves et 2. ordens lavpasfilter. Dette filter skal være et Buttenworth-filter, med en knækfrekvens på 50 Hz. 
+I projektet skal der laves et 2. ordens lavpasfilter. Dette filter skal være et Salen-Key Buttenworth-filter, med en knækfrekvens på 50 Hz. 
 
 \section{Implementering}
 \subsection{Forstærkning}
+For at få den rette forstærkning har vi valgt at benytte operationsforstærkeren INA-114. Her kan transduceren sættes på med det differentieret signal. Under opbygning og modultestning vil det differentieret signal blive simuleret af Analog Discovery.
+For at få den rette forstærkning ændres der på den "indre" modstand ($ R_g $) til INA114.
+  
 \subsection{Lavpas}
+For at opnå den ønskede effekt i lavpasfilteret, blev det oplyst at $ f_c=50$ Hz, $ R_1 = R_2 $ og $ C_2=680 nF$. Ud fra det udregnes de resterende komponentværdier for filteret.  
 
 
 \section{Modultest}
 \subsection{Forstærkning}
 \subsection{Lavpas}
-For at teste lavpasfilteret foretages målinger med en sinus, hvor frekvensen variere for hver måling. Derved aflæses fasen, mellem indgang- og udgangssignal, og amplituden for hver måling.  
+For at teste lavpasfilteret foretages målinger med en sinus, hvor frekvensen variere for hver måling. Derved aflæses fasen, mellem indgang- og udgangssignal, og amplituden for hver måling. 
+Ved knækfrekvensen skal fasendrejningen være 90\textdegree. Amplituden skal ændre sig XXX. Dette kan aflæses på billedet Måling for 50 Hz.
+Efter knækfrekvensen skal amplituden blive mindre og mindre(går mod nul). På Måling for 60 Hz, kan det ses hvordan amplituden er faldet drastisk efter knækfrekvensen.  
 \begin{figure}[htb]
 	\centering
 	\includegraphics[width=1.0\textwidth]{Figurer/10Hz}
 	\caption{Måling for 10 Hz}
 	\label{fig:maeling10Hz}
+\end{figure}
+
+\begin{figure}[htb]
+	\centering
+	\includegraphics[width=1.0\textwidth]{Figurer/50Hz}
+	\caption{Måling for 50 Hz}
+	\label{fig:maeling50Hz}
+\end{figure}
+
+\begin{figure}[htb]
+	\centering
+	\includegraphics[width=1.0\textwidth]{Figurer/60Hz}
+	\caption{Måling for 60 Hz}
+	\label{fig:maeling60Hz}
 \end{figure}
