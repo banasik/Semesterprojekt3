@@ -13,6 +13,24 @@
 	\label{version_Systemark}
 \end{longtabu}
 
+Systemets hardware kan illustreres i et BBD. Det ses at nedestående figur at systemet består af fem hardware blokke: software system, forstærker, filter, DAQ og transducer. Disse fem blokke udgør til sammen selve blodtryksmåleren.  
+	
+\begin{figure}[htb]
+	\centering
+	\includegraphics[width=1.0\textwidth]{Figurer/BDD}
+	\caption{Block Definition Diagram for hardware}
+	\label{fig:BDD viser blodtrykssystemets hardwaredele, samt sammenhængen mellem disse}
+\end{figure}
+
+Ovenstående BDD-diagram fører videre til udarbejdelsen af IBD for hardware komponenterne. I dette diagram vises koblingen mellem de forskellige blokke gennem port forbindelser.  Det ses at signalet starter ved transduceren, hvorefter det bliver behandlet gennem forstærker, filter og DAQ. Til sidste sendes det ind i software systemet, som bliver påvirket at tryk på knapper på GUI. 
+
+\begin{figure}[htb]
+	\centering
+	\includegraphics[width=1.0\textwidth]{Figurer/IBD}
+	\caption{Infernal Block Diagram for hardware}
+	\label{fig:IBD viser koblingen mellem blodtrykssystemets hardwaredele}
+\end{figure}
+
 \subsection{Forstærkning}
 Transduceren måler en tryk
 
