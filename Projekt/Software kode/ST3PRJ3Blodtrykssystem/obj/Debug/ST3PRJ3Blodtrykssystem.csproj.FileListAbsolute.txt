@@ -48,3 +48,6 @@ C:\Users\matim_000\Documents\Semesterprojekt3\Projekt\Software kode\ST3PRJ3Blodt
 C:\Users\matim_000\Documents\Semesterprojekt3\Projekt\Software kode\ST3PRJ3Blodtrykssystem\bin\Debug\DatabaseAdgang.dll
 C:\Users\matim_000\Documents\Semesterprojekt3\Projekt\Software kode\ST3PRJ3Blodtrykssystem\bin\Debug\Logik.pdb
 C:\Users\matim_000\Documents\Semesterprojekt3\Projekt\Software kode\ST3PRJ3Blodtrykssystem\bin\Debug\DatabaseAdgang.pdb
+C:\Users\Anne\Desktop\Semesterprojekt3\Projekt\Software kode\ST3PRJ3Blodtrykssystem\bin\Debug\ST3PRJ3Blodtrykssystem.exe.config
+C:\Users\Anne\Desktop\Semesterprojekt3\Projekt\Software kode\ST3PRJ3Blodtrykssystem\obj\Debug\ST3PRJ3Blodtrykssystem.exe
+C:\Users\Anne\Desktop\Semesterprojekt3\Projekt\Software kode\ST3PRJ3Blodtrykssystem\obj\Debug\ST3PRJ3Blodtrykssystem.pdb

@@ -9,27 +9,27 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Threading;
 using Logik;
-using IndhentData; //Skal fjernes når Logik er implementeret, fjern også i reference
+//using IndhentData; //Skal fjernes når Logik er implementeret, fjern også i reference
 
 namespace ST3PRJ3Blodtrykssystem
 {
     public partial class Form1 : Form
     {
-        private IndhentDataDAQ dt; //Flyttes til Logik
-        private LogikLag logik; 
+        //private IndhentDataDAQ dt; //Flyttes til Logik
+       // private LogikLag logik; 
         private LogikLag dtLogik;
-        private Thread updateUI; //Tråd til opdatering af user interface
-        private List<double> uiList;
+        //private Thread updateUI; //Tråd til opdatering af user interface
+        //private List<double> uiList;
         private int AutogenNR; //AutogeneretNR der skal tælles 1 op hver gang der trykkes på GEM-knappen.
 
         public Form1()
         {
             InitializeComponent();
-            dt = new IndhentDataDAQ(); //Flyttes til Logik
+           // dt = new IndhentDataDAQ(); //Flyttes til Logik
             dtLogik = new LogikLag();
-            logik = new LogikLag();
-            uiList = new List<double>();
-            updateUI = new Thread(() => updateGUI()); //Benyttes i metoden updateGUI()
+           // logik = new LogikLag();
+            //uiList = new List<double>();
+           // updateUI = new Thread(() => updateGUI()); //Benyttes i metoden updateGUI()
         }
 
         private void chart1_Click(object sender, EventArgs e)
@@ -43,19 +43,19 @@ namespace ST3PRJ3Blodtrykssystem
             start.BackColor = Color.DarkSeaGreen;
         }
 
-        private void updateGUI()
-        {
-            while (dtLogik.isRunningLogik())
-            {
-                uiList = dtLogik.getListLogik(); //Listen med data fra datalag lægges i en ny liste
+        //private void updateGUI()
+        //{
+        //    while (dtLogik.isRunningLogik())
+        //    {
+        //        uiList = dtLogik.getListLogik(); //Listen med data fra datalag lægges i en ny liste
 
-                if (uiList.Count > 0)
-                {
-                    updateChart();
-                    Thread.Sleep(1); //Sænker tråden 1 ms.
-                }
-            }
-        }
+        //        if (uiList.Count > 0)
+        //        {
+        //            updateChart();
+        //            Thread.Sleep(1); //Sænker tråden 1 ms.
+        //        }
+        //    }
+        //}
 
         private delegate void UpdateUICallback();
 
@@ -82,7 +82,7 @@ namespace ST3PRJ3Blodtrykssystem
 
             if (dtLogik.isRunningLogik())
             {
-                updateUI.Start();
+                //updateUI.Start();
             }
             gem.Enabled = true;
         }
@@ -94,7 +94,8 @@ namespace ST3PRJ3Blodtrykssystem
 
         private void button1_Click(object sender, EventArgs e)
         {
-            dt.stopReadData();
+          //  dt.stopReadData();
+            dtLogik.stopReadDataLogik();
             updateUI.Abort(); //Kaster tråden væk
         }
 
@@ -104,6 +105,5 @@ namespace ST3PRJ3Blodtrykssystem
             // logiklag.gemData(textForsøgsnavn.Text, AutogenNR, uiList);
             // Indsæt igen når logiklag er implementeret
         }
-
     }
 }
