@@ -35,7 +35,6 @@ Ovenstående BDD-diagram fører videre til udarbejdelsen af IBD for hardware kom
 
 \subsubsection{Forstærkning}
 Transduceren måler en trykændring som den omsætter til en spænding. Dette er udtrykt ved et differentieret signal, som sendes ind i forstærkning-blokken. Da signalet fra transduceren ligger i et interval på 0 - 11.28 mV,  skal dette forstærkes op så det passer med NI-DAQ. I projektet er det valgt at DAQ'ens input skal ligge mellem 0-5V. Derved skal signalet forstærkes: 
-
 \begin{equation}
 11.28mV\cdot x = 5 V \Rightarrow x= 443
 \end{equation}
@@ -85,3 +84,10 @@ Efter knækfrekvensen skal amplituden blive mindre og mindre(går mod nul). På 
 	\caption{Måling for 60 Hz}
 	\label{fig:maeling60Hz}
 \end{figure}
+
+
+
+\section{Software}
+\subsection{Design}
+\subsection{Implementering}
+\subsection{Modultest}
