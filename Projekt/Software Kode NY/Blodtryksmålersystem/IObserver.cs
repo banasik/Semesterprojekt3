@@ -8,6 +8,7 @@ namespace DTO
 {
     interface IObserver
     {
-        abstract public void UpdateChart(int val);
+        abstract public void UpdateChart();
+        abstract public void setArray(double[] array);
     }
 }

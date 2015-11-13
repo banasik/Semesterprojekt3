@@ -14,14 +14,13 @@ namespace LogikLag
         private IndhentDAQData DAQdata = new IndhentDAQData();
         private Thread updateUI;
         private List<double> uiList;
-        private ConcreteSubject Subject;
+        private double[] array;
 
         public Logik()
         {
             updateUI = new Thread(() => updateListe());
             updateUI.Start();
             uiList = new List<double>();
-            Subject = new ConcreteSubject();
         }
 
         public void StartTraad()
@@ -33,12 +32,17 @@ namespace LogikLag
         {
             while (isRunningLogik())
             {
-                uiList = getListLogik();
+                uiList = DAQdata.getList();
 
                 if(uiList.Count > 0)
                 {
-                    Subject.Value = uiList;
-                    updateChart();
+                    for (int i = 0; i < 500; i++)
+                    {
+
+                        Notify(array);
+                    }
+                    //Subject.Value = uiList;
+                    //updateChart();
                     Thread.Sleep(1);
                 }
             }

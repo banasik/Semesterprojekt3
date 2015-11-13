@@ -13,15 +13,13 @@ namespace LogikLag
         IObserver Iobserver;
         public void Attach(IObserver observer)
         {
-            observer = Iobserver;
+            Iobserver = observer;
         }
 
-        public void Notify()
+        public void Notify(double[] array)
         {
-            foreach (var observer in observers)
-            {
-                observer.UpdateChart(dListe);
-            }
+            Iobserver.setArray(array);
+            Iobserver.UpdateChart();
         }
     }
 }

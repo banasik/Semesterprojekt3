@@ -12,27 +12,33 @@ using DTO;
 
 namespace Blodtryksmålersystem
 {
-    public partial class HovedGUI : Form
+    public partial class HovedGUI : Form, IObserver
     {
         //private IndhentDataDAQ dt; //Flyttes til Logik
         //private LogikLag logik; 
         //private LogikLag dt;
         //private Thread updateUI; //Tråd til opdatering af user interface
-        //private List<double> uiList;
+        private List<double> uiList;
         private Logik logik;
         private int AutogenNR; //AutogeneretNR der skal tælles 1 op hver gang der trykkes på GEM-knappen.
+        private double[] GUIArray;
 
         public HovedGUI()
         {
             InitializeComponent();
             logik = new Logik();
+            GUIArray = new double[500];
+            logik.Attach(this);
            // dt = new IndhentDataDAQ(); //Flyttes til Logik
             //logik = new Logiklag();
             //dt = new LogikLag();
             //uiList = new List<double>();
             //updateUI = new Thread(() => updateGUI()); //Benyttes i metoden updateGUI()
         }
-
+        public void setArray(double[] nytArray)
+        {
+            GUIArray = nytArray;
+        }
         private void textForsøgsnavn_TextChanged(object sender, EventArgs e)
         {
             StartKnap.Enabled = true;
@@ -50,10 +56,10 @@ namespace Blodtryksmålersystem
             }
             else
             {
-                if (uiList.Count > 500) //Vises først i chart når listen indeholder mere end 500 samples
+                //if (uiList.Count > 500) //Vises først i chart når listen indeholder mere end 500 samples
                 {
                     Chart.Series["Series1"].Points.Clear(); //Charts indeholder kun de 500 sidste samples
-                    Chart.Series["Series1"].Points.DataBindY(uiList.GetRange(uiList.Count - 501, 500)); //De sidste 500 samples i listen vises i chart
+                    Chart.Series["Series1"].Points.DataBindY(GUIArray); //De sidste 500 samples i listen vises i chart
                 }
             }
         }
