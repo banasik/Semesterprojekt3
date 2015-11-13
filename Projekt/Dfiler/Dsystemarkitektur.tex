@@ -89,5 +89,39 @@ Efter knækfrekvensen skal amplituden blive mindre og mindre(går mod nul). På 
 
 \section{Software}
 \subsection{Design}
+I dette beskrives systemets softwaredesign på baggrund af systembeskrivelsen og kravspecifikationen. De overvejelser vi har gjort i forbindelse med design og implementering af software vil blive præsenteret i dette afsnit. 
+
+\subsubsection{Overordnet sekvensdiagram}
+Overordnet set ønskes det at udvikle et system, der kan interagerer med en forsker. Diagrammet herunder viser at forskerens opgave består i at starte, tage stilling til nulpunktsjustering og kalibrering samt gemme de ønskede data. Diagrammet er en simpel illustration som viser systemets adfærd gennem alle fem Use Cases. Formålet med dette diagram er udelukkende at skabe et overblik over det samlede system.
+
+\subsubsection{Problemidentifikation}
+Første step i software designet er at klarlægge hvilke klasser systemet skal bestå af. Til dette er en domænemodel derfor udarbejdet med udgangspunkt i de fem Use Cases. I de fem Use Cases er de konceptuelle klasser blevet identificeret, og derefter indført som klasser i nedestående domænemodel. Modellen har til formål at vise hvilke dele systemet skal holde styr på. 
+Diagrammet viser tydeligt forskerens interaktion med display, samt hvilke handlinger denne interaktion starter i system. Hardware-komponenterne er medtaget for at vise signalets vej fra måleobjekt til system. 
+
+\subsubsection{Klasseidentifikation}
+Ud fra domænemodellen kan et klassediagram så udarbejdes, således tager dette diagram også udgangspunkt i de fem Use Cases. Hensigten med et klassediagram er at klarlægge hver klasses individuelle formål. Dermed ses det at denne model er delt op i tre niveauer:
+\begin{enumerate}
+\item Grænsefladeklasse
+\begin{enumerate}
+\item Transducer - Indhentet data fra måleobjekt
+\item Display - Brugergrænseflade til forsker
+\end{enumerate}
+\item Kontrolklasse
+\begin{enumerate}
+\item UC1: Foretag nulpunktsjustering
+\item UC2: Foretag kalibrering
+\item UC3: Start måling
+\item UC4: Gem måling
+\item UC5: Afslut måling
+\end{enumerate}
+\item Domæneklasse
+\begin{enumerate}
+\item Database
+\end{enumerate}
+\end{enumerate}
+
+\subsubsection{Metodeidentifikation}
+Klasserne i ovenstående klassediagram er med til at definere, hvilke blokke de følgende sekvensdiagrammer må indeholde. Det er yderst vigtigt at der er en sammenhæng mellem klasserne i klassediagrammet og blokkene i sekvensdiagrammet. Vi har valgt at udarbejde et sekvensdiagram for hver enkelt Use Case, hvori systemets interne kommunikation beskrives, når både normalforløb og undtagelser gennemløbes. I alle diagrammerne beskrives forløbet via de metodekald, der er nødvendige for at få de ønskede handlinger mellem blokkene udført. 
+
 \subsection{Implementering}
 \subsection{Modultest}
