@@ -126,6 +126,19 @@ Til hver Use Case er der udarbejdet et sekvensdiagram med de nødvendige metodek
 
 \underline{\textbf{Logbog}}
 
-\textbf{Software og dokumentation: }Først blev andet udkast til domænemodellen vendt i gruppen, og fælles løsning blev udarbejdet. Derefter blev alle sekvensdiagrammer til hver enkelt Use Case tegnet ind i Visio. Derefter blev samtlige diagrammer samlet og korte beskrivelser tilføjet. Til slut blev diagrammer + kravspecifikation sendt til Gruppe 5. 
+\textbf{Software, hardware og dokumentation: }Først blev andet udkast til domænemodellen vendt i gruppen, og fælles løsning blev udarbejdet. Derefter blev alle sekvensdiagrammer til hver enkelt Use Case tegnet ind i Visio. Derefter blev samtlige diagrammer samlet og korte beskrivelser tilføjet. Til slut blev diagrammer + kravspecifikation sendt til Gruppe 5. 
 På hardware siden er det blevet diskutteret om waveform-billeder skal placeres i selve dokumentationen eller som bilag. Konklusionen blev at er de vigtige for forståelsen af den skrevne dokumentation og test placeres billedet i dokumentationen. Herefter er test af lavpasfiltret blevet dokumenteret i Dokumentationen.
+\\
+
+\section{Dato: 13-11-2015}
+\hrule
+\textbf{Omhandler:} Software-kode: Implementering af Observer og strategy
+
+\textbf{Ansvarlig:} Mathias og Anne
+
+\underline{\textbf{Logbog}}
+
+\textbf{Software: }Vi har oplevet store problemer med at få flyttet oprettelsen af tråde fra præsentationslaget ned i logiklaget. Dette kan løses med Observer-Strategy princippet. 
+Implementeringen: Der tages udgangspunkt i et eksempel fra ITS3-undervisningen. ConsumerSubjekt placeres som en metode i logiklaget, denne skal arve fra klassen Subject. Et interface af navnet Observer oprettes, samt en metode i præsentationslaget svarende til ConsumerObserver oprettes. Vores DAQ-data flyttes nu i et array fra logiklaget til præsentationslaget, hvor metoden updateChart() findes. Dette kan lade sig gøre kan updateChart() notify hver eneste gang en ny tråd oprettes i logiklaget. 
+Næste step kodemæssig er at der skal kigges på kalibrering og nulpunktsjustering.
 \\
