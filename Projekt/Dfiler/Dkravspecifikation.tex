@@ -40,7 +40,7 @@ Ved underskrivelse af dette dokument accepteres det af begge parter, som værend
 På baggrund af krav fra kunden samt hvad leverandøren finder muligt, er denne kravspecifikation blevet udarbejdet. Denne kravspecifikation har til formål at specificere kravene til produktet. Dette projekt tager udgangspunkt i en blodtryksmåler, hvortil der er en række aktører, som interagerer med et system, der er beskrevet yderligere nedenfor.
 
 \section{Systembeskrivelse}
-Blodtryksmåler apparatet ønskes udviklet således at systolisk og diastolisk blodtryk samt puls kan bestemmes ud fra en invasiv ateriel blodtryksmåling. Der udvikles instrumentering til den udleverede transducer som hardware og et software-program til visning af målt blodtryk. Disse to dele udgør til sammen vores system. 
+Blodtryksmålersystemet ønskes udviklet således at systolisk og diastolisk blodtryk samt puls kan bestemmes ud fra en invasiv ateriel blodtryksmåling. Der udvikles instrumentering til den udleverede transducer som hardware og et software-program til kontinuerligt visning af målt blodtryk, samt til udskrivelse af løbende systoliske, diastoliske og puls værdier. Disse to dele udgør til sammen systemet. 
 
 \section{Funktionelle krav}
  
@@ -64,7 +64,9 @@ Af dette diagram ses vores aktører til at være: Forsker, Måleobjekt og Databa
      Aktørnavn	&	Type		&	Beskrivelse \\ \midrule
      Forsker   	& 	Primær  	& 	Forskeren er aktøren, der starter og giver besked om at data ønskes gemt samt afslutter fysisk måling af blodtryk. \\ 			  \addlinespace[2mm]
      Database	&	Sekundær	&	Databasen er aktøren, hvori måledata bliver gemt. \\   \addlinespace[2mm]
-     Måleobjekt	&	Sekundær	&	Måleobjekt er aktøren, hvorfra signalet og måledata indhentes. Dette kan være In Vitro maskinen, som findes i Cave Lab. Under løbende test i udviklingsprocessen benyttes Analog Discovery og PhysioNet. \\   \addlinespace[2mm]
+     Måleobjekt	&	Sekundær	&	Måleobjekt er aktøren, hvorfra blodtrykssignalet indhentes. Måleobjektet er tilkoblet transduceren. 
+     I den endelige version er måleobjektet In Vitro maskinen, som findes i Cave Lab.
+     Under løbende test i udviklingsprocessen benyttes Analog Discovery og Waveform. \\   \addlinespace[2mm]
      
    
      \bottomrule                                                                                                                   
@@ -83,12 +85,11 @@ Af dette diagram ses vores aktører til at være: Forsker, Måleobjekt og Databa
 	\label{fig:Use Cases}
 \end{figure}
 
-Diagrammet ovenfor viser at systemet har fem Use Cases: Foretag nulpunktsjustering, Foretag kalibrering, Start måling, Gem data og Afslut måling. Herunder følger en nærmere beskrivelse af de enkelte Use Cases, gennem et fully-dressed Use Case skema. 
-Systemet består af en computer, hvor vores software er placeret, en NI-DAQ, en Analog Discovery samt en transducer med tilhørende implementering. 
-Brugergrænseflade er det som forsker initierer med, altså herfra hvor systemet aktiveres. Det forkortes til GUI. Grænseværdierne: SKAL SKRIVES UDFØRLIGT ET ANDET STED…..TILGÅR!
+Diagrammet ovenfor viser at systemet har fem Use Cases: Foretag nulpunktsjustering, Foretag kalibrering, Start måling, Gem data og Afslut måling. Herunder følger en nærmere beskrivelse af de enkelte Use Cases, gennem et fully-dressed Use Case skema. \\
+Systemet består af en computer, hvor softwaren er placeret, en NI-DAQmx, en Analog Discovery samt en transducer med tilhørende implementering. Systemet gør det muligt at foretage en blodtryksmåling på et måleobjekt, som er tilsluttet og sender disse signaldata ind i systemet via transduceren og det tilhørende hardware, hvor signalet vises. Det ønskede interval af blodtrykssignalet gemmes så i databasen. \\
+I systemet benyttes algoritmer til at analysere signalet, ud fra opsatte grænseværdier, så systolisk, diastolisk og puls værdier hentes frem. Disse algoritmer undersøger signalet for hvor top og bund er placeret. Da top er signalets systoliske værdi og bund er signalets diastoliske. Puls bestemmes ved at tælle antallet af blodtryksperioder pr. minut. \\    
+Brugergrænseflade er det som forsker initierer med, altså herfra hvor systemet aktiveres. Brugergrænsefladen forkortes til GUI. 
 
-
-\newpage
 \subsection{Use Cases}
 
 \begin{longtabu} to \linewidth{@{}l r X[l]@{}} %UC1%
@@ -106,7 +107,9 @@ Brugergrænseflade er det som forsker initierer med, altså herfra hvor systemet
 	Hovedscenarie 			&    1. 	&	Pop-up vindue for nulpunktsjustering er åbent\\				 	
 							&    2. 	& 	Forsker trykker på:\\ 
 							& 			&	a. Ja-knap for at starte en nulpunktsjustering\\[-1ex]
-							& 			&		 i. Nulpunktsjustering foretages og vinduet lukker efter endt justering\\[-1ex]
+							& 			&		 i. System beder om udlignelse af atmosfærisk tryk\\[-1ex]
+							& 			&		 ii. System venter på bekræftigelse fra forsker\\[-1ex]
+							& 			&		 iii. Nulpunktsjustering foretages og vinduet lukker efter endt justering\\[-1ex]
 							& 			&  	b. Nej-knap for ikke at få foretaget en nulpunktsjustering\\[-1ex]
 							& 			&   ii. Vinduet lukker\\[-1ex]	
 	Undtagelser 			&			& 	-  \\ \bottomrule
@@ -130,7 +133,9 @@ Brugergrænseflade er det som forsker initierer med, altså herfra hvor systemet
 	Hovedscenarie &    1. &		Pop-up vindue for kalibrering er åbent\\				 	
 	&    2. & Forsker trykker på:\\ 
 	& &	a. Ja-knap for at starte en kalibrering\\[-1ex]
-	& &		 i. Kalibrering foretages og vinduet lukker efter endt kalibrering\\[-1ex]
+	& &		 i. System beder om signal til justering\\[-1ex]
+	& &		 ii. System venter på bekræftigelse fra forsker\\[-1ex]
+	& & 	 iii. Kalibrering foretages og vinduet lukker efter endt kalibrering\\[-1ex]
 	& &  b. Nej-knap for ikke at få foretaget en kalibrering\\[-1ex]
 	& &   ii. Vinduet lukker\\[-1ex]	
 	Undtagelser && -  \\ \bottomrule
@@ -190,7 +195,7 @@ Brugergrænseflade er det som forsker initierer med, altså herfra hvor systemet
 \caption{Fully dressed Use Case 4}
 \label{UC4}
 \end{longtabu}
-\newpage
+
 \begin{longtabu} to \linewidth{@{}l r X[l]@{}} %UC5%
 	{\large \textbf{Use Case 5}} && \\
 	\toprule
@@ -218,13 +223,20 @@ Brugergrænseflade er det som forsker initierer med, altså herfra hvor systemet
 \textbf{Functionality}
 \begin{enumerate}
 \item Blodtryksmåleren skal indeholde en Start-knap til at igangsætte målingerne. 
-\item Blodtryksmåleren skal indeholde en Afslut-knap hvor fra måling kan stoppes.
+\item Blodtryksmåleren skal indeholde en Afslut-knap hvorfra måling kan stoppes.
 \item Blodtryksmåleren skal indeholde en Gem-knap til at gemme målingerne i Databasen.
 \item Blodtryksmåleren skal indeholde en tekstboks til forsøgsnavn, hvori forsker indtaster det pågældende forsøgsnavn.
 \item Blodtryksmåleren skal indeholde radiobutton til filtreret signal, denne skal være default valget.
 \item Blodtryksmåleren skal indeholde radiobutton til ufiltreret signal.
 \item Blodtryksmåleren skal indeholde tekstbokse til puls, systolisk og diastolisk blodtryk som vises med op til tre cifre.
-\item GUI’en skal se ud som vist på figur xxx:    INDSÆT SKITSE AF GUI!
+\item GUI’en skal se ud som vist på figuren herunder:
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.8\textwidth]{Figurer/GUI}
+	\caption{Skitse af GUI}
+	\label{fig:Skitse af GUI}
+\end{figure}
+
 \end{enumerate}
 
 \textbf{Usability}
@@ -252,7 +264,14 @@ Brugergrænseflade er det som forsker initierer med, altså herfra hvor systemet
 \item Blodtryksmåleren skal, indenfor 30 sekunder fra der er trykket på Gem-knap, kunne gemme målingerne i Databasen.  Dette accepteres med en tolerance på +/- 15 \%.
 \item Grafen vises i ét vindue, hvor y-aksen måles i mmHg (millimeter kviksølv) og x-aksen i tid pr. sekund. 
 \item Hvert 7. sekund skal værdier for systolisk og diastolisk blodtryk samt puls opdateres. Dette accepteres med en tolerance på +/- 15 \%.
-\item Graf for blodtryk skal køre kontinuerligt i GUI efter følgende princip: \textbf{INDSÆT FIGUR og beskrivelse AF GRAF!}
+\item Graf for blodtryk skal køre kontinuerligt i GUI efter følgende princip, hvor det blå signal erstatter det orange signal ved at den seneste måling altid sættes ved cursorens placering.
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.6\textwidth]{Figurer/Cursor}
+	\caption{Graf for blodtryk}
+	\label{fig:Graf for blodtryks visning}
+\end{figure}
+
 \item Når der trykkes på Gem-knap gemmes det ufiltrerede signal under det indtastede forsøgsnavn og et autogenereret nr. \textit{"forsøgsnavn\_nr"}
 \item Systemet skal kunne måle blodtryksværdier fra 0 til 250 mmHg.
 \end{enumerate}

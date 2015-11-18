@@ -18,10 +18,11 @@ namespace Blodtryksmålersystem
         //private LogikLag logik; 
         //private LogikLag dt;
         //private Thread updateUI; //Tråd til opdatering af user interface
-        private List<double> uiList;
+        //private List<double> uiList;
         private Logik logik;
         private int AutogenNR; //AutogeneretNR der skal tælles 1 op hver gang der trykkes på GEM-knappen.
         private double[] GUIArray;
+        private List<double> guiliste;
 
         public HovedGUI()
         {
@@ -49,7 +50,8 @@ namespace Blodtryksmålersystem
 
         private void updateChart()
         {
-            if (Chart.InvokeRequired)
+            guiliste = logik.UILISTE;
+            if (this.InvokeRequired)
             {
                 UpdateUICallback d = new UpdateUICallback(updateChart);
                 this.Invoke(d);
@@ -58,8 +60,7 @@ namespace Blodtryksmålersystem
             {
                 //if (uiList.Count > 500) //Vises først i chart når listen indeholder mere end 500 samples
                 {
-                    Chart.Series["Series1"].Points.Clear(); //Charts indeholder kun de 500 sidste samples
-                    Chart.Series["Series1"].Points.DataBindY(GUIArray); //De sidste 500 samples i listen vises i chart
+                    Chart.Series["Series1"].Points.DataBindY(guiliste); //De sidste 500 samples i listen vises i chart
                 }
             }
         }
@@ -93,5 +94,9 @@ namespace Blodtryksmålersystem
             // Indsæt igen når logiklag er implementeret
         }
 
+        public void UpdateChart()
+        {
+            updateChart();
+        }
     }
 }
