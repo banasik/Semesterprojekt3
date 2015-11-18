@@ -6,8 +6,10 @@
 	Version &    Dato &    Ansvarlig &    Beskrivelse\\[-1ex]
 	\midrule
 	0.1 &    03-11-2015 &    MB &    Oprettelse \\[-1ex]
-	0.2 &    10-11-2015 &    DHC, MB &    Start af skrivning, indsætning af billeder Hardware  \\[-1ex]
-	0.3 &  11-11-2015   &  DHC   &   Forstrækning  \\[-1ex]
+	0.2 &    10-11-2015 &    DHC, MB &     HW Start af skrivning, indsætning af billeder  \\[-1ex]
+	0.3 &  11-11-2015   &  DHC   &   HW Forstrækning  \\[-1ex]
+	0.4 & 18-11-2015 & ABH & HW rettelse af diagrammer \\[-1ex]
+	0.5 & 18-11-2015 & DHC, AJF & HW Forstrækning, modultest \\ [-1ex]  
 	
 	\label{version_Systemark}
 \end{longtabu}
@@ -45,14 +47,50 @@ I projektet skal der laves et 2. ordens lavpasfilter. Dette filter skal være et
 
 \subsection{Implementering}
 \subsubsection{Forstærkning}
-For at få den rette forstærkning har vi valgt at benytte operationsforstærkeren INA-114. Her kan transduceren sættes på med det differentieret signal. Under opbygning og modultestning vil det differentieret signal blive simuleret af Analog Discovery.
-For at få den rette forstærkning ændres der på den "indre" modstand ($ R_g $) til INA114.
- 
-For at imøde usikkerheden ved Analog Discovery, laves et lille kredsløb efter spændingsdeler princippet. Her bruges $ R_1=10k\Omega $ og $ R_2 = 1k\Omega $. Da vi kender det signal som skal ind i INA-114 og modstanden kan vi derved finde størrelsen af den spænding som skal sende fra Analog Discovery.
+For at få den rette forstærkning har vi valgt at benytte operationsforstærkeren INA-114. Her kan transduceren sættes på med det differentieret signal. Under opbygning og modultestning vil det differentieret signal blive simuleret af Analog Discovery. For at udregne den korrekte forstærkning bruger vi følsomheden fra transduceren og eksitationsspænding.
+Først udregnes det maksimale output:   
+\begin{equation}
+9V\cdot 250mmHg \cdot 5\cdot 10^{-5} uv/V/mmHg  = 11.25mV
+\end{equation} 
+Da det er besluttet at den maksimale indput til DQA'en er 5V, kan forstærkningen (G) nu udregnes. 
+\begin{equation}
+\begin{split}
+5V= 11.25mV \cdot G \\
+G = 444.44
+\end{split}
+\end{equation}
+For at få den rette forstærkning udregnes den "indre" modstand ($ R_g $) til INA114. Dette gøres ved formlen: 
+\begin{equation}
+\begin{split}
+G=1+\frac{50k\Omega}{R_g}\\
+444.44= 1+\frac{50k\Omega}{R_g} \Rightarrow R_g= 112.75 \Omega
+\end{split}
+\end{equation}
+Derved har vi nu en værdi for den indre modstand til INA114, som skaber den ønskede forstærkning.\\
+Det skal nu sikres at dette kan lade sig gøre. Derfor sikres det at den ønskede forstærkning kan ske ved båndbredden. Dette kan undersøges da produktet af forstærkning og båndbredde er en konstant. Konstanten aflæses i databladet. XX-reference til datasheet. 
+\begin{equation}
+\begin{split}
+1000000 Hz = G\cdot BW \\
+BW = 2250 Hz
+\end{split}
+\end{equation}
+Da båndbredden ligger over knækfrekvensen, fra lavpas filtret, er dette godkendt. Hvis båndbredde havde lagt under knækfrekvensen vil den ikke kunne arbejde med de rigtige frekvenser. \\
+\newline 
+For at imødekomme usikkerheden ved Analog Discovery ved små signaler, laves et lille kredsløb efter spændingsdeler princippet. Her bruges $ R_1=100k\Omega $ og $ R_2 = 1k\Omega $. Da vi kender signalet som skal ind i INA114 og modstanden, kan vi derved finde størrelsen af den spænding som skal sendes fra Analog Discovery.
  
 \begin{equation}
-U_{INA} = U_{analog} \cdot \frac{R_2}{R_1 + R_2} \Rightarrow 5mV = U_{analog}\cdot \frac{R_2}{R_1+R_2} \Rightarrow U_{analog}= 55mV
+\begin{split}
+U_{INA} = U_{analog} \cdot \frac{R_2}{R_1 + R_2} \\
+5mV = U_{analog}\cdot \frac{1k\Omega}{100k\Omega+1k\Omega}\\ \Rightarrow U_{analog}= 505mV
+\end{split}
 \end{equation} 
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=1.0\textwidth]{Figurer/diagram_over_HW}
+	\caption{Diagram over HW}
+	\label{fig:HW}
+\end{figure}
 
 \subsubsection{Lavpas}
 For at opnå den ønskede effekt i lavpasfilteret, blev det oplyst at $ f_c=50$ Hz, $ R_1 = R_2 $ og $ C_2=680 nF$. Ud fra det udregnes de resterende komponentværdier for filteret.  
@@ -84,6 +122,9 @@ Efter knækfrekvensen skal amplituden blive mindre og mindre(går mod nul). På 
 	\caption{Måling for 60 Hz}
 	\label{fig:maeling60Hz}
 \end{figure}
+
+\subsubsection{Kalibrering med vandsøjle}
+
 
 
 
