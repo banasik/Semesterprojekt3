@@ -3,11 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+//using DTO;
 
 namespace DTO
 {
-    public interface IObserver
+    public interface ISubject
     {
-        void UpdateChart();
+        void Attach(IObserver observer);
+
+        void Notify();
     }
 }

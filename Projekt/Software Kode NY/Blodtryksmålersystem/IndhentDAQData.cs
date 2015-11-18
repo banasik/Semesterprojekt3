@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
+//using System.Threading.Tasks;
 using System.ComponentModel;
 using NationalInstruments.DAQmx;
 using NationalInstruments;
@@ -129,7 +129,7 @@ namespace Data
             {
                 for (int sample = 0; sample < waveform.Samples.Count; ++sample)
                 {
-                    if (sample == 10)
+                    if (sample == 1)
                         break;
 
                     //dataTable.Rows[sample][currentLineIndex] = waveform.Samples[sample].Value;

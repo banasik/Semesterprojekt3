@@ -5,22 +5,32 @@ using System.Text;
 using System.Threading.Tasks;
 using Data;
 using System.Threading;
+using DTO;
 
 namespace LogikLag
 {
-    public class Logik : Subject
+    public class Logik : ISubject
     {
         private DatabaseAdgang Database = new DatabaseAdgang();
         private IndhentDAQData DAQdata = new IndhentDAQData();
         private Thread updateUI;
-        private List<double> uiList;
+        public List<double> uiList;
         private double[] array;
+        private List<IObserver> observers;
+             int counter;
 
         public Logik()
         {
             updateUI = new Thread(() => updateListe());
-            updateUI.Start();
+            //updateUI.Start();
             uiList = new List<double>();
+            observers = new List<IObserver>();
+            UILISTE = new List<double>();
+            counter = 0;
+            for (int i = 0; i < 774; i++)
+            {
+                UILISTE.Add(0);
+            }
         }
 
         public void StartTraad()
@@ -33,21 +43,29 @@ namespace LogikLag
             while (isRunningLogik())
             {
                 uiList = DAQdata.getList();
-
-                if(uiList.Count > 0)
+                List<double> xværdier = new List<double>();
+               
+                //if (uiList.Count > 0)
+                //{
+                //    for (int i = 0; i < 500; i++)
+                //    {
+                if (uiList.Count > 0 && counter < 774)
                 {
-                    for (int i = 0; i < 500; i++)
-                    {
-
-                        Notify(array);
-                    }
+                    UILISTE[counter] = (uiList[uiList.Count-1]);
+                    counter++;
+                    Notify();
+                }
+                if (counter == 774)
+                {
+                    counter = 0;
+                }
+                    //}
                     //Subject.Value = uiList;
                     //updateChart();
-                    Thread.Sleep(1);
-                }
+                    //Thread.Sleep(1);                
             }
         }
-
+        public List<double> UILISTE;
         public bool isRunningLogik()
         {
             return DAQdata.IsRunning();
@@ -72,6 +90,20 @@ namespace LogikLag
         public void gemData(string forsøgsnavn, int autogenereretNR, List<double> samplelist)
         {
             Database.gemData(forsøgsnavn, autogenereretNR, samplelist);
+        }
+
+        public void Attach(IObserver observer)
+        {
+            observers.Add(observer);
+        }
+
+        public void Notify()
+        {
+
+            foreach (IObserver obs in observers)
+            {
+                obs.UpdateChart();
+            }
         }
     }
 }
