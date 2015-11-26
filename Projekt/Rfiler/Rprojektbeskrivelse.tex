@@ -1,11 +1,41 @@
 \chapter{Projektbeskrivelse}
 \section{Projektgennemførelse}
+Projektet startede med, at der blev lavet en tidsplan, som var mulig at ændre undervejs, dog med faste deadlines, som skulle overholdes. Projektgruppen har været på 6 medlemmer, som er blevet delt ind i 2 mindre grupper. Den ene gruppe havde ansvaret for softwareudviklingen, mens den anden gruppe havde ansvaret for udarbejdelsen af hardware. Der har været projektmøde hver uge, hvor gruppen har opdateret hinanden og rettet tidsplanen, som ses i bilag XX, hvis det var nødvendigt.\\
+\newline 
+Dette projekt er gennemført vha. forskellige udviklingsprocessor, hvilket er med til at sikre kvalitet, og at deadlines overholdes. En af disse modeller er ASE-modellen. Denne model er en udviklingsmodel, der er udarbejdet af Aarhus Ingeniørhøjskole. Modellen er en semi-iterativ udviklingsproces drevet ud fra projektets Use Cases. Modellen er benyttet på den måde, at gruppemedlemmerne fastlægger en problemformulering, kravspecifikation og systemarkitektur, for derefter at designe og implementere de enkelte hardware og software dele hver for sig i sin iteration. Gennem en integrations test ses det om hardware og software delene fungere samlet.  
+Dette ender til slut med en gennemført accepttest, således at det testes om systemet lever op til kravene og der opnås en enighed mellem projektmedlemmer og forsker.
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.8\textwidth]{Figurer/AseModellen}
+	\caption{ASE-modellen}
+	\label{fig:ASE_model}
+\end{figure}
+For at forstå ASE-modellen er det vigtigt at gennemgå Use Cases; et værktøj som skal beskrive interaktioner mellem diverse aktører og selve systemet. Sammen med de ikke-funktionelle krav opnås et overblik over hvilke funktionalitetskrav, der stilles til systemet. På baggrund af kravspecifikationen kan accepttesten efterfølgende udarbejdes. I dette projekt er hardware- og software design implementering på lige fod, da projektet består af begge ting ligeligt.\\
+\newline
+V-modellen er en faseopdelt udviklingsmodel, der også er værd at nævne i dette projekt. Den beskriver udviklingsfaserne og testfaserne sideløbende i forhold til projektet, og den er derfor benyttet til dette projekt sideløbende med ASE-modellen. Modellen fungerer således, at specifikationen af test foregår parallelt med udviklingen af selve systemet.
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.6\textwidth]{Figurer/VModellen}
+	\caption{V-model}
+	\label{fig:V_Modellen}
+\end{figure}
+Den er blevet benyttet til hardware og software udviklingen. Hardware og software skulle begge teste deres funktioner inden nye faser blev igangsat, for at verificere om disse funktioner virkede korrekt gennem forløbet. Fordelen ved at teste på forskellige niveauer er, at det skal sikre de udviklede delsystemer, således at de virker som planlagt. Det er vigtigt, at hver fase er udført, før den næste fase påbegyndes. 
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.4\textwidth]{Figurer/VandfaldsModellen}
+	\caption{Vandfalds modellen}
+	\label{fig:vandfalds_model}
+\end{figure}
+Vandfaldsmodellen er også blevet benyttet under dette projekt. Softwareudviklingen bærer præg af vandfaldsmodellen, da udviklingen er opdelt i faser, hvor hver fase er blevet gennemført, før den næste er påbegyndt. Dette er i relation til V-modellen, som blev beskrevet før og den er, som vist på figur XX, konstant strømmende nedad. 
+
+
+
 \section{Projektstyring}
 
 \section{Metoder}
-Til at kunne overskue arkitekture og designet af projektet, er flere forskellige arbejdsmetoder benyttet for at skabe det bedst mulige resultat. 
+Til at kunne overskue arkitektur og designet af projektet, er flere forskellige arbejdsmetoder benyttet for at skabe det bedst mulige resultat. 
 For at finde, hvad blodtryksmåleren skal gøre, er der blevet udarbejdet Use Cases. Disse beskriver systemet funktionalitet. Use Cases viser, hvad brugeren skal opleve fra systemet, men ikke, hvordan det sker. I Use Case diagrammet bliver det også vist, hvilke aktører der findes og hvordan de interagerer med systemet.   \\
-I projektet bruges accepttest til at teste blodtryksmåleren. Dette gøres ud fra kravspecifikationerne, hvor det er angivet, hvilke krav der er til systemet. \\Accepttesten er en test, hvor der beskrives, hvad der skal ske og, hvad brugeren skal gøre. Testen er for at undersøge om produktet opfylder de krav som der er blevet sat for det. Accepttesten giver et godt overblik for udvikleren og for kunden, der nemt og hurtigt kan se om produktet virker som det skal. \\
+I projektet bruges accepttest til at teste blodtryksmåleren. Dette gøres ud fra kravspecifikationerne, hvor det er angivet, hvilke krav der er til systemet. \\Accepttesten er en test, hvor der beskrives, hvad der skal ske og, hvad brugeren skal gøre. Testen er for at undersøge om produktet opfylder de krav, som der er blevet sat for det. Accepttesten giver et godt overblik for udvikleren og for kunden, der nemt og hurtigt kan se om produktet virker som det skal. \\
 \newline
 Til  beskrivelse af design af software og hardware er diagrammer og skemaer blevet udarbejdet i SysML og UML. SysML er et grafisk modelleringssprog, som kan bruges til at overskueliggøre systemer. \\
 Til software er der blandt andet lavet en applikationsmodel i SysML, som består af et domæne-, klasse- og sekvensdiagram. \\
@@ -38,7 +68,7 @@ Gennem projektarbejdet har vi anvendt en række forskellige værktøjer til udvi
 
 \textbf{Visual Studio 2013}
 
-Softwaredelen af projektets programmering er skrevet i sproget C-sharp. Her er Visual Studio 2013 anvendt som kompiler, da programmet gør det nemt at omskrive tekst til kode. Visual Studio 2013 indeholder også funktionen Windows Form Application, der visuelt kan fremstillede de ønskede resultater i form af knapper, grafer og labels mv. i en samlet brugergrænseflade, som aktøren interagerer med. 
+Softwaredelen af projektets programmering er skrevet i sproget C-sharp. Her er Visual Studio 2013 anvendt som kompiler, da programmet gør det nemt at omskrive tekst til kode. Visual Studio 2013 indeholder også funktionen Windows Form Application, der visuelt kan fremstille de ønskede resultater i form af knapper, grafer og labels mv. i en samlet brugergrænseflade, som aktøren interagerer med. 
 
 \textbf{Microsoft Visio 2016}
 
@@ -46,7 +76,7 @@ Microsoft Visio er et tegne værktøj, der i dette projekt er anvendt til at des
 
 \textbf{Analog Discovery og Waveform fra Digilent}
 
-Analog Discovery og waveform er i projektet benyttes som omformer og signal generator under testfasen. Her fungerer Analog Discovery som en waveform generator, så et analog signal kan sendes videre ind i lavpasfiltret, forstærkeren og derefter ind i DAQ’en. I den endelig implementering erstattes Analog Discovery og Waveform med transduceren. 
+Analog Discovery og Waveform er i projektet benyttet som omformer og signal generator under testfasen. Her fungerer Analog Discovery som en Waveform generator, så et analog signal kan sendes videre ind i lavpasfiltret, forstærkeren og derefter ind i DAQ’en. I den endelig implementering erstattes Analog Discovery og Waveform med transduceren. 
 
 \textbf{NI-DAQmx}
 
@@ -54,14 +84,14 @@ NI-DAQmx er et værktøj udarbejdet af National Instruments, som anvendes til at
 
 \textbf{LaTeX}
 
-LaTeX er anvendt i projektet til design og opsætning af projektrapport og projektdokumentation. LaTeX er god til tekstformatering, hvor opsætning og strukturer defineres samlet for hele en rapport, samt god til versionsstyring. Til at skrive selve koden benyttes programmet TeX-maker som kombiler. 
+LaTeX er anvendt i projektet til design og opsætning af projektrapport og projektdokumentation. LaTeX er god til tekstformatering, hvor opsætning og strukturer defineres samlet for hele rapport, samt god til versionsstyring. Til at skrive selve koden benyttes programmet TeX-maker som kombiler. 
 
 \section{Opnåede resultater}
 \section{Perspektivering - Fremtidigt arbejde}
-I fremtiden vil blodtryksmåleren kunne udviges gennem flere muligheder. Da blodtryksmåleren er lavet til forskningsbrug, er der ingen idé i at udvide mod patienter.  En forlængelse af systemet kunne derimod være en metode, som skal kunne vise gemte målinger. \newline Et log-in vindue er en anden ting som kunne forbedre systemet, for på den måde at skabe større sikkerhed for forskeren og dataen. Et log-in vindue vil gøre at, en forsker kan være sikker på at hans målinger og forskning ikke kan tilgås af andre. Det kræver en større udvidelse, hvor der skal laves et log-in vindue og en database, hvor password og brugernavn gemmes. Der skal også laves en metode, som kan tjekke om det indtastede password og brugernavn passer over ens med det i databasen. 
+I fremtiden vil blodtryksmåleren kunne udvides gennem flere muligheder. Da blodtryksmåleren er lavet til forskningsbrug, er der ingen idé i at udvide mod patienter.  En forlængelse af systemet kunne derimod være en metode, som skal kunne vise gemte målinger. \newline Et log-in vindue er en anden ting, som kunne forbedre systemet, for på den måde at skabe større sikkerhed for forskeren og dataen. Et log-in vindue vil gøre at, en forsker kan være sikker på at hans målinger og forskning ikke kan tilgås af andre. Det kræver en større udvidelse, hvor der skal laves et log-in vindue og en database, hvor password og brugernavn gemmes. Der skal også laves en metode, som kan tjekke om det indtastede password og brugernavn passer over ens med det i databasen. 
 \newline
 Generelt skal de standarter, som findes for blodtryksmålere undersøges grundigere. Specielt brugergrænsefladen, men også resten af systemet som enheder og visning af graf, skal rettes til efter de passende standarter.
 \newline 
-Hvis systemet ydeligere skulle tilpasses forskning.  Det kunne være gennem en bedre navngivning af data i tabelle eller et bedre overblik over, hvordan data bliver gemt fx gennem en liste for de gemte målinger. På den måde vil det blive nemmere for forskeren at finde frem til gamle målinger.   
+Hvis systemet ydeligere skulle tilpasses forskning, kunne det gøres gennem en bedre navngivning af data i tabellen eller et bedre overblik over, hvordan data bliver gemt f.eks. gennem en liste for de gemte målinger. På den måde vil det blive nemmere for forskeren at finde frem til gamle målinger.   
 \newline 
-I forhold til Hardware er målet, at det hele skal samles i en kasse. Så det på den måde ikke er muligt at ændre eller stille ved det. Derved skal filteret og forstærkningen laves på en printplade. Samtidigt skal det ved kassen være en plads til batterierne, hvor det er muligt at kunne skifte dem, når nødvendigt. Derved fås en kassen, som nemt kan flyttes rundt på og som ikke er i farer for at gå i stykker.   
+I forhold til hardware er målet, at det hele skal samles i en kasse. Så det på den måde ikke er muligt at ændre eller stille ved det. Derved skal filteret og forstærkningen laves på en printplade. Samtidigt skal det ved kassen være en plads til batterierne, hvor det er muligt at kunne skifte dem, når nødvendigt. Derved fås en kasse, som nemt kan flyttes rundt på og som ikke er i fare for at gå i stykker.   
