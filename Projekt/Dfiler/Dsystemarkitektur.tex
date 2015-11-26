@@ -7,10 +7,12 @@
 	\midrule
 	0.1 &    03-11-2015 &    MB &    Oprettelse \\[-1ex]
 	0.2 &    10-11-2015 &    DHC, MB &     HW Start af skrivning, indsætning af billeder  \\[-1ex]
-	0.3 &  11-11-2015   &  DHC   &   HW Forstrækning  \\[-1ex]
+	0.3 &  11-11-2015   &  DHC   &   HW Design Forstrækning  \\[-1ex]
 	0.4 & 18-11-2015 & ABH & HW Rettelse af diagrammer \\[-1ex]
-	0.5 & 18-11-2015 & DHC, AJF & HW Forstrækning, Modultest \\ [-1ex]
-	0.6 & 26-11-2015 & DHC & HW Modultest, Kalibrering ved vandsøjle \\ [-1ex]  
+	0.5 & 18-11-2015 & DHC, AJF & HW Implementering Forstrækning, Modultest Lavpas \\ [-1ex]
+	0.6 & 18-11-2015 & ABH & SW Design, Metodeidentifikation \\[-1ex]
+	0.7 & 26-11-2015 & DHC & HW Modultest, Kalibrering ved vandsøjle \\ [-1ex]
+	0.8 & 26-11-2015 & DHC, AJF & HW Design Lavpas \\ [-1ex] 
 	
 	\label{version_Systemark}
 \end{longtabu}
@@ -29,7 +31,7 @@ Systemets hardware kan illustreres i et BBD. Det ses at nedenstående figur at s
 	%\label{fig:BDD viser blodtrykssystemets hardwaredele, samt sammenhængen mellem disse}
 \end{figure}
 
-Ovenstående BDD-diagram fører videre til udarbejdelsen af IBD for hardware komponenterne. I dette diagram vises koblingen mellem de forskellige blokke gennem port forbindelser.  Det ses at signalet starter ved transduceren, hvorefter det bliver behandlet gennem forstærker, filter og DAQ. Til sidste sendes det ind i software systemet, som bliver påvirket at tryk på knapper på GUI. 
+Ovenstående BDD-diagram fører videre til udarbejdelsen af IBD for hardware komponenterne. I dette diagram vises koblingen mellem de forskellige blokke gennem port forbindelser.  Det ses at signalet starter ved transduceren, hvorefter det bliver behandlet gennem forstærker, filter og DAQ. Til sidste sendes det ind i software systemet, som bliver påvirket af tryk på knapper på GUI. 
 
 \begin{figure}[H]
 	\centering
@@ -39,23 +41,26 @@ Ovenstående BDD-diagram fører videre til udarbejdelsen af IBD for hardware kom
 \end{figure}
 
 \subsubsection{Forstærkning}
-Transduceren måler en trykændring som den omsætter til en spænding. Dette er udtrykt ved et differentieret signal, som sendes ind i forstærkning-blokken. Da signalet fra transduceren ligger i et interval på 0 - 11.28 mV,  skal dette forstærkes op så det passer med NI-DAQ. I projektet er det valgt at DAQ'ens input skal ligge mellem 0-5V. Derved skal signalet forstærkes: 
-\begin{equation}
-11.28mV\cdot x = 5 V \Rightarrow x= 443
-\end{equation}
-Under simulering bruges Analog Discovery som en funktionsgenerator, der simulere det differentieret signal. Analog Discovery har dog en vis usikkerhed, når der arbejdes med små spændinger. Dette kan modarbejdes med en spændingsdeler, hvor der bygges et kredsløb som ligger før selve forstærkningen. Dette gør at Analog Discovery kan sende en højere spænding, som gør det mindre igen ved spændingsdeler princippet.  
+Transduceren måler en trykændring som den omsætter til en spænding. Dette er udtrykt ved et differentieret signal, som sendes ind i forstærkning-blokken. Da signalet fra transduceren er en lav spænding, skal det forstærkes op, for at det passer med DAQ'ens input. Denne forstærkning skal udregnes ud fra det maksimale output fra transduceren og det maksimale input til DAQ'en. Se under Implementering.  
+
+Under simulering bruges Analog Discovery som en funktionsgenerator, der simulere det differentieret signal. Analog Discovery har en usikkerhed, når der arbejdes med små spændinger. Dette kan modarbejdes vha. spændingsdeler princippet. Dette gør at Analog Discovery kan sende en højere spænding ind i systemet, så usikkerheden mindskes.  
 
 \subsubsection{Lavpas}
-I projektet skal der laves et 2. ordens lavpasfilter. Dette filter skal være et Salen-Key Buttenworth-filter, med en knækfrekvens på 50 Hz. 
+I projektet skal der laves et 2. ordens lavpasfilter. Filteret skal laves for at sikre, at der ikke opstår aliasering. Det sikre derfor at der ikke er noget signal ved den halve samplingsfrekvens.\\
+Aliasering  REFERENCE (DSB-bogen)er, hvor signalet bliver gentaget. Når man har signalet i det digitale domæne, bliver spektret for signalet en periodisk funktion. Det vil sige, at den gentager sig selv, efter et bestemt stykke tid. \\
+Det skal sikres, at der ikke kommer overlap mellem signalet og et alias. Da det ellers kunne give anledning til misforståelser. Derfor laves et lavpasfilter som sikre at der ikke ligger noget signal ved den halve samplingsfrekvens. Signalet her kan med fordel gøre så lille at DAQ'en ikke kan læse det, dvs. signalet skal være mindre end $ 1/2 \cdot LSB $ (Least Significant Bit).    
+\newline  
+Lavpasfilteret skal være et Sallen-Key Butterworth-filter med en knækfrekvens på 50 Hz og en samplingsfrekvens på 1kHz. Ud fra oplysninger givet til projektet, vides det at filteret skal dæmpe signalet med 20 dB, under antagelse af at den forekommende støj er mindre end signalet, også når det  forekommer over knækfrekvensen.\\
+Ved en typisk blodtryksmåling forekommer der ikke signal over 50 Hz, samtidigt er signalet her aftaget med ca. 70 dB. For at få signalet, ved den halve samplingsfrekvens til at være $ 1/2 \cdot LSB $, skal det ydeligere dæmpes 20 dB. Derfor oplyses filterets til at være 50 Hz, da dette giver en minimums dæmpning på 20 dB pr. dekade.
 
 \subsection{Implementering}
 \subsubsection{Forstærkning}
-For at få den rette forstærkning har vi valgt at benytte operationsforstærkeren INA-114. Her kan transduceren sættes på med det differentieret signal. Under opbygning og modultestning vil det differentieret signal blive simuleret af Analog Discovery. For at udregne den korrekte forstærkning bruger vi følsomheden fra transduceren og eksistationsspænding.
-Først udregnes det maksimale output:   
+For at få den rette forstærkning er det blevet valgt at benytte operationsforstærkeren INA-114. Her kan transduceren sættes på med det differentieret signal. Under opbygning og modultestning vil det differentieret signal blive simuleret af Analog Discovery. For at udregne den korrekte forstærkning bruges følsomheden fra transduceren og eksistationsspændingen.
+Først udregnes det maksimale output fra transduceren:   
 \begin{equation}
 9V\cdot 250mmHg \cdot 5\cdot 10^{-5} uv/V/mmHg  = 11.25mV
 \end{equation} 
-Da det er besluttet at den maksimale input til DAQ'en er 5V, kan forstærkningen (Gain) nu udregnes. 
+Da det er besluttet at den maksimale input til DAQ'en er 5V, kan forstærkningen (Gain) nu udregnes: 
 \begin{equation}
 \begin{split}
 5V= 11.25mV \cdot G \\
@@ -77,16 +82,16 @@ Det skal nu sikres at dette kan lade sig gøre. Derfor sikres det, at den ønske
 BW = 2250 Hz
 \end{split}
 \end{equation}
-Da båndbredden ligger over knækfrekvensen for lavpasfiltret, er dette godkendt. Hvis båndbredde havde lagt under knækfrekvensen vil operationsforstærkeren ikke kunne arbejde med de ønskede frekvenser. Det er vigtigt at båndbredden er bred nok til at kunne indeholde frekvenser fra begge side af knækfrekvensen.\\
+Da båndbredden ligger over knækfrekvensen for lavpas filtret, er dette godkendt. Hvis båndbredde havde lagt under knækfrekvensen vil operationsforstærkeren ikke kunne arbejde med de ønskede frekvenser. Det er vigtigt at båndbredden er bred nok til at kunne indeholde frekvenser fra begge side af knækfrekvensen.\\
 \newline 
 For at imødekomme usikkerheden ved Analog Discovery ved små signaler, laves et kredsløb efter spændingsdeler princippet. Signalet fra Analog Discovery skal sende igennem dette kredsløb, hvor de efter spændingsdeler princippet gøres mindre. I kredsløbet bruges $ R_1=100k\Omega $ og $ R_2 = 1k\Omega $. Da vi kender signalet som skal ind i INA114 og modstandene i kredsløbet, kan størrelsen af den spænding som skal sendes fra Analog Discovery findes:
  \begin{equation}
 \begin{split}
 U_{INA} = U_{analog} \cdot \frac{R_2}{R_1 + R_2} \\
-5mV = U_{analog}\cdot \frac{1k\Omega}{100k\Omega+1k\Omega}\\ \Rightarrow U_{analog}= 505mV
+5mV = U_{analog}\cdot \frac{1k\Omega}{100k\Omega+1k\Omega} \Rightarrow U_{analog}= 505mV
 \end{split}
 \end{equation} 
-Derved kan Analog Discovery sende nogle større signaler ud og derved mindskes usikkerheden. Der er taget højde for at, hvis modstandene i kredsløbet bliver for store, vil det skabe en termisk usikkerhed. Derfor er modstandene valgt som de er.  
+Derved kan Analog Discovery sende nogle større signaler ud og usikkerheden mindskes. Der er taget højde for at, hvis modstandene i kredsløbet bliver for store, vil det skabe en termisk usikkerhed. Derfor er modstandene valgt som de er.  
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=1.0\textwidth]{Figurer/diagram_over_HW}
@@ -95,7 +100,8 @@ Derved kan Analog Discovery sende nogle større signaler ud og derved mindskes u
 \end{figure}
 
 \subsubsection{Lavpas}
-For at opnå den ønskede effekt i lavpasfilteret, blev det oplyst at $ f_c=50$ Hz, $ R_1 = R_2 $ og $ C_2=680 nF$. Ud fra det udregnes de resterende komponentværdier for filteret.  
+For at opnå den ønskede effekt i lavpasfilteret, blev det oplyst at $ f_c=50$ Hz, $ f_s = 1$kHz, $ R_1 = R_2 $ og $ C_2=680 nF$. Ud fra det udregnes de resterende komponentværdier for filteret.
+  
 
 
 \subsection{Modultest}
