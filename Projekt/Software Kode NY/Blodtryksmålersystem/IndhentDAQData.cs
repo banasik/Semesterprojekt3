@@ -72,7 +72,7 @@ namespace Data
 
                     // Configure the timing parameters
                     myTask.Timing.ConfigureSampleClock("", Convert.ToDouble(1000),
-                        SampleClockActiveEdge.Rising, SampleQuantityMode.ContinuousSamples, 1000);
+                        SampleClockActiveEdge.Rising, SampleQuantityMode.ContinuousSamples, 10);
 
                     // Verify the Task
                     myTask.Control(TaskAction.Verify);

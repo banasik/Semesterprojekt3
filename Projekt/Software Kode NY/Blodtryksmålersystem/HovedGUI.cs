@@ -23,11 +23,14 @@ namespace Blodtryksmålersystem
         private int AutogenNR; //AutogeneretNR der skal tælles 1 op hver gang der trykkes på GEM-knappen.
         private double[] GUIArray;
         private List<double> guiliste;
+        private Analyse systole;
+        double SysVærdi;
 
         public HovedGUI()
         {
             InitializeComponent();
             logik = new Logik();
+            systole = new Analyse();
             GUIArray = new double[500];
             logik.Attach(this);
            // dt = new IndhentDataDAQ(); //Flyttes til Logik
@@ -61,8 +64,10 @@ namespace Blodtryksmålersystem
                 //if (uiList.Count > 500) //Vises først i chart når listen indeholder mere end 500 samples
                 {
                     Chart.Series["Series1"].Points.DataBindY(guiliste); //De sidste 500 samples i listen vises i chart
+                    UpdateSys();
                 }
             }
+            
         }
 
         private void StartKnap_Click(object sender, EventArgs e)
@@ -97,6 +102,15 @@ namespace Blodtryksmålersystem
         public void UpdateChart()
         {
             updateChart();
+        }
+
+        private void UpdateSys()
+        {
+            textSys.Text = Convert.ToString(systole.Systolisk());
+        }
+        private void textSys_TextChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

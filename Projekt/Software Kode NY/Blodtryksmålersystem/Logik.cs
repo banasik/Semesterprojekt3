@@ -15,9 +15,8 @@ namespace LogikLag
         private IndhentDAQData DAQdata = new IndhentDAQData();
         private Thread updateUI;
         public List<double> uiList;
-        private double[] array;
         private List<IObserver> observers;
-             int counter;
+        int counter;
 
         public Logik()
         {
@@ -27,7 +26,7 @@ namespace LogikLag
             observers = new List<IObserver>();
             UILISTE = new List<double>();
             counter = 0;
-            for (int i = 0; i < 774; i++)
+            for (int i = 0; i <799; i++)
             {
                 UILISTE.Add(0);
             }
@@ -49,13 +48,13 @@ namespace LogikLag
                 //{
                 //    for (int i = 0; i < 500; i++)
                 //    {
-                if (uiList.Count > 0 && counter < 774)
+                if (uiList.Count > 0 && counter < 800)
                 {
                     UILISTE[counter] = (uiList[uiList.Count-1]);
                     counter++;
                     Notify();
                 }
-                if (counter == 774)
+                if (counter == 799)
                 {
                     counter = 0;
                 }
@@ -104,6 +103,17 @@ namespace LogikLag
             {
                 obs.UpdateChart();
             }
+        }
+
+        private void Kalibrering()
+        {
+            double værdi1;
+            double værdi2;
+            double værdi3;
+            double voltVærdi;
+
+          
+
         }
     }
 }
