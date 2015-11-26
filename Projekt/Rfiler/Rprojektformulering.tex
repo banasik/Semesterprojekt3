@@ -1,37 +1,35 @@
 \chapter{Projektformulering og afgrænsning}
 I daglig klinisk praksis er der ofte behov for kontinuert at monitorere patienters blodtryk, i særdeleshed på intensive afdelinger samt operationsstuer, hvor blodtrykket er en vigtig parameter i monitorering af deres helbredstilstand.
 
-<<<<<<< HEAD
+
 Denne kontinuere monitorering er også nødvendig i forskningsverdenen. Det er i forskerens interesse at kunne måle blodtrykket på et objekt, med f.eks. en mekanisk hjerteklap. Her skal det være muligt for forskeren at kunne aflæse diastole, systole og puls samt en pæn kurve over blodtrykket. Det er vores mål at opbygge et produkt, der kan tage de målinger der kommer fra tryktransduceren i volt og forstærke samt filtrere signalet med fysiske komponente. Dette signal skal derefter konverteres fra analogt til digitalt. Herfra skal vi programmere en brugergrænseflade, der fremføre disse målinger samt gør det muligt for forskeren at gemme målingen i en database, til senere brug. Resultatet bliver et elektronisk kredsløb med forbindelse til et software program.
 For at de gemte data kan sammenlignes, kræver det at de alle er blevet gemt med samme forudsætning, dvs. at målingerne er blevet kalibreret og nulpunktsjusteret. Dette bliver ordnet i programmeringen med indbyggede beregninger. Når forskeren kigger på blodtryksgrafen, vil han normalt se på et filtreret signal. I tilfælde af at det er i hans interesse at se på et ufilteret signal, vil dette være muligt, ved et tryk på en knap.
 
 \textbf{MoSCoW}
 \textit{Must}
 \begin{itemize}
-\item Et elektronisk kredsløb, som forstærker signalet fra trykstranduceren og filtrerer det med ét indbygget analogt filter
+\item Et elektronisk kredsløb, som forstærker signalet fra tryktranduceren og filtrerer det med ét indbygget analogt filter
 \item Et program til at vise blodtrykket som funktion af tiden. Programmet skal opfylde en række obligatoriske krav. Det skal kunne:
 \end{itemize}
 \begin{itemize}
-\item Programmeres i C#.
+\item Programmeres i C\#
 \item Kunne kalibrere blodtrykssignalet og foretage en nulpunktsjustering
 \item Vise blodtrykssignalet kontinuert
-\item Kunne lagde de målte data i en database.
+\item Kunne gemme de målte data i en database
 \item Kunne filtrere blodtrykket i selve programmet via et digitalt filter, dette skal kunne slås til og fra (monitor = filtreret og afundet signaldiagnose mode = råt signal med alle udsving)
-\item Afbildning af systolisk/diastolisk blodtryk med tal.
+\item Afbildning af systolisk/diastolisk blodtryk med tal
 \end{itemize}
 \textit{Should}
 \begin{itemize}
-\item Alamering hvis blodtrykket overstiger indbyggede grænseværdier.
+\item Alamering hvis blodtrykket overstiger indbyggede grænseværdier
 \end{itemize}
 \textit{Could}
 \begin{itemize}
-\item Hardware skal bestå af ét print med indbyggede komponenter.
-\item Forskeren skal kunne hente de gemte data ned igen.
+\item Hardware skal bestå af ét print med indbyggede komponenter
+\item Forskeren skal kunne hente de gemte data ned igen
 \end{itemize}
-=======
-Denne kontinuere monitorering er også nødvendig i forskningsverdenen. Det er i forskerens interesse at kunne måle blodtrykket på et objekt, med f.eks. en mekanisk hjerteklap. Her skal det være muligt for forskeren at kunne aflæse diastole, systole og puls samt en pæn kurve over blodtrykket. Det er vores mål at opbygge et produkt, der kan tage de målinger der kommer fra tryktransduceren i volt og forstærke samt filtrere dem med fysiske komponente. Dette signal skal derefter konverteres fra analogt til digitalt. Herfra skal vi programmere en brugergrænseflade, der fremfører disse målinger samt gør det muligt for forskeren at gemme målingen i en database, til senere brug. Resultatet bliver et elektronisk kredsløb med forbindelse til et software program.
-For at de gemte data kan sammenlignes, kræver det at de alle er blevet gemt med samme forudsætning. Dette bliver ordnet i programmeringen med beregninger. Når forskeren kigger på blodtryksgrafen, er det hans interesse at vælge om målingen skal være filtreret eller ej. Dette er implementeret i programmering. 
->>>>>>> origin/master
+ 
+
 \subsubsection{Ansvarsområder}
 
 Idet gruppens størrelse ikke lægger op til samlet, at arbejde på alle dele på samme tid, er projektets ansvarsområder blevet fordelt som følgende:
@@ -43,7 +41,7 @@ Idet gruppens størrelse ikke lægger op til samlet, at arbejde på alle dele p�
     Albert Jakob Fredshavn &   Hardwaredesign, dokumentation	&    \\
     Martin Banasik         &   Hardwaredesign, dokumentation	&    \\
     Johan Mathias Munk     &   Softwaredesign, algoritmeopbygning, dokumentation &    \\
-    Mette Hammer Nielsen-Kudsk  &   Softwaredesign, algoritmeopbygning, dokumentation	&    \\
+    Mette Hammer Nielsen-Kudsk &   Softwaredesign, algoritmeopbygning, dokumentation &    \\
    	Anne Hoelgaard    &   Softwaredesign, algoritmeopbygning, dokumentation	&    \\
 \label{version_Systemark}
 \end{longtabu}
