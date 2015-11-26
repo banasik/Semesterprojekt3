@@ -21,7 +21,7 @@ I det følgende beskrives arkitekturen for systemet. Systemarkitekturen er vores
 
 Systemets hardware kan illustreres i et BBD. Det ses at nedestående figur at systemet består af fem hardware blokke: software system, forstærker, filter, DAQ og transducer. Disse fem blokke udgør til sammen selve blodtryksmåleren.  
 	
-\begin{figure}[htb]
+\begin{figure}[H]
 	\centering
 	\includegraphics[width=1.0\textwidth]{Figurer/BDD}
 	\caption{Block Definition Diagram for hardware}
@@ -30,7 +30,7 @@ Systemets hardware kan illustreres i et BBD. Det ses at nedestående figur at sy
 
 Ovenstående BDD-diagram fører videre til udarbejdelsen af IBD for hardware komponenterne. I dette diagram vises koblingen mellem de forskellige blokke gennem port forbindelser.  Det ses at signalet starter ved transduceren, hvorefter det bliver behandlet gennem forstærker, filter og DAQ. Til sidste sendes det ind i software systemet, som bliver påvirket at tryk på knapper på GUI. 
 
-\begin{figure}[htb]
+\begin{figure}[H]
 	\centering
 	\includegraphics[width=1.0\textwidth]{Figurer/IBD}
 	\caption{Infernal Block Diagram for hardware}
@@ -104,21 +104,21 @@ For at opnå den ønskede effekt i lavpasfilteret, blev det oplyst at $ f_c=50$ 
 For at teste lavpasfilteret foretages målinger med en sinus, hvor frekvensen variere for hver måling. Derved aflæses fasen, mellem indgang- og udgangssignal, og amplituden for hver måling. 
 Ved knækfrekvensen skal fasendrejningen være 90\textdegree. Amplituden skal ændre sig XXX. Dette kan aflæses på billedet Måling for 50 Hz.
 Efter knækfrekvensen skal amplituden blive mindre og mindre(går mod nul). På Måling for 60 Hz, kan det ses hvordan amplituden er faldet drastisk efter knækfrekvensen.  \\
-\begin{figure}[htb]
+\begin{figure}[H]
 	\centering
 	\includegraphics[width=1.0\textwidth]{Figurer/10Hz}
 	\caption{Måling for 10 Hz}
 	\label{fig:maeling10Hz}
 \end{figure}
 
-\begin{figure}[htb]
+\begin{figure}[H]
 	\centering
 	\includegraphics[width=1.0\textwidth]{Figurer/50Hz}
 	\caption{Måling for 50 Hz}
 	\label{fig:maeling50Hz}
 \end{figure}
 
-\begin{figure}[htb]
+\begin{figure}[H]
 	\centering
 	\includegraphics[width=1.0\textwidth]{Figurer/60Hz}
 	\caption{Måling for 60 Hz}
@@ -126,8 +126,26 @@ Efter knækfrekvensen skal amplituden blive mindre og mindre(går mod nul). På 
 \end{figure}
 
 \subsubsection{Kalibrering med vandsøjle}
-
-
+Efter at forstærkning og lavpas er blevet testet hver for sig, udføres en kalibrering ved en vandsøjle. Her bruges en udleveret vandsøjle med tre målepunkter, hvor det er angivet hvor højt trykket er ved hver i millimeter kviksølv. Derved kan det testes om hareware-delen måler den rigtige spænding i forhold til millimeter kviksølv. Ud fra den maksimale spænding og millimeter kviksølv kan det udregnes, hvad hardware skal vise ved 100 mmHg. 
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.3\textwidth]{Figurer/graf_vandtest}
+	\caption{Graf til kalibrering, fra udregninger}
+	\label{fig:graf_vandtest}
+\end{figure}
+Testen udføres ved, at der fyldes vand i søjlen til et bestemt punkt. Transduceren skal være tilkoblet et af de tre målepunkter, mens de andre er lukket til. Transduceren er sat til forstærkningen, der hvor Analog Discovery tidligere har været sat til. Transduceren er tilkoblet 0-9V, ved batterierne. På samme måde som ved simuleringen aflæses målingen på computeren ved hjælp af programmet WaveForms. Da det vides hvilken trykændring der måles på, ved vi fra grafen til kalibreringen, hvilken spænding den skal vise. Dette fortages for de tre målepunkter på vand søjlen, hvor hver målingen sammenlignes med den udregnet graf. For hver gang, skal transduceren flyttes til et af de andre målepunkter.  
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.2\textwidth]{Figurer/vandtest3}
+	\caption{Opstilling}
+	\label{fig:vandtest}
+\end{figure} 
+Test resultater.. 
+\begin{figure}[H]
+	\centering	\includegraphics[width=1.0\textwidth]{Figurer/vandtest}
+	\caption{Måling}
+	\label{fig:vandtest_måling}
+\end{figure} 
 
 
 \section{Software}
