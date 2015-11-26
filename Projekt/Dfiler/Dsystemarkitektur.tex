@@ -8,8 +8,9 @@
 	0.1 &    03-11-2015 &    MB &    Oprettelse \\[-1ex]
 	0.2 &    10-11-2015 &    DHC, MB &     HW Start af skrivning, indsætning af billeder  \\[-1ex]
 	0.3 &  11-11-2015   &  DHC   &   HW Forstrækning  \\[-1ex]
-	0.4 & 18-11-2015 & ABH & HW rettelse af diagrammer \\[-1ex]
-	0.5 & 18-11-2015 & DHC, AJF & HW Forstrækning, modultest \\ [-1ex]  
+	0.4 & 18-11-2015 & ABH & HW Rettelse af diagrammer \\[-1ex]
+	0.5 & 18-11-2015 & DHC, AJF & HW Forstrækning, Modultest \\ [-1ex]
+	0.6 & 26-11-2015 & DHC & HW Modultest, Kalibrering ved vandsøjle \\ [-1ex]  
 	
 	\label{version_Systemark}
 \end{longtabu}
@@ -49,44 +50,43 @@ I projektet skal der laves et 2. ordens lavpasfilter. Dette filter skal være et
 
 \subsection{Implementering}
 \subsubsection{Forstærkning}
-For at få den rette forstærkning har vi valgt at benytte operationsforstærkeren INA-114. Her kan transduceren sættes på med det differentieret signal. Under opbygning og modultestning vil det differentieret signal blive simuleret af Analog Discovery. For at udregne den korrekte forstærkning bruger vi følsomheden fra transduceren og eksitationsspænding.
+For at få den rette forstærkning har vi valgt at benytte operationsforstærkeren INA-114. Her kan transduceren sættes på med det differentieret signal. Under opbygning og modultestning vil det differentieret signal blive simuleret af Analog Discovery. For at udregne den korrekte forstærkning bruger vi følsomheden fra transduceren og eksistationsspænding.
 Først udregnes det maksimale output:   
 \begin{equation}
 9V\cdot 250mmHg \cdot 5\cdot 10^{-5} uv/V/mmHg  = 11.25mV
 \end{equation} 
-Da det er besluttet at den maksimale indput til DQA'en er 5V, kan forstærkningen (G) nu udregnes. 
+Da det er besluttet at den maksimale indput til DAQ'en er 5V, kan forstærkningen (Gain) nu udregnes. 
 \begin{equation}
 \begin{split}
 5V= 11.25mV \cdot G \\
 G = 444.44
 \end{split}
 \end{equation}
-For at få den rette forstærkning udregnes den "indre" modstand ($ R_g $) til INA114. Dette gøres ved formlen: 
+For at få den rette forstærkning udregnes den eksterne modstand ($ R_g $) til INA114. INA114's forstærkning kommer af størrelsen på $ R_g $, hvis modstanden er stor, er forstærkningen lille og vice versa.  $ R_g $ udregnes ved formlen: 
 \begin{equation}
 \begin{split}
 G=1+\frac{50k\Omega}{R_g}\\
 444.44= 1+\frac{50k\Omega}{R_g} \Rightarrow R_g= 112.75 \Omega
 \end{split}
 \end{equation}
-Derved har vi nu en værdi for den indre modstand til INA114, som skaber den ønskede forstærkning.\\
-Det skal nu sikres at dette kan lade sig gøre. Derfor sikres det at den ønskede forstærkning kan ske ved båndbredden. Dette kan undersøges da produktet af forstærkning og båndbredde er en konstant. Konstanten aflæses i databladet. XX-reference til datasheet. 
+Derved fås en værdi for den eksterne modstand til INA114, som skaber den ønskede forstærkning.\\
+Det skal nu sikres at dette kan lade sig gøre. Derfor sikres det, at den ønskede forstærkning kan ske ved båndbredden. Dette kan undersøges da produktet af forstærkning og båndbredde er en konstant. Konstanten aflæses i databladet. XX-reference til datasheet. 
 \begin{equation}
 \begin{split}
 1000000 Hz = G\cdot BW \\
 BW = 2250 Hz
 \end{split}
 \end{equation}
-Da båndbredden ligger over knækfrekvensen, fra lavpas filtret, er dette godkendt. Hvis båndbredde havde lagt under knækfrekvensen vil den ikke kunne arbejde med de rigtige frekvenser. \\
+Da båndbredden ligger over knækfrekvensen for lavpas filtret, er dette godkendt. Hvis båndbredde havde lagt under knækfrekvensen vil operations forstærker ikke kunne arbejde med de ønskede frekvenser. Det er vigtigt at båndbredden er bred nok til at kunne indeholde frekvenser fra begge side af knækfrekvensen.\\
 \newline 
-For at imødekomme usikkerheden ved Analog Discovery ved små signaler, laves et lille kredsløb efter spændingsdeler princippet. Her bruges $ R_1=100k\Omega $ og $ R_2 = 1k\Omega $. Da vi kender signalet som skal ind i INA114 og modstanden, kan vi derved finde størrelsen af den spænding som skal sendes fra Analog Discovery.
- 
-\begin{equation}
+For at imødekomme usikkerheden ved Analog Discovery ved små signaler, laves et kredsløb efter spændingsdeler princippet. Signalet fra Analog Discovery skal sende igennem dette kredsløb, hvor de efter spændingsdeler princippet gøres mindre. I kredsløbet bruges $ R_1=100k\Omega $ og $ R_2 = 1k\Omega $. Da vi kender signalet som skal ind i INA114 og modstandene i kredsløbet, kan størrelsen af den spænding som skal sendes fra Analog Discovery findes:
+ \begin{equation}
 \begin{split}
 U_{INA} = U_{analog} \cdot \frac{R_2}{R_1 + R_2} \\
 5mV = U_{analog}\cdot \frac{1k\Omega}{100k\Omega+1k\Omega}\\ \Rightarrow U_{analog}= 505mV
 \end{split}
 \end{equation} 
-
+Derved kan Analog Discovery sende nogle større signaler ud og derved mindskes usikkerheden. Der er taget højde for at, hvis modstandene i kredsløbet bliver for store, vil det skabe en termisk usikkerhed. Derfor er modstandene valgt som de er.  
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=1.0\textwidth]{Figurer/diagram_over_HW}
