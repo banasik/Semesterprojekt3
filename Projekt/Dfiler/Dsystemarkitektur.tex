@@ -161,12 +161,36 @@ I dette beskrives systemets softwaredesign på baggrund af systembeskrivelsen og
 \subsubsection{Overordnet sekvensdiagram}
 Overordnet set ønskes det at udvikle et system, der kan interagerer med en forsker. Diagrammet herunder viser at forskerens opgave består i at starte, tage stilling til nulpunktsjustering og kalibrering samt gemme de ønskede data. Diagrammet er en simpel illustration som viser systemets adfærd gennem alle fem Use Cases. Formålet med dette diagram er udelukkende at skabe et overblik over det samlede system.
 
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.7\textwidth]{Figurer/OverordnetSD}
+	\caption{Overordnet sekvensdiagram for systemet}
+	%\label{fig:Overordnet sekvensdiagram for systemet}
+\end{figure}
+
 \subsubsection{Problemidentifikation}
 Første step i software designet er at klarlægge hvilke klasser systemet skal bestå af. Til dette er en domænemodel derfor udarbejdet med udgangspunkt i de fem Use Cases. I de fem Use Cases er de konceptuelle klasser blevet identificeret, og derefter indført som klasser i nedestående domænemodel. Modellen har til formål at vise hvilke dele systemet skal holde styr på. 
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=1.0\textwidth]{Figurer/DomaneModel}
+	\caption{Domænemodel}
+	%\label{fig:Domænemodel}
+\end{figure}
+
 Diagrammet viser tydeligt forskerens interaktion med display, samt hvilke handlinger denne interaktion starter i system. Hardware-komponenterne er medtaget for at vise signalets vej fra måleobjekt til system. 
 
 \subsubsection{Klasseidentifikation}
-Ud fra domænemodellen kan et klassediagram udarbejdes, således tager dette diagram også udgangspunkt i de fem Use Cases. Hensigten med et klassediagram er at klarlægge hver klasses individuelle formål. Dermed ses det at denne model er delt op i tre niveauer:
+Ud fra domænemodellen kan et klassediagram udarbejdes, således tager dette diagram også udgangspunkt i de fem Use Cases. Hensigten med et klassediagram er at klarlægge hver klasses individuelle formål. 
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=1.0\textwidth]{Figurer/Applikationsmodel}
+	\caption{Applikationsmodel for software}
+	%\label{fig:Applikationsmodellen viser software klasser}
+\end{figure}
+
+Dermed ses det at denne model er delt op i tre niveauer:
 \begin{enumerate}
 \item Grænsefladeklasse
 \begin{enumerate}
@@ -190,5 +214,68 @@ Ud fra domænemodellen kan et klassediagram udarbejdes, således tager dette dia
 \subsubsection{Metodeidentifikation}
 Klasserne i ovenstående klassediagram er med til at definere, hvilke blokke de følgende sekvensdiagrammer må indeholde. Det er yderst vigtigt at der er en sammenhæng mellem klasserne i klassediagrammet og blokkene i sekvensdiagrammet. Vi har valgt at udarbejde et sekvensdiagram for hver enkelt Use Case, hvori systemets interne kommunikation beskrives, når både normalforløb og undtagelser gennemløbes. I alle diagrammerne beskrives forløbet via de metodekald, der er nødvendige for at få de ønskede handlinger mellem blokkene udført. 
 
+\textbf{Use Case 1}
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.7\textwidth]{Figurer/UC1}
+	\caption{Sekvensdiagram for Use Case 1}
+	%\label{fig:Sekvensdiagram for Use Case 1 - Foretag nulpunktsjustering}
+\end{figure}
+Det ses af ovenstående sekvensdiagram at forsker interagerer med display. Her er der to mulige udfald "Vælger nulpunktsjustering" og "Vælger ikke nulpunktsjustering", disse implementeres som to muligheder forsker kan vælge imellem. 
+
+\textbf{Use Case 2}
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.7\textwidth]{Figurer/UC2}
+	\caption{Sekvensdiagram for Use Case 2}
+	%\label{fig:Sekvensdiagram for Use Case 2 - Foretag kalibrering}
+\end{figure}
+Diagrammet ovenfor viser at forsker interagerer med display, hvor der ved tryk enten vælges ja eller nej til kalibering. Afhængig af valg foretager systemet de nødvendige kald.
+
+\textbf{Use Case 3}
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.7\textwidth]{Figurer/UC3}
+	\caption{Sekvensdiagram for Use Case 3}
+	%\label{fig:Sekvensdiagram for Use Case 3 - Start måling}
+\end{figure}
+Ved Use Case 3 - Start måling ses det at display, transducer og filtreringsklassen vil komme i spil. Her modtages besked ved indtastning af forsøgsnavn og tryk på start-knap på display om, at signaldata fra transduceren skal hentes ind i systemet. Herefter foretages filtrering af signalet, samt visning af signal i graf, systoliske-, diastoliske og puls-værdier på display. Use Casen indeholder en undtagelse hvor filtrering af signal ikke ønskes foretaget, denne er ikke medtaget i sekvensdiagrammet.
+
+\textbf{Use Case 4}
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.7\textwidth]{Figurer/UC4}
+	\caption{Sekvensdiagram for Use Case 4}
+	%\label{fig:Sekvensdiagram for Use Case 4 - Gem data}
+\end{figure}
+Ovenstående diagram viser at for at få gemt data fra signalet, kræver det at der trykkes på Gem-knap på display, hvor efter systemet konstant vil sende data ned i databasen indtil der igen trykkes på Gem-knappen, for at stoppe gemning af data. 
+
+\textbf{Use Case 5}
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.7\textwidth]{Figurer/UC5}
+	\caption{Sekvensdiagram for Use Case 5}
+	%\label{fig:Sekvensdiagram for Use Case 5 - Afslut måking}
+\end{figure}
+Ved afslutning af en måling ses det at forsker trykker på Afslut-knap på display, hvorefter indhentening af data fra DAQ stoppes og programmet lukker ned.
+
 \subsection{Implementering}
+\begin{enumerate}
+\item Observer - strategy
+\item Oprettelse af metoder - trelagsmodel
+\item Forklar princippet bag kalibrering og nulpunktsjustering, beregningerne
+\item Visning i graf
+\item Bestemmelse af systolisk, diastolisk og puls 
+\item GUI design
+\item Aktivitetsdiagrammer
+\item Klassediagrammer
+\item Database
+\end{enumerate}
+
 \subsection{Modultest}
+\begin{enumerate}
+\item GUI test
+\item Test af tråde (observer strategy)
+\item Test af systolisk, diastolisk og puls-værdier
+\item Test af Gem i database
+\end{enumerate}
