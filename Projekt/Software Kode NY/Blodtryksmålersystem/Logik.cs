@@ -42,7 +42,7 @@ namespace LogikLag
             while (isRunningLogik())
             {
                 uiList = DAQdata.getList();
-                List<double> xværdier = new List<double>();
+                //List<double> xværdier = new List<double>();
                
                 //if (uiList.Count > 0)
                 //{

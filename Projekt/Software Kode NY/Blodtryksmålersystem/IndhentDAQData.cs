@@ -72,7 +72,7 @@ namespace Data
 
                     // Configure the timing parameters
                     myTask.Timing.ConfigureSampleClock("", Convert.ToDouble(1000),
-                        SampleClockActiveEdge.Rising, SampleQuantityMode.ContinuousSamples, 10);
+                        SampleClockActiveEdge.Rising, SampleQuantityMode.ContinuousSamples,10);
 
                     // Verify the Task
                     myTask.Control(TaskAction.Verify);
@@ -118,7 +118,7 @@ namespace Data
             {
                 runningTask = null;
                 myTask.Dispose();
-                throw exception;
+                //throw exception;
             }
         }
         private void dataToDataTable(AnalogWaveform<double>[] sourceArray, ref DataTable dataTable)
@@ -129,8 +129,8 @@ namespace Data
             {
                 for (int sample = 0; sample < waveform.Samples.Count; ++sample)
                 {
-                    if (sample == 1)
-                        break;
+                    //if (sample == 1)
+                    //    break;
 
                     //dataTable.Rows[sample][currentLineIndex] = waveform.Samples[sample].Value;
                     //Flytter data fra Waveform-array til dataList:

@@ -21,27 +21,22 @@ namespace Blodtryksmålersystem
         //private List<double> uiList;
         private Logik logik;
         private int AutogenNR; //AutogeneretNR der skal tælles 1 op hver gang der trykkes på GEM-knappen.
-        private double[] GUIArray;
+        private double[] DiaSysArray;
         private List<double> guiliste;
-        private Analyse systole;
-        double SysVærdi;
+        private Analyse diaSystole;
 
         public HovedGUI()
         {
             InitializeComponent();
             logik = new Logik();
-            systole = new Analyse();
-            GUIArray = new double[500];
+            diaSystole = new Analyse(logik);
+            //GUIArray = new double[500];
             logik.Attach(this);
            // dt = new IndhentDataDAQ(); //Flyttes til Logik
             //logik = new Logiklag();
             //dt = new LogikLag();
             //uiList = new List<double>();
             //updateUI = new Thread(() => updateGUI()); //Benyttes i metoden updateGUI()
-        }
-        public void setArray(double[] nytArray)
-        {
-            GUIArray = nytArray;
         }
         private void textForsøgsnavn_TextChanged(object sender, EventArgs e)
         {
@@ -64,10 +59,13 @@ namespace Blodtryksmålersystem
                 //if (uiList.Count > 500) //Vises først i chart når listen indeholder mere end 500 samples
                 {
                     Chart.Series["Series1"].Points.DataBindY(guiliste); //De sidste 500 samples i listen vises i chart
-                    UpdateSys();
+                    diaSystole.DiaSystolisk();
+                    DiaSysArray = diaSystole.diaSystoliskArray;
+                    textSys.Text = Convert.ToString(DiaSysArray.Max());
+                    textDia.Text = Convert.ToString(DiaSysArray.Min());
+                    //UpdateSys();
                 }
             }
-            
         }
 
         private void StartKnap_Click(object sender, EventArgs e)
@@ -104,10 +102,10 @@ namespace Blodtryksmålersystem
             updateChart();
         }
 
-        private void UpdateSys()
-        {
-            textSys.Text = Convert.ToString(systole.Systolisk());
-        }
+        //private void UpdateSys()
+        //{
+        //    textSys.Text = Convert.ToString(systole.Systolisk());
+        //}
         private void textSys_TextChanged(object sender, EventArgs e)
         {
 

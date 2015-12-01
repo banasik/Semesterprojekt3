@@ -57,9 +57,9 @@
             this.forsøgsnavn.AutoSize = true;
             this.forsøgsnavn.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.forsøgsnavn.ForeColor = System.Drawing.Color.White;
-            this.forsøgsnavn.Location = new System.Drawing.Point(29, 64);
+            this.forsøgsnavn.Location = new System.Drawing.Point(33, 80);
             this.forsøgsnavn.Name = "forsøgsnavn";
-            this.forsøgsnavn.Size = new System.Drawing.Size(205, 28);
+            this.forsøgsnavn.Size = new System.Drawing.Size(251, 32);
             this.forsøgsnavn.TabIndex = 2;
             this.forsøgsnavn.Text = "Indtast forsøgsnavn:";
             // 
@@ -67,10 +67,10 @@
             // 
             this.textForsøgsnavn.BackColor = System.Drawing.Color.DimGray;
             this.textForsøgsnavn.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textForsøgsnavn.Location = new System.Drawing.Point(43, 107);
+            this.textForsøgsnavn.Location = new System.Drawing.Point(48, 134);
             this.textForsøgsnavn.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.textForsøgsnavn.Name = "textForsøgsnavn";
-            this.textForsøgsnavn.Size = new System.Drawing.Size(175, 34);
+            this.textForsøgsnavn.Size = new System.Drawing.Size(196, 39);
             this.textForsøgsnavn.TabIndex = 3;
             this.textForsøgsnavn.TextChanged += new System.EventHandler(this.textForsøgsnavn_TextChanged);
             // 
@@ -79,9 +79,9 @@
             this.vælg.AutoSize = true;
             this.vælg.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.vælg.ForeColor = System.Drawing.Color.White;
-            this.vælg.Location = new System.Drawing.Point(29, 174);
+            this.vælg.Location = new System.Drawing.Point(33, 218);
             this.vælg.Name = "vælg";
-            this.vælg.Size = new System.Drawing.Size(63, 28);
+            this.vælg.Size = new System.Drawing.Size(78, 32);
             this.vælg.TabIndex = 15;
             this.vælg.Text = "Vælg:";
             // 
@@ -90,10 +90,10 @@
             this.filtreret.AutoSize = true;
             this.filtreret.Checked = true;
             this.filtreret.Font = new System.Drawing.Font("Segoe UI Semibold", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.filtreret.Location = new System.Drawing.Point(43, 220);
+            this.filtreret.Location = new System.Drawing.Point(48, 275);
             this.filtreret.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.filtreret.Name = "filtreret";
-            this.filtreret.Size = new System.Drawing.Size(139, 27);
+            this.filtreret.Size = new System.Drawing.Size(174, 34);
             this.filtreret.TabIndex = 16;
             this.filtreret.TabStop = true;
             this.filtreret.Text = "Filtreret signal";
@@ -103,10 +103,10 @@
             // 
             this.ufiltreret.AutoSize = true;
             this.ufiltreret.Font = new System.Drawing.Font("Segoe UI Semibold", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ufiltreret.Location = new System.Drawing.Point(43, 254);
+            this.ufiltreret.Location = new System.Drawing.Point(48, 318);
             this.ufiltreret.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.ufiltreret.Name = "ufiltreret";
-            this.ufiltreret.Size = new System.Drawing.Size(148, 27);
+            this.ufiltreret.Size = new System.Drawing.Size(185, 34);
             this.ufiltreret.TabIndex = 17;
             this.ufiltreret.TabStop = true;
             this.ufiltreret.Text = "Ufiltreret signal";
@@ -116,9 +116,9 @@
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Segoe UI Semibold", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(39, 313);
+            this.label1.Location = new System.Drawing.Point(44, 391);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(69, 23);
+            this.label1.Size = new System.Drawing.Size(85, 30);
             this.label1.TabIndex = 18;
             this.label1.Text = "Filnavn:";
             // 
@@ -129,10 +129,10 @@
             this.StartKnap.FlatAppearance.BorderColor = System.Drawing.Color.DarkSeaGreen;
             this.StartKnap.FlatAppearance.BorderSize = 4;
             this.StartKnap.Font = new System.Drawing.Font("Segoe UI", 19.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.StartKnap.Location = new System.Drawing.Point(35, 385);
+            this.StartKnap.Location = new System.Drawing.Point(39, 481);
             this.StartKnap.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.StartKnap.Name = "StartKnap";
-            this.StartKnap.Size = new System.Drawing.Size(211, 118);
+            this.StartKnap.Size = new System.Drawing.Size(237, 148);
             this.StartKnap.TabIndex = 20;
             this.StartKnap.Text = "START MÅLING";
             this.StartKnap.UseVisualStyleBackColor = false;
@@ -142,10 +142,10 @@
             // 
             this.StopKnap.BackColor = System.Drawing.SystemColors.ButtonShadow;
             this.StopKnap.Font = new System.Drawing.Font("Segoe UI", 19.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.StopKnap.Location = new System.Drawing.Point(267, 385);
+            this.StopKnap.Location = new System.Drawing.Point(300, 481);
             this.StopKnap.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.StopKnap.Name = "StopKnap";
-            this.StopKnap.Size = new System.Drawing.Size(208, 118);
+            this.StopKnap.Size = new System.Drawing.Size(234, 148);
             this.StopKnap.TabIndex = 21;
             this.StopKnap.Text = "STOP";
             this.StopKnap.UseVisualStyleBackColor = false;
@@ -156,10 +156,10 @@
             this.GemKnap.BackColor = System.Drawing.SystemColors.ButtonShadow;
             this.GemKnap.Enabled = false;
             this.GemKnap.Font = new System.Drawing.Font("Segoe UI", 19.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.GemKnap.Location = new System.Drawing.Point(495, 385);
+            this.GemKnap.Location = new System.Drawing.Point(557, 481);
             this.GemKnap.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.GemKnap.Name = "GemKnap";
-            this.GemKnap.Size = new System.Drawing.Size(211, 118);
+            this.GemKnap.Size = new System.Drawing.Size(237, 148);
             this.GemKnap.TabIndex = 22;
             this.GemKnap.Text = "GEM";
             this.GemKnap.UseVisualStyleBackColor = false;
@@ -169,10 +169,10 @@
             // 
             this.AfslutKnap.BackColor = System.Drawing.Color.IndianRed;
             this.AfslutKnap.Font = new System.Drawing.Font("Segoe UI", 19.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.AfslutKnap.Location = new System.Drawing.Point(725, 386);
+            this.AfslutKnap.Location = new System.Drawing.Point(816, 482);
             this.AfslutKnap.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.AfslutKnap.Name = "AfslutKnap";
-            this.AfslutKnap.Size = new System.Drawing.Size(211, 118);
+            this.AfslutKnap.Size = new System.Drawing.Size(237, 148);
             this.AfslutKnap.TabIndex = 23;
             this.AfslutKnap.Text = "AFSLUT";
             this.AfslutKnap.UseVisualStyleBackColor = false;
@@ -184,10 +184,10 @@
             this.textPuls.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.textPuls.Font = new System.Drawing.Font("Microsoft Sans Serif", 36F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.textPuls.ForeColor = System.Drawing.Color.LimeGreen;
-            this.textPuls.Location = new System.Drawing.Point(1033, 305);
+            this.textPuls.Location = new System.Drawing.Point(1162, 381);
             this.textPuls.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.textPuls.Name = "textPuls";
-            this.textPuls.Size = new System.Drawing.Size(100, 68);
+            this.textPuls.Size = new System.Drawing.Size(112, 82);
             this.textPuls.TabIndex = 37;
             this.textPuls.Text = "--/-";
             // 
@@ -197,10 +197,10 @@
             this.textDia.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.textDia.Font = new System.Drawing.Font("Microsoft Sans Serif", 36F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.textDia.ForeColor = System.Drawing.Color.Red;
-            this.textDia.Location = new System.Drawing.Point(1033, 199);
+            this.textDia.Location = new System.Drawing.Point(1162, 249);
             this.textDia.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.textDia.Name = "textDia";
-            this.textDia.Size = new System.Drawing.Size(100, 68);
+            this.textDia.Size = new System.Drawing.Size(112, 82);
             this.textDia.TabIndex = 36;
             this.textDia.Text = "--/-";
             // 
@@ -208,12 +208,12 @@
             // 
             this.textSys.BackColor = System.Drawing.Color.DimGray;
             this.textSys.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.textSys.Font = new System.Drawing.Font("Microsoft Sans Serif", 36F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textSys.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.textSys.ForeColor = System.Drawing.Color.Red;
-            this.textSys.Location = new System.Drawing.Point(1033, 95);
+            this.textSys.Location = new System.Drawing.Point(1162, 119);
             this.textSys.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.textSys.Name = "textSys";
-            this.textSys.Size = new System.Drawing.Size(100, 68);
+            this.textSys.Size = new System.Drawing.Size(112, 28);
             this.textSys.TabIndex = 35;
             this.textSys.Text = "--/-";
             this.textSys.TextChanged += new System.EventHandler(this.textSys_TextChanged);
@@ -222,9 +222,9 @@
             // 
             this.Puls.AutoSize = true;
             this.Puls.Font = new System.Drawing.Font("Segoe UI Semibold", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Puls.Location = new System.Drawing.Point(1025, 279);
+            this.Puls.Location = new System.Drawing.Point(1153, 349);
             this.Puls.Name = "Puls";
-            this.Puls.Size = new System.Drawing.Size(41, 23);
+            this.Puls.Size = new System.Drawing.Size(51, 30);
             this.Puls.TabIndex = 34;
             this.Puls.Text = "Puls";
             // 
@@ -232,9 +232,9 @@
             // 
             this.Diastolisk.AutoSize = true;
             this.Diastolisk.Font = new System.Drawing.Font("Segoe UI Semibold", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Diastolisk.Location = new System.Drawing.Point(1025, 174);
+            this.Diastolisk.Location = new System.Drawing.Point(1153, 218);
             this.Diastolisk.Name = "Diastolisk";
-            this.Diastolisk.Size = new System.Drawing.Size(82, 23);
+            this.Diastolisk.Size = new System.Drawing.Size(104, 30);
             this.Diastolisk.TabIndex = 33;
             this.Diastolisk.Text = "Diastolisk";
             // 
@@ -242,9 +242,9 @@
             // 
             this.Systolisk.AutoSize = true;
             this.Systolisk.Font = new System.Drawing.Font("Segoe UI Semibold", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Systolisk.Location = new System.Drawing.Point(1025, 69);
+            this.Systolisk.Location = new System.Drawing.Point(1153, 86);
             this.Systolisk.Name = "Systolisk";
-            this.Systolisk.Size = new System.Drawing.Size(75, 23);
+            this.Systolisk.Size = new System.Drawing.Size(94, 30);
             this.Systolisk.TabIndex = 32;
             this.Systolisk.Text = "Systolisk";
             // 
@@ -262,7 +262,7 @@
             this.Chart.ChartAreas.Add(chartArea1);
             legend1.Name = "Legend1";
             this.Chart.Legends.Add(legend1);
-            this.Chart.Location = new System.Drawing.Point(220, 12);
+            this.Chart.Location = new System.Drawing.Point(248, 15);
             this.Chart.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.Chart.Name = "Chart";
             this.Chart.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.SemiTransparent;
@@ -271,7 +271,7 @@
             series1.Legend = "Legend1";
             series1.Name = "Series1";
             this.Chart.Series.Add(series1);
-            this.Chart.Size = new System.Drawing.Size(927, 370);
+            this.Chart.Size = new System.Drawing.Size(1043, 462);
             this.Chart.TabIndex = 31;
             this.Chart.Text = "chart2";
             // 
@@ -279,18 +279,18 @@
             // 
             this.textFilnavn.BackColor = System.Drawing.Color.DimGray;
             this.textFilnavn.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textFilnavn.Location = new System.Drawing.Point(115, 305);
+            this.textFilnavn.Location = new System.Drawing.Point(129, 381);
             this.textFilnavn.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.textFilnavn.Name = "textFilnavn";
-            this.textFilnavn.Size = new System.Drawing.Size(132, 34);
+            this.textFilnavn.Size = new System.Drawing.Size(148, 39);
             this.textFilnavn.TabIndex = 38;
             // 
             // HovedGUI
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.ClientSize = new System.Drawing.Size(1159, 538);
+            this.ClientSize = new System.Drawing.Size(1304, 672);
             this.Controls.Add(this.textFilnavn);
             this.Controls.Add(this.textPuls);
             this.Controls.Add(this.textDia);
