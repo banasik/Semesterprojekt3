@@ -131,9 +131,36 @@ Nu den sidste overføringsfunktion sammenlignes med den generelle for 2. ordens 
  R= 4681
 \end{split}
 \end{equation}
-Derved er modstandene udregnet til $ R =4681\Omega $. Nu kan der isoleres for den sidste kondensator C1: 
- 
+Derved er modstandene udregnet til $ R = 4681\Omega $. Nu kan der isoleres for den sidste kondensator C1: 
+\begin{equation}
+\begin{split}
+\dfrac{1}{C1\cdot C2\cdot R^2}= \omega^2\\
+\dfrac{1}{C1\cdot 680\cdot 10^{-9}\cdot 4681^2}= (2\cdot \pi \cdot 50)^2\\
+\Downarrow\\
+C1=680\cdot 10^{-9}
+\end{split}
+\end{equation}
+Dvs. at kondensatorerne også er ens og deres værdi er $ C = 680\cdot 10^{-9} $. Derved har vi alle komponentværdierne til lavpasfilteret og det kan nu realiseres. \\
+For at være sikker på at filteret har de ønskede karakteristika, laver vi et bodeplot af den endelig overføringsfunktion: 
+\begin{equation}
+H(z)=\dfrac{625000000000000}{6332498929\cdot \left( s^2+\dfrac{50000000}{79577}\cdot s + \dfrac{625000000000000}{6332498929} \right)}
+\end{equation}
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.5\textwidth]{Figurer/Bodeplot}
+	\caption{Bodeplot}
+	\label{fig:bodeplot}
+\end{figure}
+Ud fra bodeplottet kan det antages at $ \zeta $ må være 1. Når $ \zeta $ er en betyder det at systemet er kritisk dæmpet. Værdien for $ \zeta $ kan også beregnes: 
 
+\begin{equation}
+\begin{split}
+\dfrac{2}{R\cdot C1}= 2\cdot \zeta\cdot \omega_n\\
+\dfrac{2}{4681\cdot 680\cdot 10^{-9}}= 2\cdot \zeta\cdot (2\cdot \pi \cdot 50)\\
+\Downarrow\\
+\zeta = 1
+\end{split}
+\end{equation}
 
 \subsection{Modultest}
 \subsubsection{Forstærkning}
