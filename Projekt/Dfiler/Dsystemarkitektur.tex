@@ -65,19 +65,19 @@ Ved en typisk blodtryksmåling forekommer der ikke signal over 50 Hz, samtidigt 
 
 \subsection{Implementering}
 \subsubsection{Forstærkning}
-For at få den rette forstærkning er det blevet valgt at benytte operationsforstærkeren INA-114. Her kan transduceren sættes på med det differentieret signal. Under opbygning og modultestning vil det differentieret signal blive simuleret af Analog Discovery. For at udregne den korrekte forstærkning bruges følsomheden fra transduceren og eksistationsspændingen.
+For at få den rette forstærkning er det blevet valgt, at benytte operationsforstærkeren INA-114. Her kan transduceren sættes på med det differentierede signal. Under opbygning og modultestning vil det differentierede signal blive simuleret af Analog Discovery. For at udregne den korrekte forstærkning, bruges følsomheden fra transduceren og eksistationsspændingen.
 Først udregnes det maksimale output fra transduceren:   
 \begin{equation}
 9V\cdot 250mmHg \cdot 5\cdot 10^{-5} uv/V/mmHg  = 11.25mV
 \end{equation} 
-Da det er besluttet at den maksimale input til DAQ'en \cite{DSB} er 5V, kan forstærkningen (Gain) nu udregnes: 
+Da det er besluttet at det maksimale input til DAQ'en \cite{DSB} er 5V, kan forstærkningen (Gain) nu udregnes: 
 \begin{equation}
 \begin{split}
 5V= 11.25mV \cdot G \\
 G = 444.44
 \end{split}
 \end{equation}
-For at få den rette forstærkning udregnes den eksterne modstand ($ R_g $) til INA114 \cite{INA}. INA114's forstærkning kommer af størrelsen på $ R_g $, hvis modstanden er stor, er forstærkningen lille og vice versa.  $ R_g $ udregnes ved formlen: 
+For at få den rette forstærkning udregnes den eksterne modstand ($ R_g $) til INA114 \cite{INA}. INA114's forstærkning kommer af størrelsen på $ R_g $, hvis modstanden er stor, er forstærkningen lille og omvendt.  $ R_g $ udregnes ved formlen: 
 \begin{equation}
 \begin{split}
 G=1+\frac{50k\Omega}{R_g}\\
@@ -92,9 +92,9 @@ Det skal nu sikres at dette kan lade sig gøre. Derfor sikres det, at den ønske
 BW = 2250 Hz
 \end{split}
 \end{equation}
-Da båndbredden ligger over knækfrekvensen for lavpas filtret, er dette godkendt. Hvis båndbredde havde lagt under knækfrekvensen vil operationsforstærkeren ikke kunne arbejde med de ønskede frekvenser. Det er vigtigt at båndbredden er bred nok til at kunne indeholde frekvenser fra begge side af knækfrekvensen.\\
+Da båndbredden ligger over knækfrekvensen for lavpas filtret, er dette godkendt. Hvis båndbredde havde ligget under knækfrekvensen vil operationsforstærkeren ikke have kunnet arbejde med de ønskede frekvenserne. Derfor er det vigtigt at båndbredden er bred nok til at kunne indeholde frekvenser fra begge side af knækfrekvensen.\\
 \newline 
-For at imødekomme usikkerheden ved Analog Discovery ved små signaler, laves et kredsløb efter spændingsdeler princippet. Signalet fra Analog Discovery skal sende igennem dette kredsløb, hvor de efter spændingsdeler princippet gøres mindre. I kredsløbet bruges $ R_1=100k\Omega $ og $ R_2 = 1k\Omega $. Da vi kender signalet som skal ind i INA114 og modstandene i kredsløbet, kan størrelsen af den spænding som skal sendes fra Analog Discovery findes:
+For at imødekomme usikkerheden ved Analog Discoverys små signaler, laves et kredsløb efter spændingsdelerprincippet. Signalerne fra Analog Discovery skal sendes igennem dette kredsløb, hvor de efter spændingsdeler princippet gøres mindre. I kredsløbet benyttes to modstande, hvis værdier er $ R_1=100k\Omega $ og $ R_2 = 1k\Omega $. Da vi kender signalet som skal ind i INA114 og modstandene i kredsløbet, kan størrelsen af den spænding, som skal sendes fra Analog Discovery, findes:
 \begin{equation}
 \begin{split}
 U_{INA} = U_{analog} \cdot \frac{R_2}{R_1 + R_2} \\
@@ -110,14 +110,14 @@ Derved kan Analog Discovery sende nogle større signaler ud og usikkerheden mind
 \end{figure}
 
 \subsubsection{Lavpas}
-For at opnå den ønskede effekt i lavpasfilteret, blev det oplyst at $ f_c=50$ Hz, $ f_s = 1$kHz, $ R_1 = R_2 $ og $ C_2=680 nF$. Ud fra det udregnes de resterende komponentværdier for filteret.
+For at opnå den ønskede effekt i lavpasfilteret, blev det oplyst at $ f_c=50$ Hz, $ f_s = 1$kHz, $ R_1 = R_2 $ og $ C_2=680 nF$. Ud fra disse værdier, udregnes de resterende komponentværdier for filteret.
 
 Overføringsfunktionen for et 2. ordens filter er: 
 \begin{equation}
 H(z)=\frac{\omega_n^2}{(s^2 + 2\cdot\zeta \cdot \omega_n \cdot s+\omega_n^2)}
 \end{equation}
 
-For at finde en overførings funktion for det gældende system, vides det at følge ligninger gælder \cite{Wikilavpas}: 
+For at finde overføringsfunktionen for det gældende system, vides det at følge ligninger gælder \cite{Wikilavpas}: 
 \begin{equation}
 \begin{split}
 \omega_n = 2\cdot \pi\ 50 = \dfrac{1}{\sqrt{R1\cdot R2\cdot C1\cdot C2}}\\
@@ -133,7 +133,7 @@ Da det bliver oplyst at $ R1=R2 $, kan funktionen reduceres. I sidste ende fås 
 H(z)=\dfrac{\dfrac{1}{C1 \cdot C2\cdot R^2}}{s^2+s\cdot \dfrac{2}{R\cdot C2}+ \dfrac{1}{C1\cdot C2\cdot R^2}}
 \end{equation}
 Da der arbejdes med at 2. ordens Butterworth filter, vides det at udsvinget$ \zeta $ skal være 0.7 \cite{ASB}. 
-Den sidste overføringsfunktion sammenlignes med den generelle for 2. ordens systemer. Det gælder at $ C2 = 680\cdot 10^{-9} nF $. Det er muligt at isolerer forskellige lige led. Først isoleres for modstanden: 
+Den sidste overføringsfunktion sammenlignes med den generelle for 2. ordens systemer. Det gælder at $ C2 = 680\cdot 10^{-9} nF $. Det er muligt at isolerer forskellige lige led. Først isoleres der for modstanden: 
 \begin{equation}
 \begin{split}
 \dfrac{2}{R\cdot C2}= 2\cdot \zeta \cdot \omega_n\\
@@ -151,7 +151,7 @@ Derved er modstandene udregnet til $ R = 6687\Omega $. Nu kan der isoleres for d
 C1=333\cdot 10^{-9} nF
 \end{split}
 \end{equation}
-Dvs. at kondensatoren $ C1 $ har værdien $ 333\cdot 10^{-9} nF $  og  $ C2 = 680\cdot 10^{-9} nF$. Derved er alle komponentværdierne til lavpasfilteret fundet og det kan nu realiseres. \\ Under udviklingen af lavpas filteret er komponent størrelserne, blevet ændret for at kunne realisere det. De brugte komponent størrelser er: $ R= 6.6 k\Omega $, $ C1= 330\cdot 10 ^{-9} nF$ og $ C2= 680\cdot 10^{-9} nF$.   
+Dette betyder, at kondensatoren $ C1 $ har værdien $ 333\cdot 10^{-9} nF $  og  $ C2 = 680\cdot 10^{-9} nF$. Derved er alle komponentværdierne til lavpasfilteret fundet og det kan nu realiseres. \\ Under udviklingen af lavpas filteret er komponent størrelserne, blevet ændret for at kunne realisere det. De brugte komponent størrelser er: $ R= 6.6 k\Omega $, $ C1= 330\cdot 10 ^{-9} nF$ og $ C2= 680\cdot 10^{-9} nF$.   
 For at være sikker på at filteret har de ønskede karakteristika, laves et bodeplot for den endelig overføringsfunktion: 
 \begin{equation}
 H(z)=\dfrac{62500000000}{610929\cdot \left( s^2+\dfrac{250000}{561}\cdot s + \dfrac{62500000000}{610929} \right)}
@@ -202,14 +202,14 @@ Efter knækfrekvensen skal amplituden gå mod nul. På Måling for 60 Hz, kan de
 \end{figure}
 
 \subsubsection{Kalibrering med vandsøjle}
-Efter forstærkning og lavpas er blevet testet hver for sig, udføres en kalibrering ved en vandsøjle. Her bruges en udleveret vandsøjle med tre målepunkter, hvor det er angivet hvor højt trykket er ved hver, i millimeter kviksølv. Derved kan det testes om hareware-delen måler den rigtige spænding i forhold til millimeter kviksølv. Ud fra den maksimale spænding og millimeter kviksølv kan det udregnes, hvad hardware skal vise ved 100 mmHg. 
+Efter forstærkning og lavpasfilteret er blevet testet hver for sig, udføres en kalibrering af systemet vha. en vandsøjle. Her bruges en udleveret vandsøjle med tre målepunkter, hvor det er angivet hvor højt trykket er ved hvert af disse punkter, målt i milimeter kviksølv (mmHg). Derved kan det testes om hareware-delen måler den rigtige spænding i forhold til mmHg. Ud fra det maksimale antal volt (V) spænding og mmHg kan det udregnes, hvad hardware skal vise ved 100 mmHg. 
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=0.3\textwidth]{Figurer/graf_vandtest}
 	\caption{Graf til kalibrering, fra udregninger}
 	\label{fig:graf_vandtest}
 \end{figure}
-Testen udføres ved, at der fyldes vand i søjlen til et bestemt punkt. Transduceren skal være tilkoblet et af de tre målepunkter, mens de andre er lukket til. Transduceren er sat til forstærkningen, der hvor Analog Discovery tidligere har været sat til. Transduceren er tilkoblet 0-9V, ved batterierne. På samme måde som ved simuleringen aflæses målingen på computeren ved hjælp af programmet WaveForms. Da det vides hvilken trykændring der måles på, ved vi fra grafen til kalibreringen, hvilken spænding den skal vise. Dette fortages for de tre målepunkter på vand søjlen, hvor hver måling sammenlignes med den udregnet graf. For hver gang, skal transduceren flyttes til et af de andre målepunkter.  
+Testen udføres ved, at fylde vand i søjlen til et bestemt punkt. Transduceren skal være tilkoblet et af de tre målepunkter, mens de andre er lukket til. Transduceren er sat til forstærkningen, der hvor Analog Discovery tidligere har været sat til. Transduceren er tilkoblet 0-9V, ved batterierne. På samme måde som ved simuleringen aflæses målingen på computeren ved hjælp af programmet WaveForms. Da det vides hvilken trykændring der måles på, ved vi fra grafen til kalibreringen, hvilken spænding den skal vise. Dette fortages for de tre målepunkter på vandsøjlen, hvor hver måling sammenlignes med den udregnede graf. For hver måling, skal transduceren flyttes til et af de andre målepunkter.  
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=0.2\textwidth]{Figurer/vandtest3}
