@@ -49,7 +49,7 @@ Under simulering bruges Analog Discovery som en funktionsgenerator, der simulere
 
 \subsubsection{Lavpas}
 I projektet skal der laves et 2. ordens lavpasfilter. Filteret skal laves for at sikre, at der ikke opstår aliasering. Det sikre derfor at der ikke er noget signal ved den halve samplingsfrekvens.\\
-Aliasering  REFERENCE (DSB-bogen)er, hvor signalet bliver gentaget. Når man har signalet i det digitale domæne, bliver spektret for signalet en periodisk funktion. Det vil sige, at den gentager sig selv, efter et bestemt stykke tid. \\
+Aliasering \cite{DSB} er, hvor signalet bliver gentaget. Når man har signalet i det digitale domæne, bliver spektret for signalet en periodisk funktion. Det vil sige, at den gentager sig selv, efter et bestemt stykke tid. \\
 Det skal sikres, at der ikke kommer overlap mellem signalet og et alias. Da det ellers kunne give anledning til misforståelser. Derfor laves et lavpasfilter som sikre at der ikke ligger noget signal ved den halve samplingsfrekvens. Signalet her kan med fordel gøre så lille at DAQ'en ikke kan læse det, dvs. signalet skal være mindre end $ 1/2 \cdot LSB $ (Least Significant Bit).    
 \newline  
 Lavpasfilteret skal være et Sallen-Key Butterworth-filter med en knækfrekvens på 50 Hz og en samplingsfrekvens på 1kHz. Ud fra oplysninger givet til projektet, vides det at filteret skal dæmpe signalet med 20 dB, under antagelse af at den forekommende støj er mindre end signalet, også når det  forekommer over knækfrekvensen.\\
