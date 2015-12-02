@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using LogikLag;
 using DTO;
+using System.Timers;
 
 namespace Blodtryksmålersystem
 {
@@ -29,7 +30,7 @@ namespace Blodtryksmålersystem
         {
             InitializeComponent();
             logik = new Logik();
-            diaSystole = new Analyse(logik);
+            diaSystole = new Analyse();
             //GUIArray = new double[500];
             logik.Attach(this);
            // dt = new IndhentDataDAQ(); //Flyttes til Logik
@@ -45,7 +46,6 @@ namespace Blodtryksmålersystem
         }
 
         private delegate void UpdateUICallback();
-
         private void updateChart()
         {
             guiliste = logik.UILISTE;
@@ -59,15 +59,13 @@ namespace Blodtryksmålersystem
                 //if (uiList.Count > 500) //Vises først i chart når listen indeholder mere end 500 samples
                 {
                     Chart.Series["Series1"].Points.DataBindY(guiliste); //De sidste 500 samples i listen vises i chart
-                    diaSystole.DiaSystolisk();
-                    DiaSysArray = diaSystole.diaSystoliskArray;
-                    textSys.Text = Convert.ToString(DiaSysArray.Max());
-                    textDia.Text = Convert.ToString(DiaSysArray.Min());
+                    textSys.Text = Convert.ToString(Convert.ToInt16(diaSystole.Systole_));
+                    textDia.Text = Convert.ToString(Convert.ToInt16(logik.getDia()));
+                    
                     //UpdateSys();
                 }
             }
         }
-
         private void StartKnap_Click(object sender, EventArgs e)
         {
             logik.indhentDataLogik();

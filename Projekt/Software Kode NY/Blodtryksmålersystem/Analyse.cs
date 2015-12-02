@@ -9,18 +9,36 @@ namespace LogikLag
 {
     public class Analyse
     {
+        private double diastole_;
+        public double Diastole_
+        {
+            get { return diastole_; }
+            set
+            {
+                if (value > 0)
+                {
+                    diastole_ = value;
+                }
+            }
+        }
+        private double systole_;
+        public double Systole_
+        {
+            get { return systole_; }
+            set
+            {
+                if (value>0)
+                {
+                    systole_ = value;
+                }
+            }
+        }
         public double[] diaSystoliskArray;
         private Logik logik;
-        private List<double> blodtryksliste;
-        int counter;
 
-        public Analyse(Logik logik_)
+        public Analyse()
         {
             //logik = new Logik();
-            logik = logik_;
-            blodtryksliste = new List<double>();
-            counter = 0;
-            diaSystoliskArray = new double[1000];
         }
 
         //public List<int> BeregnSystole(List<int> systoleliste_)
@@ -40,18 +58,31 @@ namespace LogikLag
         //    return systoleliste_;
         //}
 
-        public void DiaSystolisk()
+        public void Diastole(List<double> diastoleListe)
         {
-                for (int i = 0; i < logik.UILISTE.Count; i++)
-                {
-                    diaSystoliskArray[counter] = logik.UILISTE[i];
-                    counter++;
-                    if (counter > 999)
-                    {
-                        counter = 0;
-                    }
-                }
+            for (int i = 0; i < 250; i++)
+            {
+                Diastole_ = diastoleListe.Min();
+                System.Threading.Thread.Sleep(200);
+            }
+                //for (int i = 0; i < logik.UILISTE.Count; i++)
+                //{
+                //    diaSystoliskArray[counter] = logik.UILISTE[i];
+                //    counter++;
+                //    if (counter > 999)
+                //    {
+                //        counter = 0;
+                //    }
+                //}
             
+        }
+        public void Systole(List<double> systoleListe)
+        {
+            for (int i = 0; i < 250; i++)
+            {
+                Systole_ = systoleListe.Min();
+                System.Threading.Thread.Sleep(200);
+            }
         }
         //public void Diastolisk()
         //{
