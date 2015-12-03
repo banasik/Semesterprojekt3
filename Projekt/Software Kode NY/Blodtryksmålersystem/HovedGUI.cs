@@ -30,7 +30,7 @@ namespace Blodtryksmålersystem
         {
             InitializeComponent();
             logik = new Logik();
-            diaSystole = new Analyse();
+            diaSystole = new Analyse(logik);
             //GUIArray = new double[500];
             logik.Attach(this);
            // dt = new IndhentDataDAQ(); //Flyttes til Logik
@@ -59,8 +59,10 @@ namespace Blodtryksmålersystem
                 //if (uiList.Count > 500) //Vises først i chart når listen indeholder mere end 500 samples
                 {
                     Chart.Series["Series1"].Points.DataBindY(guiliste); //De sidste 500 samples i listen vises i chart
+                    //textSys.Text = Convert.ToString(Convert.ToInt16(logik.getSys()));
+                    //textDia.Text = Convert.ToString(Convert.ToInt16(logik.getDia()));
                     textSys.Text = Convert.ToString(Convert.ToInt16(diaSystole.Systole_));
-                    textDia.Text = Convert.ToString(Convert.ToInt16(logik.getDia()));
+                    textDia.Text = Convert.ToString(Convert.ToInt16(diaSystole.Diastole_));
                     
                     //UpdateSys();
                 }

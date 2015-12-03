@@ -36,8 +36,9 @@ namespace LogikLag
         public double[] diaSystoliskArray;
         private Logik logik;
 
-        public Analyse()
+        public Analyse(Logik logik_)
         {
+            logik = logik_;
             //logik = new Logik();
         }
 

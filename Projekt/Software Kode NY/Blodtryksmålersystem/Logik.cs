@@ -19,14 +19,14 @@ namespace LogikLag
         public List<double> uiList;
         private List<IObserver> observers;
         int counter;
-        private Analyse AnalyseKlasse = new Analyse();
+        //private Analyse AnalyseKlasse = new Analyse();
 
         public Logik()
         {
 
             updateUI = new Thread(() => updateListe());
-            updateDia = new Thread(() => getDia());
-            updateSys = new Thread(() => getSys());
+            //updateDia = new Thread(() => getDia());
+            //updateSys = new Thread(() => getSys());
             //updateUI.Start();
             uiList = new List<double>();
             observers = new List<IObserver>();
@@ -41,8 +41,8 @@ namespace LogikLag
         public void StartTraad()
         {
             updateUI.Start();
-            updateDia.Start();
-            updateSys.Start();
+            //updateDia.Start();
+            //updateSys.Start();
         }
 
         private void updateListe()
@@ -72,22 +72,22 @@ namespace LogikLag
                     //Thread.Sleep(1);                
             }
         }
-        public double getDia()
-        {
-            while(isRunningLogik())
-            {
-                AnalyseKlasse.Diastole(UILISTE);
-            }
-            return AnalyseKlasse.Diastole_;
-        }
-        public double getSys()
-        {
-            while (isRunningLogik())
-            {
-                AnalyseKlasse.Systole(UILISTE);
-            }
-            return AnalyseKlasse.Systole_;
-        }
+        //public double setDia()
+        //{
+        //    while(isRunningLogik())
+        //    {
+        //        AnalyseKlasse.Diastole(UILISTE);
+        //    }
+        //    return AnalyseKlasse.Diastole_;
+        //}
+        //public double Sys()
+        //{
+        //    while (isRunningLogik())
+        //    {
+        //        AnalyseKlasse.Systole(UILISTE);
+        //    }
+        //    return AnalyseKlasse.Systole_;
+        //}
         
         public List<double> UILISTE;
         public bool isRunningLogik()
