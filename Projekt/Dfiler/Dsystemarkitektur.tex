@@ -15,7 +15,9 @@
     0.8 & 20-11-2015 & MHNK & Indskrivning af alle sekvensdiagrammer \\[-1ex]
 	0.9 & 26-11-2015 & DHC & HW Modultest, Kalibrering ved vandsøjle \\ [-1ex]
 	1.0 & 26-11-2015 & DHC, AJF & HW Design Lavpas \\ [-1ex]
-	1.1 & 02-12-2015 & DHC & Referencer HW \\ [-1ex]
+	1.1 & 02-12-2015 & DHC & HW Referencer  \\ [-1ex]
+	1.2 & 02-12-2015 & MHNK & HW Rettelser i tekst \\[-1ex]
+	1.3 & 02-12-2015 & DHC, MB & HW Modultest \\[-1ex]
 	 
 	
 	\label{version_Systemark}
@@ -215,21 +217,36 @@ Efter forstærkning og lavpasfilteret er blevet testet hver for sig, udføres en
 	\caption{Graf til kalibrering, fra udregninger}
 	\label{fig:graf_vandtest}
 \end{figure}
+
 Testen udføres ved, at fylde vand i søjlen til et bestemt punkt. Transduceren skal være tilkoblet et af de tre målepunkter, mens de andre er lukket til. Transduceren er sat til forstærkningen, der hvor Analog Discovery tidligere har været sat til. Transduceren er tilkoblet 0-9V, ved batterierne. På samme måde som ved simuleringen aflæses målingen på computeren ved hjælp af programmet WaveForms. Da det vides hvilken trykændring der måles på, ved vi fra grafen til kalibreringen, hvilken spænding den skal vise. Dette fortages for de tre målepunkter på vandsøjlen, hvor hver måling sammenlignes med den udregnede graf. For hver måling, skal transduceren flyttes til et af de andre målepunkter.  
+
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=0.2\textwidth]{Figurer/vandtest3}
+	\includegraphics[width=0.4\textwidth]{Figurer/vandtest_opstilling}
 	\caption{Opstilling}
-	\label{fig:vandtest}
+	\label{fig:vandtest_opstilling}
 \end{figure} 
-Test resultater.. 
+Opstillingen er gjort klar og der hentes ekstra vand under testen. Vandet skal bruges til at fylde vandsøjlen på til de forskellige målinger. \\
+Ud fra grafen i figur \ref{fig:graf_vandtest} vides, hvad svaret på hver måling skal være. På figur \ref{fig:vandtest_måling50} ses målingen, da transduceren var tilkoblet målepunktet for 50 mmHg. Ud fra figur \ref{fig:graf_vandtest} vides det at målingen skal vise 1V DC.  
 \begin{figure}[H]
-	\centering	\includegraphics[width=1.0\textwidth]{Figurer/vandtest}
-	\caption{Måling}
-	\label{fig:vandtest_måling}
-\end{figure} 
+	\centering	\includegraphics[width=0.8\textwidth]{Figurer/50mmhg}
+	\caption{Måling ved 50 mmHg}
+	\label{fig:vandtest_måling50}
+\end{figure}
+ 
+\begin{figure}[H]
+	\centering	\includegraphics[width=0.8\textwidth]{Figurer/10mmhg}
+	\caption{Måling ved 10mmHg}
+	\label{fig:vandtest_måling10}
+\end{figure}
+På målingen for 10 mmHg ses en del rystelser(udsving på signalet). Som det ses på figur \ref{fig:vandtest_måling10} ligger signalet ikke præcist på 0.2V, dette kan skyldes at under testen, skal transduceren være i højde med målepunktet. Pga. korte ledninger, blev det under testen derfor nødvendigt at løfte og holde transducer, vevo board og Analog Discovery i højde med målepunktet. 
 
-
+\begin{figure}[H]
+	\centering	\includegraphics[width=0.8\textwidth]{Figurer/100mmhg}
+	\caption{Måling ved 100mmHg}
+	\label{fig:vandtest_måling100}
+\end{figure}
+Ved målingen for 100mmHg skulle der måles en spænding på 2V. Som det ses på figur \ref{fig:vandtest_måling100} ligger den ikke præcist på 2V. Som under målingen for 10 mmHg skal transduceren være i samme højde som målepunktet. Her er målepunktet lavt, men det skaber stadig en del usikkerhed.   
 \section{Software}
 \subsection{Design}
 I dette beskrives systemets softwaredesign på baggrund af systembeskrivelsen og kravspecifikationen. De overvejelser vi har gjort i forbindelse med design og implementering af software vil blive præsenteret i dette afsnit. 
