@@ -36,9 +36,9 @@ namespace LogikLag
         public double[] diaSystoliskArray;
         private Logik logik;
 
-        public Analyse(Logik logik_)
+        public Analyse()
         {
-            logik = logik_;
+            //logik = logik_;
             //logik = new Logik();
         }
 
@@ -64,25 +64,13 @@ namespace LogikLag
             for (int i = 0; i < 250; i++)
             {
                 Diastole_ = diastoleListe.Min();
-                System.Threading.Thread.Sleep(200);
             }
-                //for (int i = 0; i < logik.UILISTE.Count; i++)
-                //{
-                //    diaSystoliskArray[counter] = logik.UILISTE[i];
-                //    counter++;
-                //    if (counter > 999)
-                //    {
-                //        counter = 0;
-                //    }
-                //}
-            
         }
         public void Systole(List<double> systoleListe)
         {
             for (int i = 0; i < 250; i++)
             {
-                Systole_ = systoleListe.Min();
-                System.Threading.Thread.Sleep(200);
+                Systole_ = systoleListe.Max();
             }
         }
         //public void Diastolisk()

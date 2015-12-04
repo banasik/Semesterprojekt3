@@ -19,19 +19,22 @@ namespace LogikLag
         public List<double> uiList;
         private List<IObserver> observers;
         int counter;
-        //private Analyse AnalyseKlasse = new Analyse();
+        double diastoleVærdi;
+        double systoleVærdi;
+        private Analyse AnalyseKlasse = new Analyse();
 
         public Logik()
         {
-
             updateUI = new Thread(() => updateListe());
-            //updateDia = new Thread(() => getDia());
-            //updateSys = new Thread(() => getSys());
+            updateDia = new Thread(() => getDia());
+            updateSys = new Thread(() => getSys());
             //updateUI.Start();
             uiList = new List<double>();
             observers = new List<IObserver>();
             UILISTE = new List<double>();
             counter = 0;
+            diastoleVærdi = new double();
+            systoleVærdi = new double();
             for (int i = 0; i <799; i++)
             {
                 UILISTE.Add(0);
@@ -41,8 +44,8 @@ namespace LogikLag
         public void StartTraad()
         {
             updateUI.Start();
-            //updateDia.Start();
-            //updateSys.Start();
+            updateDia.Start();
+            updateSys.Start();
         }
 
         private void updateListe()
@@ -72,22 +75,24 @@ namespace LogikLag
                     //Thread.Sleep(1);                
             }
         }
-        //public double setDia()
-        //{
-        //    while(isRunningLogik())
-        //    {
-        //        AnalyseKlasse.Diastole(UILISTE);
-        //    }
-        //    return AnalyseKlasse.Diastole_;
-        //}
-        //public double Sys()
-        //{
-        //    while (isRunningLogik())
-        //    {
-        //        AnalyseKlasse.Systole(UILISTE);
-        //    }
-        //    return AnalyseKlasse.Systole_;
-        //}
+
+        public void getDia()
+        {
+            AnalyseKlasse.Diastole(UILISTE);
+            diastoleVærdi = AnalyseKlasse.Diastole_;
+            
+            //while (isRunningLogik())
+            //{
+            //   AnalyseKlasse.Diastole(diastoleListe);
+            //}
+            //return AnalyseKlasse.Diastole_;
+        }
+        public void getSys()
+        {
+            AnalyseKlasse.Systole(UILISTE);
+            systoleVærdi = AnalyseKlasse.Systole_;
+        }
+        
         
         public List<double> UILISTE;
         public bool isRunningLogik()
