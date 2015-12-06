@@ -249,7 +249,7 @@ På målingen for 10 mmHg ses en del rystelser(udsving på signalet). Som det se
 Ved målingen for 100mmHg skulle der måles en spænding på 2V. Som det ses på figur \ref{fig:vandtest_måling100} ligger den ikke præcist på 2V. Som under målingen for 10 mmHg skal transduceren være i samme højde som målepunktet. Her er målepunktet lavt, men det skaber stadig en del usikkerhed.   
 \section{Software}
 \subsection{Design}
-I dette beskrives systemets softwaredesign på baggrund af systembeskrivelsen og kravspecifikationen. De overvejelser vi har gjort i forbindelse med design og implementering af software vil blive præsenteret i dette afsnit. 
+I dette beskrives systemets softwaredesign på baggrund af systembeskrivelsen og kravspecifikationen. De overvejelser vi har gjort i forbindelse med design af software vil blive præsenteret i dette afsnit. 
 
 \subsubsection{Overordnet sekvensdiagram}
 Overordnet set ønskes det at udvikle et system, der kan interagerer med en forsker. Diagrammet herunder viser at forskerens opgave består i at starte, tage stilling til nulpunktsjustering og kalibrering samt gemme de ønskede data. Diagrammet er en simpel illustration som viser systemets adfærd gennem alle fem Use Cases. Formålet med dette diagram er udelukkende at skabe et overblik over det samlede system.
@@ -353,17 +353,86 @@ Ovenstående diagram viser at for at få gemt data fra signalet, kræver det at 
 Ved afslutning af en måling ses det at forsker trykker på Afslut-knap på display, hvorefter indhentening af data fra DAQ stoppes og programmet lukker ned.
 
 \subsection{Implementering}
-\begin{enumerate}
-\item Observer - strategy
-\item Oprettelse af metoder - trelagsmodel
-\item Forklar princippet bag kalibrering og nulpunktsjustering, beregningerne
-\item Visning i graf
-\item Bestemmelse af systolisk, diastolisk og puls 
-\item GUI design
-\item Aktivitetsdiagrammer
-\item Klassediagrammer
-\item Database
-\end{enumerate}
+\subsubsection{Indledende implementeringsovervejelser}
+På baggrund af designfasen for softwaren kan implementeringen af softwaren påbegyndes. Softwaredesignet viser at systemet skal implementeres med en GUI applikation, som aktøren kan interagere med systemet gennem. Derudover er det kendt at softwaren skal indeholde en række klasser, hvor i funktionalitetér som kalibrering, nulpunktsjustering, digitalt filter og indhentning af systolisk-, diastoliske- og puls-værdier skal placeres. I det følgende beskrives de overvejelser vi har gjort i forhold til implementering af disse funktionaliteter og hele softwaresystemet generelt. 
+
+Implementeringen af softwaren sker i Visual Studio 2013 i sproget C-sharp. Dette er valgt da programmet er godt til arbejde med GUI applikationer, samt til håndtering af tråde og tråd kommunikation. Tråde benyttes i softwaren, da systemet der skal implementeres er et eventdrevet system, hvilket vil sige at systemet skal kunne håndtere mange handlinger på en gang. Handlingerne igangsættes af events der kommer af aktørens interaktion med systemet. Tråd kommunikationen fungerer således at en tråd kan sende et signal ud som andre tråde kan reagere på. 
+
+\subsubsection{Klasse implementering}
+På baggrund af designmodellerne er det besluttet at opbygge systemkoden efter principperne i en trelagsmodel. Trelagsmodellen indeholder et præsentations-lag, et logik-lag og et data-lag. Præsentations-laget består af de klasser som systemets aktører har tilgang til. Logik-laget er det analyserende lag. Det er således i dette lag at signalet behandles. Logik-laget har tilgang til de andre lag som det eneste. Det betyder at præsentations-laget og data-laget ikke kan kommunikere sammen, derved skal denne kommunikation foregå gennem logik-laget. Data-laget er tilgangen til den implementerede database og til indhentning af blodtrykssignalet fra hardware.
+
+Fordelen ved trelagsmodel opbygningen er at det skaber et godt overblik i koden, og skaber en kode med lav kobling, da hver enkelt klasse har hvert sit specifikke ansvar. Hvilket gør at koden er let at vedligeholde og ændre hvis funktionaliteter ønskes opbygget anderledes. Et overordnet klassediagram over systemet er udarbejdet på baggrund af præcisering af applikationsmodellen, se figur 3.22.
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=1.0\textwidth]{Figurer/Klassediagram}
+	\caption{Klassediagram}
+	%\label{fig:Klassediagram over implementerede klasser i SW}
+\end{figure}
+
+\subsubsection{Brugergrænseflade}
+Displayet (GUI) er aktørens, i dette tilfælde forskerens, indgang til systemet. Derfor er det vigtigt at den er opbygget efter hvad der følger forskerens logik. Til at klarlægge dette er principperne om en god brugergrænseflade taget i mente. Brugen af disse kommer til udtryk ved, at det tydeligt fremgår af hver knap eller label hvad dens formål er, samt at størrelsen af det enkelte komponent er tilstrækkelig stor til at det ikke er til at overse. Komponenterne på display er logisk placeret, det vil sige at de dele som forsker først skal forholde sig til og eventuelt udfylde er placeret i venstre side af display. Dette vil give mening såfremt systemet benyttes af personer fra den vestlige verden, hvor læseretningen er fra venstre mod højre. 
+
+Det er et krav at forsker indtaster et forsøgsnavn inden at en måling startes, derfor er komponenterne implementeres således at knappen ”Start måling” først bliver aktiveret når der er indtastet noget i tekstboksen hvori forsøgsnavn skal indtastes. Systoliske-, diastoliske og puls-værdi er placeret efter hvilken rækkefølge det typisk ses på standard blodtryksapparater. 
+
+\textbf{Indsæt figur - Evt. alle tre form i et billede}
+
+Af figur xx ses det at grafen er en væsentlig del af display’s brugergrænseflade. Grafen implementeres som en Windows Form komponent. Det vælges at få vist signalet som en kurve, og førsteaksen indstilles til tid i sekunder fra 0 til 7 sekunder, og andenaksen til en minimums værdi på 0 mmHg og en maksimum værdi på 250 mmHg, hvilket er givet i kravspecifikationen. 
+
+\subsubsection{Observer / Strategy}
+\textbf{Skriv om princippet bag Observer og Strategy}
+
+Samplefrekvensen er som krav givet til 1000 Hertz. Hvilket svarer til at systemet modtager 1000 samples i sekunder. Varigheden af en sample er givet ved: \textbf{Indsæt beregning}
+
+Det har vist sig under arbejdet med softwaren, at systemet ikke kan følge med til at modtage så mange målinger i sekundet. Derfor er det valgt at skære i antallet af målinger pr. sekund der skal videre bearbejdes i logik-laget og udskrives i præsentations-laget. Antallet skæres ned til 50 målinger pr. sekund. Dette gøres ved at gennemsnittet af 20 målinger efter hinanden bestemmes, hvorefter gennemsnitsværdien returneres og gemmes i listen der sendes videre i systemet. Herefter findes så gennemsnittet af de næste 20 målinger og således fortsættende.   
+
+\subsubsection{Nulpunktsjustering}
+Formålet med en nulpunktsjustering er at flytte signalets offset enten op eller end, så det atmosfæriske tryk altid er placeret ved 0 volt på outputsignalet. Dette gøres ved at åbne for den tilsluttede transducer til systemet, så det atmosfæriske tryk måles. Ud fra denne værdi kan justeringsfaktoren så bestemmes ved, hvor x er det målte atmosfæriske tryk i volt modtaget gennem DAQ’en:
+\textbf{Indsæt beregning}
+
+Af ligningen ses det at justeringsfaktoren både vil kunne blive positiv og negativ, afhængig af om offset værdien skal rykkes op eller ned for at blive placeret i nul. Optimalt set vil det atmosfæriske tryk være en konstant værdi ved den samme måling, men det opleves at der er en smule støj på signalet og derfor vil den målte værdi være en tilnærmelse af det atmosfæriske tryk. Systemet ønskes nulpunktsjusteret for at sikre at alle de målte blodtrykssignaler har samme udgangspunkt. Hvilket gør at målingerne kan sammenlignes. Justeringsfaktoren skal lægges til samtlige samples fra DAQ’en som ønskes udskrevet i graf på display. 
+
+\subsubsection{Kalibrering}
+Ved kalibrering ønskes det at bestemme hardwarens visningsfejl. I dette projekt betyder det at omsætningsfaktoren fra volt til millimeter kviksølv bestemmes. Denne bestemmes ved at tilkoble en væskesøjle til systemet. Væskesøjlen fyldes med vand til den vil give et kendt mængde tryk på systemet angivet i mmHg. Herefter kan output i volt fra hardwaren måles. Omsætningsfaktor er givet ved:
+
+\textbf{Indsæt beregning}
+
+x angiver trykket fra væskesøjlen, denne hardcodes til 50 mmHg. y angiver den målte spændingsoutput på hardwaren. Denne indtaster forsker i implementeret teksboks i KalibreringsForm. Optimalt set er omsætningsfaktoren givet ved \textbf{Indsæt beregning}, hvor 250 mmHg er det maksimale blodtryk systemet kan måle og 5 Volt er maks spændingen i volt. Grafisk vil det se ud som vist på figur 3.8 under hardware modultest. Af figur 3.8 kan det aflæses at den optimale outputspænding ved 50 mmHg er 1 Volt. Omsætningsfaktoren skal ganges på samtlige sample-værdier der kommer fra DAQ’en og som ønskes udskrevet på graf i display. 
+
+Det er vigtigt at pointere at nulpunktsjusteringsfaktoren lægges til samtlige værdier i signalet førend at kalibreringsfaktoren ganges på. Dette implementeres med en for-løkke i logik-klassen som vist på figur 3.23.
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=1.0\textwidth]{Figurer/AktKaliNul}
+	\caption{Aktivitetsdiagram}
+	%\label{fig:Aktivitetsdiagram for omregning af signalet}
+\end{figure}
+
+\subsubsection{Digitalt Filter}
+Formålet med implementering af et digitalt filter er at fjerne støj fra det indhentede signal. Dette gøres ved at udglatte signalet. Til dette kan en række forskellige filtre benyttes. Vi har valgt at implementere et glidende middelværdifilter (moving average filter). Fordelen ved dette filter er at det er simpelt at forstå og at det er optimalt at bruge på signaler i tidsdomænet. Skulle signalet være vist i frekvensdomænet ville valget have faldet på et helt andet filter. 
+
+Det glidende middelværdifilter fungerer ved midling af en række punkter fra inputsignalet for at frembringe hvert punkt i outputsignalet. Hvilke punkter der tages fra inputsignalet vil flytte sig en plads for hvert beregnet outputsignal punkt, heraf kommer den glidende effekt. Matematisk er filtret givet ved:
+
+\textbf{Indsæt beregning}
+
+Hvor x[] er inputsignalet, y[] er outputsignalet og M er antallet af punkter der benyttes i det glidende middelværdifilter. Denne beregning benytter sig udelukkende af punkter placeres på den samme side af output sample nummeret, hvilket vil føre til en relativ forskydning mellem input og output. M sættes til 50. Implementeringen af filtret er vist i et aktivitetsdiagram på figur 3.24.
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=1.0\textwidth]{Figurer/AktFiltrering}
+	\caption{Aktivitetsdiagram af metoden Filtrering()}
+	%\label{fig:Aktivitetsdiagram for metoden filtrering() i klassen Digitalt filter}
+\end{figure}
+Systemet gør det muligt for forsker selv at vælge om signalet ønskes vist filtreret eller ufiltreret. Dette vælges på brugergrænsefladen. Vælges visning af det ufiltrede signal sendes det indhentede signal naturligvis ikke gennem det digitale filter. 
+
+\subsubsection{Analyse}
+Analyse dækker over indhentningen af de systoliske-, diastoliske- og puls-værdi ud fra blodtrykssignalet. Dette er implementeret i en klasse kaldet Analyse(). Heri er placeret algoritmer der gemmer målinger i et array[] med 3000, når dette array så er fyldt op sendes det op til præsentationslaget, hvor den pågældende maximum og minimums værdi udskrives på display. I en blodtrykskurve er den systoliske værdi givet ved maximum på kurven og den diastoliske er givet ved minimums værdien på kurven. Når dette er sket tømmes array’et og processen kører igen og igen, så værdierne opdateres i display hvert 3 sekund. I løbet af 3 sekunder vil der være gennemløbet 3-5 blodtryksperioder, afhængig af pulsfrekvensen. Dermed vil samtlige systoliske og diastoliske værdier ikke blive udskrevet. Intervallet på 3 sekunder er valgt da det er passende tid til at kunne nå og aflæse den pågældende værdi.
+
+Pulsen bestemmes ved at tælle antallet af systoliske-værdier på 10 sekunder, hvorefter denne værdi ganges med 6. Da puls er angivet i slag pr. minut. Det er en udfordring at bestemme hvornår der præcist er gået 10 sekunder, da det er usikkert om den systoliske- og diastoliske værdi opdateres præcist hvert tredje sekund. Dette skyldes at der er implementeres en timer i programmet, som er baseret på tråde. Ved implementering af mange tråde kan det føre til et langsomt gennemløb af koden. Parametre som computerens processer og RAM størrelse spiller også ind på hvor hurtigt en kode kan gennemløbes. 
+
+\textbf{Gennemsnit af værdier?}
+
+\subsubsection{Database}
+I systemet er der implementeret en lokal database. Formålet med databasen er at lagre de målte ufiltrerede blodtrykssignaler. Det er valgt at implementere databasen som typen SQL, da denne database-type indeholder de funktioner som er nødvendige for dette system. Data gemmes i tabeller i denne type database, derfor er relevante tabeller oprettet. Et blodtrykssignal indeholder en stor mængde datapunkter, derfor gemmes signalet i en BLOB (Binar Large OBject) hvor en række binære datapunkter gemmes som en enkelt enhed i databasen. Dette er valgt for at spare på data pladsen i databasen. 
+
+\textbf{Filnavnet som hvert enkelt signal gemmes under? Forsøgsnavn…}
 
 \subsection{Modultest}
 \begin{enumerate}
