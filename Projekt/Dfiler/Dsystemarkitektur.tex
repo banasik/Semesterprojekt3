@@ -102,21 +102,15 @@ BW = 2250 Hz
 \end{equation}
 Da båndbredden ligger over knækfrekvensen for lavpas filtret, er dette godkendt. Hvis båndbredde havde ligget under knækfrekvensen vil operationsforstærkeren ikke have kunnet arbejde med de ønskede frekvenserne. Derfor er det vigtigt at båndbredden er bred nok til at kunne indeholde frekvenser fra begge side af knækfrekvensen.\\
 \newline 
-For at imødekomme usikkerheden ved Analog Discoverys små signaler, laves et kredsløb efter spændingsdelerprincippet. Signalerne fra Analog Discovery skal sendes igennem dette kredsløb, hvor de efter spændingsdeler princippet gøres mindre. I kredsløbet benyttes to modstande, hvis værdier er $ R_1=100k\Omega $ og $ R_2 = 1k\Omega $. Da vi kender signalet som skal ind i INA114 og modstandene i kredsløbet, kan størrelsen af den spænding, som skal sendes fra Analog Discovery, findes:
+For at imødekomme usikkerheden ved Analog Discovery med lave spændinger, laves et kredsløb efter spændingsdelerprincippet. Signalerne fra Analog Discovery skal sendes igennem dette kredsløb, hvor de efter spændingsdeler princippet gøres mindre. I kredsløbet benyttes to modstande, hvis værdier er $ R_1=100k\Omega $ og $ R_2 = 1k\Omega $. Da vi kender signalet som skal ind i INA114 og modstandene i kredsløbet, kan størrelsen af den spænding, som skal sendes fra Analog Discovery, findes:
 \begin{equation}
 \begin{split}
 U_{INA} = U_{analog} \cdot \frac{R_2}{R_1 + R_2} \\
-5mV = U_{analog}\cdot \frac{1k\Omega}{100k\Omega+1k\Omega} \Rightarrow U_{analog}= 505mV
+11.25mV = U_{analog}\cdot \frac{1k\Omega}{100k\Omega+1k\Omega} \Rightarrow U_{analog}=1.1362 V
 \end{split}
 \end{equation} 
 Derved kan Analog Discovery sende signaler med en højere spænding ud og usikkerheden mindskes. Der er taget højde for at, hvis modstandene i kredsløbet bliver for store, vil det skabe en termisk usikkerhed. Derfor er modstandene valgt som de er. Dette er kun under simulering, når transduceren benyttes, bruges spændingsdeleren ikke.  
-\begin{figure}[H]
-	\centering
-	\includegraphics[width=1.0\textwidth]{Figurer/diagram_over_HW}
-	\caption{Diagram over HW}
-	\label{fig:HW}
-\end{figure}
-
+  
 \subsubsection{Lavpas}
 For at opnå den ønskede effekt i lavpasfilteret, blev det oplyst at $ f_c=50$ Hz, $ f_s = 1$kHz, $ R_1 = R_2 $ og $ C_2=680 nF$. Ud fra disse værdier, udregnes de resterende komponentværdier for filteret.
 
@@ -136,7 +130,7 @@ Derved fås en overføringsfunktion som hedder:
 \begin{equation}
 H(z)=\frac{\left(\dfrac{1}{\sqrt{R1\cdot R2 \cdot C1\cdot C2}}\right)^2}{s^2+ \left( \dfrac{1}{C2} \cdot \left( \dfrac{R1+R2}{R1\cdot R2}\right) \cdot s \right) +\left( \dfrac{1}{\sqrt{R1\cdot R2 \cdot C1\cdot C2}}\right)^2 }
 \end{equation}
-Da det bliver oplyst at $ R1=R2 $, kan funktionen reduceres. Den kan samtidig simplificeres. I sidste ende fås funktionen, se Bilag for nærmere udregninger: 
+Da det bliver oplyst at $ R1=R2 $, kan funktionen reduceres. Den kan samtidig simplificeres. I sidste ende fås oveføringsfunktionen, se Bilag for nærmere udregninger: 
 \begin{equation}
 H(z)=\dfrac{\dfrac{1}{C1 \cdot C2\cdot R^2}}{s^2+s\cdot \dfrac{2}{R\cdot C2}+ \dfrac{1}{C1\cdot C2\cdot R^2}}
 \end{equation}
@@ -181,6 +175,15 @@ Udregning af den præcise oversving $ \zeta $ ud fra de benyttet komponentværdi
 \zeta = 0.709
 \end{split}
 \end{equation}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=1.0\textwidth]{Figurer/diagram_over_HW}
+	\caption{Diagram over HW}
+	\label{fig:HW}
+\end{figure}
+
+På figur \ref{fig:HW} ses et diagram over, hvordan hele kredsløber er bygget op. Her ses kredsløbet for realiseringen med transduceren og for simuleringen med Analog Discovery.
 
 \subsection{Modultest}
 \subsubsection{Forstærkning}
