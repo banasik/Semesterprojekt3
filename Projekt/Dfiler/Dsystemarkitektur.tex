@@ -64,7 +64,14 @@ Ved en typisk blodtryksmåling forekommer der ikke signal over 50 Hz, samtidigt 
 
 \subsection{Implementering}
 \subsubsection{Forstærkning}
-For at få den rette forstærkning er det blevet valgt, at benytte operationsforstærkeren INA-114. Her kan transduceren sættes på med det differentierede signal. Under opbygning og modultestning vil det differentierede signal blive simuleret af Analog Discovery. \\
+For at få den rette forstærkning er det blevet valgt, at benytte instrumentationsforstærkeren INA-114. Her kan transduceren sættes på med det differentierede signal. INA114 er valgt da følgende gælder\cite{Instrumentation} for instrumentationsforstærkere: 
+\begin{itemize}
+	\item Differentielt input - single ended output 
+	\item Gain justering med ændring af kun én modstand 
+	\item Meget høj indgangsimpedans 
+	\item Stor Common Mode Rejection Ratio(CMRR)
+\end{itemize}
+Under opbygning og modultestning vil det differentierede signal blive simuleret af Analog Discovery. \\
 For at udregne den korrekte forstærkning, bruges følsomheden fra transduceren og eksistationsspændingen.
 Først udregnes det maksimale output fra transduceren:   
 \begin{equation}
