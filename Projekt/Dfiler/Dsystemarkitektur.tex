@@ -384,22 +384,30 @@ Af figur xx ses det at grafen er en væsentlig del af display’s brugergrænsef
 \subsubsection{Observer / Strategy}
 \textbf{Skriv om princippet bag Observer og Strategy}
 
-Samplefrekvensen er som krav givet til 1000 Hertz. Hvilket svarer til at systemet modtager 1000 samples i sekunder. Varigheden af en sample er givet ved: \textbf{Indsæt beregning}
-
+Samplefrekvensen er som krav givet til 1000 Hertz. Hvilket svarer til at systemet modtager 1000 samples i sekunder. Varigheden af en sample er givet ved: 
+\begin{equation}
+\frac{1}{f_s}=\frac{1}{1000}=0.001 sek
+\end{equation}
 Det har vist sig under arbejdet med softwaren, at systemet ikke kan følge med til at modtage så mange målinger i sekundet. Derfor er det valgt at skære i antallet af målinger pr. sekund der skal videre bearbejdes i logik-laget og udskrives i præsentations-laget. Antallet skæres ned til 50 målinger pr. sekund. Dette gøres ved at gennemsnittet af 20 målinger efter hinanden bestemmes, hvorefter gennemsnitsværdien returneres og gemmes i listen der sendes videre i systemet. Herefter findes så gennemsnittet af de næste 20 målinger og således fortsættende.   
 
 \subsubsection{Nulpunktsjustering}
 Formålet med en nulpunktsjustering er at flytte signalets offset enten op eller end, så det atmosfæriske tryk altid er placeret ved 0 volt på outputsignalet. Dette gøres ved at åbne for den tilsluttede transducer til systemet, så det atmosfæriske tryk måles. Ud fra denne værdi kan justeringsfaktoren så bestemmes ved, hvor x er det målte atmosfæriske tryk i volt modtaget gennem DAQ’en:
-\textbf{Indsæt beregning}
-
+\begin{equation}
+faktor_{jus}=0-(x)
+\end{equation}
 Af ligningen ses det at justeringsfaktoren både vil kunne blive positiv og negativ, afhængig af om offset værdien skal rykkes op eller ned for at blive placeret i nul. Optimalt set vil det atmosfæriske tryk være en konstant værdi ved den samme måling, men det opleves at der er en smule støj på signalet og derfor vil den målte værdi være en tilnærmelse af det atmosfæriske tryk. Systemet ønskes nulpunktsjusteret for at sikre at alle de målte blodtrykssignaler har samme udgangspunkt. Hvilket gør at målingerne kan sammenlignes. Justeringsfaktoren skal lægges til samtlige samples fra DAQ’en som ønskes udskrevet i graf på display. 
 
 \subsubsection{Kalibrering}
 Ved kalibrering ønskes det at bestemme hardwarens visningsfejl. I dette projekt betyder det at omsætningsfaktoren fra volt til millimeter kviksølv bestemmes. Denne bestemmes ved at tilkoble en væskesøjle til systemet. Væskesøjlen fyldes med vand til den vil give et kendt mængde tryk på systemet angivet i mmHg. Herefter kan output i volt fra hardwaren måles. Omsætningsfaktor er givet ved:
+\begin{equation}
+faktor=\dfrac{x [mmHg]}{y [Volt]}
+\end{equation}
 
-\textbf{Indsæt beregning}
-
-x angiver trykket fra væskesøjlen, denne hardcodes til 50 mmHg. y angiver den målte spændingsoutput på hardwaren. Denne indtaster forsker i implementeret teksboks i KalibreringsForm. Optimalt set er omsætningsfaktoren givet ved \textbf{Indsæt beregning}, hvor 250 mmHg er det maksimale blodtryk systemet kan måle og 5 Volt er maks spændingen i volt. Grafisk vil det se ud som vist på figur 3.8 under hardware modultest. Af figur 3.8 kan det aflæses at den optimale outputspænding ved 50 mmHg er 1 Volt. Omsætningsfaktoren skal ganges på samtlige sample-værdier der kommer fra DAQ’en og som ønskes udskrevet på graf i display. 
+x angiver trykket fra væskesøjlen, denne hardcodes til 50 mmHg. y angiver den målte spændingsoutput på hardwaren. Denne indtaster forsker i implementeret teksboks i KalibreringsForm. Optimalt set er omsætningsfaktoren givet ved 
+\begin{equation}
+\dfrac{250 [mmHg]}{5 [V]}=50
+\end{equation}
+, hvor 250 mmHg er det maksimale blodtryk systemet kan måle og 5 Volt er maks spændingen i volt. Grafisk vil det se ud som vist på figur 3.8 under hardware modultest. Af figur 3.8 kan det aflæses at den optimale outputspænding ved 50 mmHg er 1 Volt. Omsætningsfaktoren skal ganges på samtlige sample-værdier der kommer fra DAQ’en og som ønskes udskrevet på graf i display. 
 
 Det er vigtigt at pointere at nulpunktsjusteringsfaktoren lægges til samtlige værdier i signalet førend at kalibreringsfaktoren ganges på. Dette implementeres med en for-løkke i logik-klassen som vist på figur 3.23.
 \begin{figure}[H]
@@ -413,8 +421,9 @@ Det er vigtigt at pointere at nulpunktsjusteringsfaktoren lægges til samtlige v
 Formålet med implementering af et digitalt filter er at fjerne støj fra det indhentede signal. Dette gøres ved at udglatte signalet. Til dette kan en række forskellige filtre benyttes. Vi har valgt at implementere et glidende middelværdifilter (moving average filter). Fordelen ved dette filter er at det er simpelt at forstå og at det er optimalt at bruge på signaler i tidsdomænet. Skulle signalet være vist i frekvensdomænet ville valget have faldet på et helt andet filter. 
 
 Det glidende middelværdifilter fungerer ved midling af en række punkter fra inputsignalet for at frembringe hvert punkt i outputsignalet. Hvilke punkter der tages fra inputsignalet vil flytte sig en plads for hvert beregnet outputsignal punkt, heraf kommer den glidende effekt. Matematisk er filtret givet ved:
-
-\textbf{Indsæt beregning}
+\begin{equation}
+y[i]=\frac{1}{M}\cdot\sum\limits_{j=0}^{M-1} x[i+j]
+\end{equation}
 
 Hvor x[] er inputsignalet, y[] er outputsignalet og M er antallet af punkter der benyttes i det glidende middelværdifilter. Denne beregning benytter sig udelukkende af punkter placeres på den samme side af output sample nummeret, hvilket vil føre til en relativ forskydning mellem input og output. M sættes til 50. Implementeringen af filtret er vist i et aktivitetsdiagram på figur 3.24.
 \begin{figure}[H]
