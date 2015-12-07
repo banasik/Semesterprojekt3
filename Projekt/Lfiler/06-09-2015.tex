@@ -32,7 +32,7 @@ Der er lavet et GUI udkast i Visual Studios. Der er tilføjet forskellige Forms 
 \textbf{Hardware:} Udregning af komponentværdier, samt finde teori bag. Opbygning af filter og forstærkning på fumlebræt. Start af test på filter og modstand. \\
 \\ 
 \textbf{Software:} Der er oprettet klasser til 3-lagsmodellen. Der er kigget på hvordan DAQ-klassen skal tilføjes og hvordan koden skal skrives. Der er taget udgangspunkt i et eksempel der blev fremvist for flere fra studiet, men der er kommet nogle spørgsmål til hvad der helt præcist skal trækkes videre fra eksempel.
-
+\newpage
 \section{Dato: 21-10-2015}
 \hrule
 \textbf{Omhandler:} Hardware og oprettelse af to-do liste af rapport og dokumentation.
@@ -41,9 +41,20 @@ Der er lavet et GUI udkast i Visual Studios. Der er tilføjet forskellige Forms 
 
 \underline{\textbf{Logbog}}
 
-\textbf{Hardware: }Byttet om på modstande i forhold til INA-114 og test af udgangssignal. 
+\textbf{Hardware: }Byttet om på modstande i forhold til INA-114 og test af udgangssignal. Lavet tegning/figur over, hvordan hele systemet interagerer. Fra Transducer til DAQ.  
 \\
 Der er udover hardware blevet oprettet to-do lister til rapport og dokumentationen, sådan at de enkelde dele af hver er skrevet ned.
+
+\section{Dato: 22-10-2015}
+\hrule
+\textbf{Omhandler:} Hardware.
+
+\textbf{Ansvarlig:} Ditte og Albert.
+
+\underline{\textbf{Logbog}}
+
+\textbf{Hardware: }Systemet er nu bygget færdigt. Der er kun lavet små teste på det. Der er taget billeder af fumlebræt, så det er nemmere at tjekke om batterier sidder rigtigt. Vi har indtil videre rodet lidt rundt i det.  
+\\
 
 \section{Dato: 27-10-2015}
 \hrule
@@ -66,8 +77,8 @@ Vi mangler at lave IBD, der skal stemme overens med BDD'et. Så mangler vi Sekve
 \textbf{Hardware: } Lavet et komponent-liste diagram i Visio Studios, og dannet en figur ud fra dette. 
 \\
 Vi har lavet spørgsmål til Peter i morgen for hold til Hardware delen (signal, lavpasfilter test)
->>>>>>> origin/master
 
+\newpage
 \section{Dato: 28-10-2015}
 \hrule
 \textbf{Omhandler:} Opdele programmeringen i projekter
@@ -77,6 +88,7 @@ Vi har lavet spørgsmål til Peter i morgen for hold til Hardware delen (signal,
 \underline{\textbf{Logbog}}
 
 \textbf{Software: }Vi har besluttet at opdele koden i små projekter, så hvert lag/del af programmet er i sit eget projekt. Dette er valgt da det så er lettere at arbejde flere personer med koden. Koden opbygges efter principperne i tre-lagsmodellen. Derudover kan der nu indlæses data fra DAQ'en via brug af tråde, dog udenom Logiklaget. 
+\textbf{Hardware: } Der laves test på Lavpas og forstærkning.  
 \\
 
 \section{Dato: 02-11-2015}
@@ -89,6 +101,17 @@ Vi har lavet spørgsmål til Peter i morgen for hold til Hardware delen (signal,
 
 \textbf{Software: }Database er blevet implementeret, så der i databasen skal gemmes 'Forsøgsnavn, AutogeneretNR og det ufiltrede signalet'. Logiklaget er på nuværende tidspunkt ikke implementeret helt, dette skal jeg have inputs til fra gruppen på tirsdagensmøde.  
 I koden har jeg tilføjet en række kommentarer til senere brug.
+\\
+
+\section{Dato: 05-11-2015}
+\hrule
+\textbf{Omhandler:} Hardware
+
+\textbf{Ansvarlig:} Ditte
+
+\underline{\textbf{Logbog}}
+
+\textbf{Hardware: } Pga. frustrationer over test som ikke virkede og usikkerhed om komponentværdier snakkes der med Arne Justesen, om filteret. Efter flere test og forsøg sammen, fortæller Arne at han mente det virkede som det skulle. Problemet ligger i at vi ikke kan aflæse det vi får ud rigtigt. Vi havde blandet DC og AC sammen og havde gemt at de begge spiller ind og havde derfor aflæst det forkert.  
 \\
 
 \section{Dato: 04-11-2015}
@@ -128,32 +151,35 @@ Til hver Use Case er der udarbejdet et sekvensdiagram med de nødvendige metodek
 
 \textbf{Software, hardware og dokumentation: }Først blev andet udkast til domænemodellen vendt i gruppen, og fælles løsning blev udarbejdet. Derefter blev alle sekvensdiagrammer til hver enkelt Use Case tegnet ind i Visio. Derefter blev samtlige diagrammer samlet og korte beskrivelser tilføjet. Til slut blev diagrammer + kravspecifikation sendt til Gruppe 5. 
 På hardware siden er det blevet diskutteret om waveform-billeder skal placeres i selve dokumentationen eller som bilag. Konklusionen blev at er de vigtige for forståelsen af den skrevne dokumentation og test placeres billedet i dokumentationen. Herefter er test af lavpasfiltret blevet dokumenteret i Dokumentationen.
-\\
 
+\newpage
 \section{Dato: 13-11-2015}
 \hrule
-\textbf{Omhandler:} Software-kode: Implementering af Observer og strategy
+\textbf{Omhandler:} Software-kode: Implementering af Observer og strategy. Hardware:  
 
-\textbf{Ansvarlig:} Mathias og Anne
+\textbf{Ansvarlig:} Mathias, Anne
 
 \underline{\textbf{Logbog}}
 
 \textbf{Software: }Vi har oplevet store problemer med at få flyttet oprettelsen af tråde fra præsentationslaget ned i logiklaget. Dette kan løses med Observer-Strategy princippet. 
 Implementeringen: Der tages udgangspunkt i et eksempel fra ITS3-undervisningen. ConsumerSubjekt placeres som en metode i logiklaget, denne skal arve fra klassen Subject. Et interface af navnet Observer oprettes, samt en metode i præsentationslaget svarende til ConsumerObserver oprettes. Vores DAQ-data flyttes nu i et array fra logiklaget til præsentationslaget, hvor metoden updateChart() findes. Dette kan lade sig gøre kan updateChart() notify hver eneste gang en ny tråd oprettes i logiklaget. 
 Næste step kodemæssig er at der skal kigges på kalibrering og nulpunktsjustering.
-\\
 
 \section{Dato: 18-11-2015}
 \hrule
-\textbf{Omhandler:} Forsknings delen 
+\textbf{Omhandler:} Forsknings delen, Hardware
 
 \textbf{Ansvarlig:} Mette
 
 \underline{\textbf{Logbog}}
 
 Startede på anatomi og fysiologi delen omkring faglig viden om blodtryk i går. Vil skrive generelt om blodtryk, forhøjet blodtryk og for lavt blodtryk. Hvilke sygdomme kan tilstandene føre til? Hvorfor det er vigtigt at få målt blodtryk. 
+
+Til Hardware er der blevet lavet en vandsøjle test, primært for bare at tjekke om det virker. Der skal senere udføres en anden test, for at kunne fult ud dokumentere det. 
+Udregninger til komponentværdier er påbegyndt, men der er problemer med at få det til at hænge sammen. Specielt Zeta værdien er problematisk, da det ikke vides om den skal være 0.7(de værdier vi indtil nu har arbejdet med) eller 1(som er i ideelle?). 
+
+Software har arbejdet videre med struktur i koden.  
 \\
-\newpage
 \section{Dato: 26-11-2015}
 \hrule
 \textbf{Omhandler:} Generelt udvikling af projektet
@@ -163,7 +189,9 @@ Startede på anatomi og fysiologi delen omkring faglig viden om blodtryk i går.
 \underline{\textbf{Logbog}}
 
 Der er diskuteret hvad der skal gøres med hardwaret. Enigheden lød på at få eksporteret det over i Ultiboard hvor vi derefter kan få lavet et færdigt print. Dette print vil dog ikke være klar til aflevering, men inden eksamen. Indtil videre laves der et VERO Board i stedet for fumlebræt.
-Projektformuleringen og afgrænsning er færdiggjort. Modultest i forhold til vandsøjlen er gjort. Anatomi er færdiggjort. Software skal stadig arbejdes videre med. I gruppen er der problemer med LateX. 
+Projektformuleringen og afgrænsning er færdiggjort. Modultest i forhold til vandsøjlen er gjort. Anatomi er færdiggjort. Software skal stadig arbejdes videre med. I gruppen er der problemer med LateX.
+
+Der arbejdes videre med beregninger af komponentværdier. Det vides nu at zeta skal være 0.7 og vi kan derfor arbejde videre med de værdier vi hele tiden har haft. Beregningerne skrives ind i System arkitekturen. Næsten skridt er nu VERO Board.  
 \\
 
 \section{Dato: 02-12-2015}
@@ -175,4 +203,61 @@ Projektformuleringen og afgrænsning er færdiggjort. Modultest i forhold til va
 \underline{\textbf{Logbog}}
 
 Der er nu blevet oprettet figurlister til både rapporten og dokumentationen. Figurlisten opdaterer selv og tilretter rækkefølgen og numre. Der er blevet lavet referenceliste i både rapporten og dokumentationen. Opdatering af referencelisten fungerer på sammen med som med figurlisten. Retter selv nummer og rækkefølgen.  
+\\
+
+\section{Dato: 03-12-2015}
+\hrule
+\textbf{Omhandler:} Hardware
+
+\textbf{Ansvarlig:} Ditte  
+
+\underline{\textbf{Logbog}}
+
+Lavpasfilteret og forstærkningen er blevet loddet over på en printplade. Det er blevet testen, men signalet der fås er et firkant signal. Det skal testes ydeligere fredag(i morgen).  
+\\
+
+\section{Dato: 04-12-2015}
+\hrule
+\textbf{Omhandler:} Software, Hardware
+
+\textbf{Ansvarlig:} Ditte  
+
+\underline{\textbf{Logbog}}
+
+Printpladen er testes ved en vandsøjle test. Den virker som den skal. Systemarkitektur for Hardware er skrevet færdig. Der er blevet udført endnu en test på forstærkningen, for at kunne dokumenterer det gennem billeder.
+Mathias arbejde på at få indlæst systolisk og diastolisk tryk. Får problemer med tråde og en timer. Anne arbejde på filter, nulpunktjustering og kalibrering.    
+\newpage
+\section{Dato: 06-12-2015}
+\hrule
+\textbf{Omhandler:} Software
+
+\textbf{Ansvarlig:} Anne 
+
+\underline{\textbf{Logbog}}
+
+Software implementering skrevet til dokumentering. Opdateret versionshistorik.   
+\\
+
+\section{Dato: 07-12-2015}
+\hrule
+\textbf{Omhandler:} Software og tekst
+
+\textbf{Ansvarlig:} Ditte 
+
+\underline{\textbf{Logbog}}
+
+Softwaren skal sættes sammen, findes nu i to programmer som skal lægges sammen. 
+Mette skriver Abstract. 
+Martin opdaterer og tjekker use cases i forhold til krav og accepttest. Der tjekkes op på dokumenter der skal underskrives senere.  
+\\
+
+\section{Dato: 08-12-2015}
+\hrule
+\textbf{Omhandler:} Software og tekst
+
+\textbf{Ansvarlig:} Albert 
+
+\underline{\textbf{Logbog}}
+
+Der arbejdes på at få softwaren til at hænge sammen. Dvs. den tilpasses og der ændres løbene i kravspek og AT. Gøres klar til AT i morgen. Planlægges at udføre den selv uden Peter, så vi ved hvad der kommer til at ske, når Peter er med.   
 \\
