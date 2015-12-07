@@ -52,22 +52,236 @@ Sekvensdiagrammet fortæller, hvad der sker i selve koden. Igen går det ud fra 
 For at skabe et overblik og indsigt i koden, er der i UML udarbejdet et aktivitetsdiagram og et klassediagram. Aktivitetsdiagrammet går i dybden med en specifik metode. Det er kun blevet gjort for relevante metoder. Her tydeliggøres det, hvordan hver metode fungere og, hvad den indeholder.  Klassediagrammet fortæller hvilke metoder, en klasse indeholder og hvordan klasserne hænger sammen.\\
 \newline  
 Til hardwaren er der blevet brugt Block Definition Diagram(BDD), som viser hvilke blokke et system indeholder og hvilke porte de har. BDD er lavet til at give et overblik over systemet. Ud fra BDD’et er et Internal Block Diagram(IDB) blevet lavet. Her vises, hvilke signaler som findes i systemet og hvordan de sendes rundt. Her vises portene igen og der skal være overensstemmelse  mellem BDD og IBD.    
+\newline 
+Til udarbejdelsen af kredsløb blev Analog Discovery brugt til at simulerer signalet, som i sidste ende skal komme fra transduceren. Først blev kredsløbet opbygget på et fumlebræt, hvor det blev testet for at afprøve om det lever op til kravene. Når det opfylder kravene, flyttes det over på et VEVO Board. VEVO Boardet bliver igen testet før aflevering. 
 
 \section{Systemarkitektur}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=1.0\textwidth]{Figurer/DomaneModel}
+	\caption{Domæne Model}
+	\label{fig:Domaene Model}
+\end{figure}
+
 \subsection{Hardware}
+I hardware delen skal der ligge en forstærkning og et lavpasfilter. Det differentieret signal fra transduceren skal forstærkes og filtrers før det kan sendes ind i DAQ'en. Se figur 
 \subsection{Software}
 
 \section{Problemidentifikation (design)}
 \subsection{Hardware}
+\subsubsection{Forstærkning}
+Transduceren måler en trykændring som den omsætter til en spænding. Dette er udtrykt ved et differentieret signal, som sendes ind i forstærker-blokken. \\
+Signalet fra transduceren er en lav spænding, som skal forstærkes op, for at passe med DAQ'ens input. Denne forstærkning udregnes ud fra det maksimale output fra transduceren og det maksimale input til DAQ'en. Se beregningerne under Implementering.  
+\newline
+Under simulering bruges Analog Discovery som en funktionsgenerator, der simulere det differentieret signal.  
+
+\subsubsection{Lavpas}
+I projektet skal der laves et 2. ordens lavpasfilter. Filteret skal laves for at sikre, at der ikke opstår aliasering.\\
+Aliasering \cite{DSB} er, hvor signalet bliver gentaget. Når man har signalet i det digitale domæne, bliver spektret for signalet en periodisk funktion. Det vil sige, at den gentager sig selv, efter et bestemt stykke tid. \\
+Det skal sikres, at der ikke kommer overlap mellem signalet og et alias. Da det ellers kunne give anledning til misforståelser. Derfor laves et lavpasfilter, som sikre at der ikke ligger noget signal ved den halve samplingsfrekvens.    
+\newline  
+Lavpasfilteret skal være et Sallen-Key Butterworth-filter med en knækfrekvens på 50 Hz og en samplingsfrekvens på 1kHz. Ud fra oplysninger givet til projektet, vides det at filteret skal dæmpe signalet med 20 dB, under antagelse af at den forekommende støj er mindre end signalet, også når det  forekommer over knækfrekvensen.\\
+Ved en typisk blodtryksmåling forekommer der ikke signal over 50 Hz, samtidigt er signalet her aftaget med ca. 70 dB. For at få signalet, ved den halve samplingsfrekvens til at være $ 1/2 \cdot LSB $, skal det ydeligere dæmpes 20 dB. Derfor oplyses filterets til at være 50 Hz, da dette giver en minimums dæmpning på 20 dB pr. dekade.
 \subsection{Software}
 
 \section{Implementering}
+\subsection{Hardware}
+\subsubsection{Forstærkning}
+For at få den rette forstærkning er det blevet valgt, at benytte instrumentationsforstærkeren INA-114. Her kan transduceren sættes på med det differentierede signal. INA114 er valgt da følgende gælder\cite{Instrumentation} for instrumentationsforstærkere: 
+\begin{itemize}
+	\item Differentielt input - single ended output 
+	\item Gain justering med ændring af kun én modstand 
+	\item Meget høj indgangsimpedans 
+	\item Stor Common Mode Rejection Ratio(CMRR)
+\end{itemize}
+For at udregne den korrekte forstærkning, bruges følsomheden fra transduceren og eksistationsspændingen.
+Først udregnes det maksimale output fra transduceren:   
+\begin{equation}
+9V\cdot 250mmHg \cdot 5\mu\cdot 10^{-5} uV/V/mmHg  = 11.25mV
+\end{equation} 
+Da det er besluttet at det maksimale input til DAQ'en \cite{DSB} er 5V, kan forstærkningen (Gain) nu udregnes: 
+\begin{equation}
+\begin{split}
+5V= 11.25mV \cdot G \\
+G = 444.44
+\end{split}
+\end{equation}
+For at få den rette forstærkning udregnes den eksterne modstand ($ R_g $) til INA114 \cite{INA}.\\ 
+INA114's forstærkning afhænger af størrelsen på $ R_g $, hvis modstanden er stor, er forstærkningen lille og omvendt.  $ R_g $ udregnes ved formlen: 
+\begin{equation}
+\begin{split}
+G=1+\frac{50k\Omega}{R_g}\\
+444.44= 1+\frac{50k\Omega}{R_g} \Rightarrow R_g= 112.75 \Omega
+\end{split}
+\end{equation}
+Derved fås en værdi for den eksterne modstand til INA114, som skaber den ønskede forstærkning.\\
+\newline
+Den ønskede forstærkning kan bruges, da det passer over ens med båndbredden. Dette kan undersøges da produktet af forstærkning og båndbredde er konstant og båndbredden skal ligge over knækfrekvensen for filteret. Se beregning i Dokumentation ligning 3.4.\\
+\newline 
+For at imødekomme usikkerheden ved Analog Discovery der bruger lave spændinger, laves et kredsløb efter spændingsdelerprincippet. Signalerne fra Analog Discovery skal sendes igennem dette kredsløb, hvor de efter spændingsdeler princippet gøres mindre.\\  
+Derved kan Analog Discovery sende signaler med en højere spænding ind i kredsløbet og usikkerheden mindskes. Hvis INA114 skal have 11.25 mV skal Analog Discovery sende 1.1352 V ind.  
+\\
+\newline 
+På figur \ref{fig:HW} ses et diagram af det endelige kredsløb med komponentværdier. Her ses, hvordan det ser ud ved realiseringen med transduceren og ved simuleringen ved Analog Discovery. 
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=1.0\textwidth]{Figurer/diagram_over_HW}
+	\caption{Diagram over HW}
+	\label{fig:HW}
+\end{figure}
+
+\subsubsection{Lavpas}
+For at opnå den ønskede effekt i lavpasfilteret, blev det oplyst at $ f_c=50$ Hz, $ f_s = 1$kHz, $ R_1 = R_2 $ og $ C_2=680 nF$. Ud fra disse værdier, udregnes de resterende komponentværdier for filteret.
+
+Overføringsfunktionen for et 2. ordens filter er: 
+\begin{equation}
+H(z)=\frac{\omega_n^2}{(s^2 + 2\cdot\zeta \cdot \omega_n \cdot s+\omega_n^2)}
+\end{equation}
+
+For at finde overføringsfunktionen for det gældende system, vides det at følge ligninger gælder \cite{Wikilavpas}: 
+\begin{equation}
+\begin{split}
+\omega_n = 2\cdot \pi\ 50 = \dfrac{1}{\sqrt{R1\cdot R2\cdot C1\cdot C2}}\\
+2\cdot \zeta\cdot\omega_n =\frac{1}{C2}\cdot \left( \frac{R1+R2}{R1\cdot R2}\right)
+\end{split}
+\end{equation}
+Derved fås en overføringsfunktion: 
+\begin{equation}
+H(z)=\frac{\left(\dfrac{1}{\sqrt{R1\cdot R2 \cdot C1\cdot C2}}\right)^2}{s^2+ \left( \dfrac{1}{C2} \cdot \left( \dfrac{R1+R2}{R1\cdot R2}\right) \cdot s \right) +\left( \dfrac{1}{\sqrt{R1\cdot R2 \cdot C1\cdot C2}}\right)^2 }
+\end{equation}
+Da det bliver oplyst at $ R1=R2 $, kan funktionen reduceres. Den kan samtidig simplificeres. I sidste ende fås funktionen, se Bilag for nærmere udregninger: 
+\begin{equation}
+H(z)=\dfrac{\dfrac{1}{C1 \cdot C2\cdot R^2}}{s^2+s\cdot \dfrac{2}{R\cdot C2}+ \dfrac{1}{C1\cdot C2\cdot R^2}}
+\end{equation}
+Da der arbejdes med at 2. ordens Butterworth filter, vides det at udsvinget$ \zeta $ skal være 0.7 \cite{ASB}. 
+Den sidste overføringsfunktion sammenlignes med den generelle for 2. ordens systemer. Det gælder at $ C2 = 680\cdot 10^{-9} nF $. Det er muligt at isolerer forskellige lige led. Først isoleres der for modstanden: 
+\begin{equation}
+\begin{split}
+\dfrac{2}{R\cdot C2}= 2\cdot \zeta \cdot \omega_n\\
+\dfrac{2}{R\cdot 680\cdot 10^-9}=2\cdot 0.7 \cdot(2\cdot\pi\cdot 50)\\
+\Downarrow\\
+R= 6687 \Omega
+\end{split}
+\end{equation}
+Derved er modstandene udregnet til $ R = 6687\Omega $. Nu kan der isoleres for den sidste kondensator C1: 
+\begin{equation}
+\begin{split}
+\dfrac{1}{C1\cdot C2\cdot R^2}= \omega^2\\
+\dfrac{1}{C1\cdot 680\cdot 10^{-9}\cdot 6687^2}= (2\cdot \pi \cdot 50)^2\\
+\Downarrow\\
+C1=333\cdot 10^{-9} nF
+\end{split}
+\end{equation}
+Dette betyder, at kondensatoren $ C1 $ har værdien $ 333\cdot 10^{-9} nF $  og  $ C2 = 680\cdot 10^{-9} nF$. Derved er alle komponentværdierne til lavpasfilteret fundet og det kan nu realiseres. \\ 
+\newline
+Under udviklingen af lavpas filteret er komponent størrelserne, blevet ændret for at kunne realisere det. De brugte komponent værdier er: $ R= 6.6 k\Omega $, $ C1= 330\cdot 10 ^{-9} nF$ og $ C2= 680\cdot 10^{-9} nF$.   
+For at være sikker på at filteret har de ønskede karakteristika, laves et bodeplot for den endelig overføringsfunktion: 
+\begin{equation}
+H(z)=\dfrac{62500000000}{610929\cdot \left( s^2+\dfrac{250000}{561}\cdot s + \dfrac{62500000000}{610929} \right)}
+\end{equation}
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.5\textwidth]{Figurer/Bodeplot}
+	\caption{Bodeplot}
+	\label{fig:bodeplot}
+\end{figure}
+Udregning af den præcise oversving $ \zeta $ ud fra de benyttet komponentværdier: 
+\begin{equation}
+\begin{split}
+\dfrac{2}{R\cdot C1}= 2\cdot \zeta\cdot \omega_n\\
+\dfrac{2}{6600\cdot 680\cdot 10^{-9}}= 2\cdot \zeta\cdot (2\cdot \pi \cdot 50)\\
+\Downarrow\\
+\zeta = 0.709
+\end{split}
+\end{equation}
+Dvs. at ændringerne på komponentværdierne ikke har haft en betydelig ændring på $ \zeta $. 
+\subsection{Software}
+
 \section{GUI-beskrivelse}
 \subsection{Algoritmer (grænseværdier)}
 \subsection{Filteret/Ufiltreret}
 \subsection{Lagring af data i Database}
 
 \section{Test}
+\subsection{Hardware}
+\subsubsection{Forstærkning}
+For at teste forstærkningen sendes et differentieret signal ind vha. Analog Discovery, hvor der ses på hvor meget signalet bliver forstærket. 
+På figur \ref{fig:forstaerkning} ses det signal, som sendes ind i forstærknings blokken og det, der måles på udgangen af blokken. 
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=1.0\textwidth]{Figurer/forst_blok}
+	\caption{Forstærknings blok}
+	\label{fig:forstaerkning}
+\end{figure}
+Der sendes et differentieret signal ind i INA114. På udgangen, ses det at signalet er blevet forstærket op til 5 V DC. Herved er maks. input til forstærknings-blokken blevet forstærket så det passer med maks. input til DAQ'en. Signalet bliver ikke ændret på andre måde i denne blok.
+
+\subsubsection{Lavpas}
+For at teste lavpasfilteret foretages målinger med en sinus, hvor frekvensen variere for hver måling. Derved aflæses fasen, mellem indgang- og udgangssignal, og amplituden for hver måling. 
+Ved knækfrekvensen skal fasedrejningen være 90\textdegree. Dette kan aflæses på figur \ref{fig:maeling50Hz}.
+Efter knækfrekvensen skal amplituden gå mod nul. Ved målingen for 60 Hz figur \ref{fig:maeling60Hz}, kan det ses hvordan amplituden er faldet drastisk efter knækfrekvensen. 
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=1.0\textwidth]{Figurer/10Hz}
+	\caption{Måling for 10 Hz}
+	\label{fig:maeling10Hz}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=1.0\textwidth]{Figurer/50Hz}
+	\caption{Måling for 50 Hz}
+	\label{fig:maeling50Hz}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=1.0\textwidth]{Figurer/60Hz}
+	\caption{Måling for 60 Hz}
+	\label{fig:maeling60Hz}
+\end{figure}
+
+\subsubsection{Kalibrering med vandsøjle}
+Efter forstærkning og lavpasfilteret er blevet testet hver for sig, udføres en kalibrering af systemet vha. en vandsøjle. Her bruges en udleveret vandsøjle med tre målepunkter, hvor det er angivet hvor højt trykket er ved hvert af disse punkter, målt i millimeter kviksølv (mmHg). Derved kan det testes om hardware-delen måler den rigtige spænding i forhold til mmHg. Ud fra det maksimale antal volt (V) spænding og mmHg kan det udregnes, hvad hardware skal vise ved 100 mmHg. 
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.3\textwidth]{Figurer/graf_vandtest}
+	\caption{Graf til kalibrering, fra udregninger}
+	\label{fig:graf_vandtest}
+\end{figure}
+
+Testen udføres ved, at fylde vand i søjlen til et bestemt punkt. Transduceren skal være tilkoblet et af de tre målepunkter, mens de andre er lukket til. Transduceren er sat til forstærkningen, der hvor Analog Discovery tidligere har været sat til. Transduceren er tilkoblet 0-9V, ved batterierne. På samme måde som ved simuleringen aflæses målingen på computeren ved hjælp af programmet WaveForms. Da det vides hvilken trykændring der måles på, ved vi fra grafen til kalibreringen, hvilken spænding den skal vise. Dette fortages for de tre målepunkter på vandsøjlen, hvor hver måling sammenlignes med den udregnede graf. For hver måling, skal transduceren flyttes til et af de andre målepunkter.  
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.4\textwidth]{Figurer/vandtest_opstilling}
+	\caption{Opstilling}
+	\label{fig:vandtest_opstilling}
+\end{figure} 
+Opstillingen er gjort klar og der hentes ekstra vand under testen. Vandet skal bruges til at fylde vandsøjlen på til de forskellige målinger. \\
+Ud fra grafen i figur \ref{fig:graf_vandtest} vides, hvad svaret på hver måling skal være. På figur \ref{fig:vandtest_måling50} ses målingen, da transduceren var tilkoblet målepunktet for 50 mmHg. Ud fra figur \ref{fig:graf_vandtest} vides det at målingen skal vise 1V DC.  
+\begin{figure}[H]
+	\centering	\includegraphics[width=0.8\textwidth]{Figurer/50mmhg}
+	\caption{Måling ved 50 mmHg}
+	\label{fig:vandtest_måling50}
+\end{figure}
+
+\begin{figure}[H]
+	\centering	\includegraphics[width=0.8\textwidth]{Figurer/10mmhg}
+	\caption{Måling ved 10mmHg}
+	\label{fig:vandtest_måling10}
+\end{figure}
+På målingen for 10 mmHg ses en del rystelser(udsving på signalet). Som det ses på figur \ref{fig:vandtest_måling10} ligger signalet ikke præcist på 0.2V, dette kan skyldes at under testen, skal transduceren være i højde med målepunktet. Pga. korte ledninger, blev det under testen derfor nødvendigt at løfte og holde transducer, vevo board og Analog Discovery i højde med målepunktet. 
+
+\begin{figure}[H]
+	\centering	\includegraphics[width=0.8\textwidth]{Figurer/100mmhg}
+	\caption{Måling ved 100mmHg}
+	\label{fig:vandtest_måling100}
+\end{figure}
+Ved målingen for 100mmHg skulle der måles en spænding på 2V. Som det ses på figur \ref{fig:vandtest_måling100} ligger den ikke præcist på 2V. Som under målingen for 10 mmHg skal transduceren være i samme højde som målepunktet. Her er målepunktet lavt, men det skaber stadig en del usikkerhed.
+
+\subsection{Software}
+
 \section{Resultater og diskussion}
 \section{Udviklingsværktøjer}
 Gennem projektarbejdet har vi anvendt en række forskellige værktøjer til udvikling af blodtryksmåler-systemet. Disse er yderligere uddybet herunder.
