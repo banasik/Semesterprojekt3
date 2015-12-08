@@ -43,21 +43,26 @@ namespace Blodtryksmålersystem
             myTimer.Interval = 3000;
             myTimer.Elapsed += myTimer_Elapsed;
             logik.Attach(this);
+            GUISetNVærdi();
 
         }
 
         void myTimer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
         {
             MethodInvoker action = delegate
-            { textDia.Text = Convert.ToDouble(logik.diastoleVærdi).ToString();
-            textSys.Text = Convert.ToDouble(logik.systoleVærdi).ToString();
+            { textDia.Text = Convert.ToInt32(logik.diastoleVærdi).ToString();
+            textSys.Text = Convert.ToInt32(logik.systoleVærdi).ToString();
             };
             
             textDia.BeginInvoke(action);
             textSys.BeginInvoke(action);
         }
-       
-        
+
+        private void GUISetNVærdi()
+        {
+            double værdi = -2;
+            logik.nulpunktsJustering(værdi);
+        }
 
         private void textForsøgsnavn_TextChanged(object sender, EventArgs e)
         {

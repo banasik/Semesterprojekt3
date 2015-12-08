@@ -25,5 +25,5 @@ C:\Users\matim_000\Documents\Semesterprojekt3\Projekt\Software Kode NY\Blodtryks
 C:\Users\matim_000\Documents\Semesterprojekt3\Projekt\Software Kode NY\Blodtryksmålersystem\obj\Debug\Blodtryksmålersystem.HovedGUI.resources
 C:\Users\matim_000\Documents\Semesterprojekt3\Projekt\Software Kode NY\Blodtryksmålersystem\obj\Debug\Blodtryksmålersystem.KalibreringGUI.resources
 C:\Users\matim_000\Documents\Semesterprojekt3\Projekt\Software Kode NY\Blodtryksmålersystem\obj\Debug\Blodtryksmålersystem.NulpunktsjusteringGUI.resources
-C:\Users\matim_000\Documents\Semesterprojekt3\Projekt\Software Kode NY\Blodtryksmålersystem\obj\Debug\Blodtryksmålersystem.Properties.Resources.resources
 C:\Users\matim_000\Documents\Semesterprojekt3\Projekt\Software Kode NY\Blodtryksmålersystem\obj\Debug\Blodtryksmålersystem.csproj.GenerateResource.Cache
+C:\Users\matim_000\Documents\Semesterprojekt3\Projekt\Software Kode NY\Blodtryksmålersystem\obj\Debug\LogikLag.Properties.Resources.resources

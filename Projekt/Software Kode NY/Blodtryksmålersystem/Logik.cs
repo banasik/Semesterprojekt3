@@ -16,13 +16,16 @@ namespace LogikLag
         private Thread updateUI;
         private Thread updateDia;
         private Thread updateSys;
-        private Thread update20;
-        public List<double> uiList;
+        private double kalibreringKoef;
         private List<IObserver> observers;
         int counter;
+        int counter1;
         public double diastoleVærdi;
         public double systoleVærdi;
+        private double beregnetNværdi;
         private Analyse AnalyseKlasse = new Analyse();
+        private Nulpunktsjustering NulpunktObjekt = new Nulpunktsjustering();
+        private Kalibrering KalibreringObjekt = new Kalibrering();
         public List<double> GennemsnitListe;
 
         public Logik()
@@ -31,19 +34,21 @@ namespace LogikLag
             updateDia = new Thread(() => getDia());
             updateSys = new Thread(() => getSys());
             //updateUI.Start();
-            uiList = new List<double>();
+            kalibreringKoef = KalibreringObjekt.Kalibrer();
             UILISTE = new List<double>();
             GennemsnitListe = new List<double>();
             observers = new List<IObserver>();
-            List<double> ListAfTal = new List<double>();
+            
             DAQdata.Attach(this);
 
             diastoleVærdi = new double();
             systoleVærdi = new double();
-            for (int i = 0; i < 799; i++)
+            for (int i = 0; i < 299; i++)
             {
                 UILISTE.Add(0);
             }
+            counter1 = 0;
+            counter = 0;
         }
 
         public void StartTraad()
@@ -59,34 +64,23 @@ namespace LogikLag
         {
             while (isRunningLogik())
             {
-                //uiList = DAQdata.getList();
-                //    counter = 0;
-                //    //double sum = 0.0;
-                //    if (uiList.Count > 0 && counter < 21)
-                //    {
-                //        GennemsnitListe[counter] = (uiList[uiList.Count - 1]);
-                //        counter++;
-                //    }
-                //    if (counter == 20)
-                //    {
-                //        GennemsnitListe.Average();
-                //        counter = 0;
-                //    }
-                int counter1 = 0;
-                //List<double> xværdier = new List<double>();
-
-                //if (uiList.Count > 0)
-                //{
-                //    for (int i = 0; i < 500; i++)
-                //    {
-                if (GennemsnitListe.Count > 0 && counter1 < 800)
+                
+                for (int i = 0; i < GennemsnitListe.Count; i++)
                 {
-                    UILISTE[counter1] = (GennemsnitListe[GennemsnitListe.Count - 1]);
-                    counter1++;
+                    GennemsnitListe[i] = (GennemsnitListe[i] + beregnetNværdi);
+                    GennemsnitListe[i] = (GennemsnitListe[i] * KalibreringObjekt.Kalibrer());
+                }
+            
+                if (GennemsnitListe.Count > 0 && counter1 < 300)
+                {
+                    
+                   UILISTE[counter1] = (GennemsnitListe[GennemsnitListe.Count -1]);
+                   counter1++;
+                   counter++;
                     Notify(UILISTE);
                 }
 
-                if (counter1 == 799)
+                if (counter1 == 299)
                 {
                     counter1 = 0;
                 }
@@ -95,6 +89,11 @@ namespace LogikLag
                 //updateChart();
                 //Thread.Sleep(1);                
             }
+        
+        
+        
+        
+        
         }
 
         public void getDia()
@@ -159,5 +158,11 @@ namespace LogikLag
         {
             GennemsnitListe.Add(Convert.ToDouble(graf.Average()));
         }
+        public void nulpunktsJustering(double værdi)
+        {
+            beregnetNværdi = NulpunktObjekt.Justering(værdi);
+        }
+        
+    
     }
 }

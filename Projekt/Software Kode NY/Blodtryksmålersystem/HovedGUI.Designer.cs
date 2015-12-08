@@ -274,6 +274,8 @@
             this.Chart.Size = new System.Drawing.Size(1043, 462);
             this.Chart.TabIndex = 31;
             this.Chart.Text = "chart2";
+            this.Chart.ChartAreas[0].AxisY.Minimum = 0;
+            this.Chart.ChartAreas[0].AxisY.Maximum = 250;
             // 
             // textFilnavn
             // 
