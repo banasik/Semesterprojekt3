@@ -11,6 +11,6 @@ namespace DTO
     {
         void Attach(IObserver observer);
 
-        void Notify();
+        void Notify(List<double> data);
     }
 }
