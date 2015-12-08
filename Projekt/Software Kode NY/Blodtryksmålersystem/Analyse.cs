@@ -12,28 +12,17 @@ namespace LogikLag
         private double diastole_;
         public double Diastole_
         {
-            get { return diastole_; }
-            set
-            {
-                if (value > 0)
-                {
-                    diastole_ = value;
-                }
-            }
+            get;
+            set;
+
         }
         private double systole_;
         public double Systole_
         {
-            get { return systole_; }
-            set
-            {
-                if (value>0)
-                {
-                    systole_ = value;
-                }
-            }
+            get; set;
+            
         }
-        public double[] diaSystoliskArray;
+        //public double[] diaSystoliskArray;
         private Logik logik;
 
         public Analyse()
@@ -61,17 +50,15 @@ namespace LogikLag
 
         public void Diastole(List<double> diastoleListe)
         {
-            for (int i = 0; i < 250; i++)
-            {
+            
                 Diastole_ = diastoleListe.Min();
-            }
+            
         }
         public void Systole(List<double> systoleListe)
         {
-            for (int i = 0; i < 250; i++)
-            {
+            
                 Systole_ = systoleListe.Max();
-            }
+            
         }
         //public void Diastolisk()
         //{

@@ -8,6 +8,6 @@ namespace DTO
 {
     public interface IObserver
     {
-        void UpdateChart();
+        void Gennemsnit(List<double> data);
     }
 }

@@ -21,7 +21,7 @@ namespace Blodtryksmålersystem
         //private List<double> uiList;
         private Logik logik;
         private int AutogenNR; //AutogeneretNR der skal tælles 1 op hver gang der trykkes på GEM-knappen.
-        private double[] DiaSysArray;
+        //private double[] DiaSysArray;
         private List<double> guiliste;
         private Analyse diaSystole;
         private System.Timers.Timer myTimer;
@@ -42,14 +42,15 @@ namespace Blodtryksmålersystem
             myTimer.Enabled = true;
             myTimer.Interval = 3000;
             myTimer.Elapsed += myTimer_Elapsed;
+            logik.Attach(this);
 
         }
 
         void myTimer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
         {
             MethodInvoker action = delegate
-            { textDia.Text = Convert.ToInt32(diaSystole.Diastole_).ToString();
-            textSys.Text = Convert.ToInt32(diaSystole.Systole_).ToString();
+            { textDia.Text = Convert.ToDouble(logik.diastoleVærdi).ToString();
+            textSys.Text = Convert.ToDouble(logik.systoleVærdi).ToString();
             };
             
             textDia.BeginInvoke(action);
@@ -67,7 +68,7 @@ namespace Blodtryksmålersystem
         private delegate void UpdateUICallback();
         private void updateChart()
         {
-            guiliste = logik.UILISTE;
+            //guiliste = logik.UILISTE;
             if (this.InvokeRequired)
             {
                 UpdateUICallback d = new UpdateUICallback(updateChart);
@@ -78,11 +79,12 @@ namespace Blodtryksmålersystem
                 //if (uiList.Count > 500) //Vises først i chart når listen indeholder mere end 500 samples
                 {
                     Chart.Series["Series1"].Points.DataBindY(guiliste); //De sidste 500 samples i listen vises i chart
-                    logik.getDia();
+                     logik.getDia();
                     logik.getSys();
                 }
             }
         }
+        
         private void StartKnap_Click(object sender, EventArgs e)
         {
             logik.indhentDataLogik();
@@ -113,8 +115,9 @@ namespace Blodtryksmålersystem
             // Indsæt igen når logiklag er implementeret
         }
 
-        public void UpdateChart()
+        public void Gennemsnit(List<double> graf)
         {
+            guiliste = graf;
             updateChart();
         }
 

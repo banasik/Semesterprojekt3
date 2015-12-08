@@ -9,19 +9,21 @@ using DTO;
 
 namespace LogikLag
 {
-    public class Logik : ISubject
+    public class Logik : ISubject, IObserver
     {
         private DatabaseAdgang Database = new DatabaseAdgang();
         private IndhentDAQData DAQdata = new IndhentDAQData();
         private Thread updateUI;
         private Thread updateDia;
         private Thread updateSys;
+        private Thread update20;
         public List<double> uiList;
         private List<IObserver> observers;
         int counter;
-        double diastoleVærdi;
-        double systoleVærdi;
+        public double diastoleVærdi;
+        public double systoleVærdi;
         private Analyse AnalyseKlasse = new Analyse();
+        public List<double> GennemsnitListe;
 
         public Logik()
         {
@@ -30,12 +32,15 @@ namespace LogikLag
             updateSys = new Thread(() => getSys());
             //updateUI.Start();
             uiList = new List<double>();
-            observers = new List<IObserver>();
             UILISTE = new List<double>();
-            counter = 0;
+            GennemsnitListe = new List<double>();
+            observers = new List<IObserver>();
+            List<double> ListAfTal = new List<double>();
+            DAQdata.Attach(this);
+
             diastoleVærdi = new double();
             systoleVærdi = new double();
-            for (int i = 0; i <799; i++)
+            for (int i = 0; i < 799; i++)
             {
                 UILISTE.Add(0);
             }
@@ -48,31 +53,47 @@ namespace LogikLag
             updateSys.Start();
         }
 
+        
+
         private void updateListe()
         {
             while (isRunningLogik())
             {
-                uiList = DAQdata.getList();
+                //uiList = DAQdata.getList();
+                //    counter = 0;
+                //    //double sum = 0.0;
+                //    if (uiList.Count > 0 && counter < 21)
+                //    {
+                //        GennemsnitListe[counter] = (uiList[uiList.Count - 1]);
+                //        counter++;
+                //    }
+                //    if (counter == 20)
+                //    {
+                //        GennemsnitListe.Average();
+                //        counter = 0;
+                //    }
+                int counter1 = 0;
                 //List<double> xværdier = new List<double>();
-               
+
                 //if (uiList.Count > 0)
                 //{
                 //    for (int i = 0; i < 500; i++)
                 //    {
-                if (uiList.Count > 0 && counter < 800)
+                if (GennemsnitListe.Count > 0 && counter1 < 800)
                 {
-                    UILISTE[counter] = (uiList[uiList.Count-1]);
-                    counter++;
-                    Notify();
+                    UILISTE[counter1] = (GennemsnitListe[GennemsnitListe.Count - 1]);
+                    counter1++;
+                    Notify(UILISTE);
                 }
-                if (counter == 799)
+
+                if (counter1 == 799)
                 {
-                    counter = 0;
+                    counter1 = 0;
                 }
-                    //}
-                    //Subject.Value = uiList;
-                    //updateChart();
-                    //Thread.Sleep(1);                
+                //}
+                //Subject.Value = uiList;
+                //updateChart();
+                //Thread.Sleep(1);                
             }
         }
 
@@ -80,7 +101,7 @@ namespace LogikLag
         {
             AnalyseKlasse.Diastole(UILISTE);
             diastoleVærdi = AnalyseKlasse.Diastole_;
-            
+
             //while (isRunningLogik())
             //{
             //   AnalyseKlasse.Diastole(diastoleListe);
@@ -92,8 +113,8 @@ namespace LogikLag
             AnalyseKlasse.Systole(UILISTE);
             systoleVærdi = AnalyseKlasse.Systole_;
         }
-        
-        
+
+
         public List<double> UILISTE;
         public bool isRunningLogik()
         {
@@ -126,24 +147,17 @@ namespace LogikLag
             observers.Add(observer);
         }
 
-        public void Notify()
+        public void Notify(List<double> data)
         {
 
             foreach (IObserver obs in observers)
             {
-                obs.UpdateChart();
+                obs.Gennemsnit(data);
             }
         }
-
-        private void Kalibrering()
+        public void Gennemsnit(List<double> graf)
         {
-            //double værdi1;
-            //double værdi2;
-            //double værdi3;
-            //double voltVærdi;
-
-          
-
+            GennemsnitListe.Add(Convert.ToDouble(graf.Average()));
         }
     }
 }
