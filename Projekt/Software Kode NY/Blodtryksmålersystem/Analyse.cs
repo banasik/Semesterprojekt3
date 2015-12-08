@@ -9,18 +9,26 @@ namespace LogikLag
 {
     public class Analyse
     {
-        public double[] diaSystoliskArray;
-        private Logik logik;
-        private List<double> blodtryksliste;
-        int counter;
-
-        public Analyse(Logik logik_)
+        private double diastole_;
+        public double Diastole_
         {
+            get;
+            set;
+
+        }
+        private double systole_;
+        public double Systole_
+        {
+            get; set;
+            
+        }
+        //public double[] diaSystoliskArray;
+        private Logik logik;
+
+        public Analyse()
+        {
+            //logik = logik_;
             //logik = new Logik();
-            logik = logik_;
-            blodtryksliste = new List<double>();
-            counter = 0;
-            diaSystoliskArray = new double[1000];
         }
 
         //public List<int> BeregnSystole(List<int> systoleliste_)
@@ -40,17 +48,16 @@ namespace LogikLag
         //    return systoleliste_;
         //}
 
-        public void DiaSystolisk()
+        public void Diastole(List<double> diastoleListe)
         {
-                for (int i = 0; i < logik.UILISTE.Count; i++)
-                {
-                    diaSystoliskArray[counter] = logik.UILISTE[i];
-                    counter++;
-                    if (counter > 999)
-                    {
-                        counter = 0;
-                    }
-                }
+            
+                Diastole_ = diastoleListe.Min();
+            
+        }
+        public void Systole(List<double> systoleListe)
+        {
+            
+                Systole_ = systoleListe.Max();
             
         }
         //public void Diastolisk()

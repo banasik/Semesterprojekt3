@@ -21,15 +21,16 @@ namespace Blodtryksmålersystem
         //private List<double> uiList;
         private Logik logik;
         private int AutogenNR; //AutogeneretNR der skal tælles 1 op hver gang der trykkes på GEM-knappen.
-        private double[] DiaSysArray;
+        //private double[] DiaSysArray;
         private List<double> guiliste;
         private Analyse diaSystole;
+        private System.Timers.Timer myTimer;
 
         public HovedGUI()
         {
             InitializeComponent();
             logik = new Logik();
-            diaSystole = new Analyse(logik);
+            diaSystole = new Analyse();
             //GUIArray = new double[500];
             logik.Attach(this);
            // dt = new IndhentDataDAQ(); //Flyttes til Logik
@@ -37,7 +38,27 @@ namespace Blodtryksmålersystem
             //dt = new LogikLag();
             //uiList = new List<double>();
             //updateUI = new Thread(() => updateGUI()); //Benyttes i metoden updateGUI()
+            myTimer = new System.Timers.Timer();
+            myTimer.Enabled = true;
+            myTimer.Interval = 3000;
+            myTimer.Elapsed += myTimer_Elapsed;
+            logik.Attach(this);
+
         }
+
+        void myTimer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
+        {
+            MethodInvoker action = delegate
+            { textDia.Text = Convert.ToDouble(logik.diastoleVærdi).ToString();
+            textSys.Text = Convert.ToDouble(logik.systoleVærdi).ToString();
+            };
+            
+            textDia.BeginInvoke(action);
+            textSys.BeginInvoke(action);
+        }
+       
+        
+
         private void textForsøgsnavn_TextChanged(object sender, EventArgs e)
         {
             StartKnap.Enabled = true;
@@ -45,10 +66,9 @@ namespace Blodtryksmålersystem
         }
 
         private delegate void UpdateUICallback();
-
         private void updateChart()
         {
-            guiliste = logik.UILISTE;
+            //guiliste = logik.UILISTE;
             if (this.InvokeRequired)
             {
                 UpdateUICallback d = new UpdateUICallback(updateChart);
@@ -59,15 +79,12 @@ namespace Blodtryksmålersystem
                 //if (uiList.Count > 500) //Vises først i chart når listen indeholder mere end 500 samples
                 {
                     Chart.Series["Series1"].Points.DataBindY(guiliste); //De sidste 500 samples i listen vises i chart
-                    diaSystole.DiaSystolisk();
-                    DiaSysArray = diaSystole.diaSystoliskArray;
-                    textSys.Text = Convert.ToString(DiaSysArray.Max());
-                    textDia.Text = Convert.ToString(DiaSysArray.Min());
-                    //UpdateSys();
+                     logik.getDia();
+                    logik.getSys();
                 }
             }
         }
-
+        
         private void StartKnap_Click(object sender, EventArgs e)
         {
             logik.indhentDataLogik();
@@ -83,6 +100,7 @@ namespace Blodtryksmålersystem
         {
             logik.stopReadDataLogik();
             //updateUI.Abort(); //Kaster tråden væk
+            myTimer.Close();
         }
 
         private void AfslutKnap_Click(object sender, EventArgs e)
@@ -97,8 +115,9 @@ namespace Blodtryksmålersystem
             // Indsæt igen når logiklag er implementeret
         }
 
-        public void UpdateChart()
+        public void Gennemsnit(List<double> graf)
         {
+            guiliste = graf;
             updateChart();
         }
 

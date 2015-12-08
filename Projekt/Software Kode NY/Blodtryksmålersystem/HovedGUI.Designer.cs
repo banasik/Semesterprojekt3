@@ -182,12 +182,12 @@
             // 
             this.textPuls.BackColor = System.Drawing.Color.DimGray;
             this.textPuls.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.textPuls.Font = new System.Drawing.Font("Microsoft Sans Serif", 36F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textPuls.ForeColor = System.Drawing.Color.LimeGreen;
+            this.textPuls.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textPuls.ForeColor = System.Drawing.Color.White;
             this.textPuls.Location = new System.Drawing.Point(1162, 381);
             this.textPuls.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.textPuls.Name = "textPuls";
-            this.textPuls.Size = new System.Drawing.Size(112, 82);
+            this.textPuls.Size = new System.Drawing.Size(112, 28);
             this.textPuls.TabIndex = 37;
             this.textPuls.Text = "--/-";
             // 
@@ -195,12 +195,12 @@
             // 
             this.textDia.BackColor = System.Drawing.Color.DimGray;
             this.textDia.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.textDia.Font = new System.Drawing.Font("Microsoft Sans Serif", 36F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textDia.ForeColor = System.Drawing.Color.Red;
+            this.textDia.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textDia.ForeColor = System.Drawing.Color.White;
             this.textDia.Location = new System.Drawing.Point(1162, 249);
             this.textDia.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.textDia.Name = "textDia";
-            this.textDia.Size = new System.Drawing.Size(112, 82);
+            this.textDia.Size = new System.Drawing.Size(112, 28);
             this.textDia.TabIndex = 36;
             this.textDia.Text = "--/-";
             // 
@@ -209,7 +209,7 @@
             this.textSys.BackColor = System.Drawing.Color.DimGray;
             this.textSys.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.textSys.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textSys.ForeColor = System.Drawing.Color.Red;
+            this.textSys.ForeColor = System.Drawing.Color.White;
             this.textSys.Location = new System.Drawing.Point(1162, 119);
             this.textSys.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.textSys.Name = "textSys";
