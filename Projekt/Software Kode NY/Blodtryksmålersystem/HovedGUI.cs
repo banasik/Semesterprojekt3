@@ -83,7 +83,7 @@ namespace Blodtryksmålersystem
             {
                 //if (uiList.Count > 500) //Vises først i chart når listen indeholder mere end 500 samples
                 {
-                    Chart.Series["Series1"].Points.DataBindY(guiliste); //De sidste 500 samples i listen vises i chart
+                    Chart.Series["Series1"].Points.DataBindY(logik.FiltreringLogik(guiliste)); //De sidste 500 samples i listen vises i chart
                      logik.getDia();
                     logik.getSys();
                 }
@@ -123,6 +123,7 @@ namespace Blodtryksmålersystem
         public void Gennemsnit(List<double> graf)
         {
             guiliste = graf;
+            
             updateChart();
         }
 
@@ -133,6 +134,9 @@ namespace Blodtryksmålersystem
         private void textSys_TextChanged(object sender, EventArgs e)
         {
 
+        }
+        private void GUIFiltrering()
+        {
         }
     }
 }

@@ -59,6 +59,7 @@
   <ItemGroup>
     <Compile Include="Analyse.cs" />
     <Compile Include="DatabaseAdgang.cs" />
+    <Compile Include="Filter.cs" />
     <Compile Include="HovedGUI.cs">
       <SubType>Form</SubType>
     </Compile>

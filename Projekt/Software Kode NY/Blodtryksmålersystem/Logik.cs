@@ -13,19 +13,22 @@ namespace LogikLag
     {
         private DatabaseAdgang Database = new DatabaseAdgang();
         private IndhentDAQData DAQdata = new IndhentDAQData();
+        private Nulpunktsjustering NulpunktObjekt = new Nulpunktsjustering();
+        private Kalibrering KalibreringObjekt = new Kalibrering();
+        private Filter FilterObj = new Filter();
         private Thread updateUI;
         private Thread updateDia;
         private Thread updateSys;
         private double kalibreringKoef;
         private List<IObserver> observers;
+        private List<double> FiltreretListe;
         int counter;
         int counter1;
         public double diastoleVærdi;
         public double systoleVærdi;
         private double beregnetNværdi;
         private Analyse AnalyseKlasse = new Analyse();
-        private Nulpunktsjustering NulpunktObjekt = new Nulpunktsjustering();
-        private Kalibrering KalibreringObjekt = new Kalibrering();
+        
         public List<double> GennemsnitListe;
 
         public Logik()
@@ -38,6 +41,7 @@ namespace LogikLag
             UILISTE = new List<double>();
             GennemsnitListe = new List<double>();
             observers = new List<IObserver>();
+            FiltreretListe = new List<double>();
             
             DAQdata.Attach(this);
 
@@ -84,15 +88,8 @@ namespace LogikLag
                 {
                     counter1 = 0;
                 }
-                //}
-                //Subject.Value = uiList;
-                //updateChart();
-                //Thread.Sleep(1);                
+                               
             }
-        
-        
-        
-        
         
         }
 
@@ -100,12 +97,6 @@ namespace LogikLag
         {
             AnalyseKlasse.Diastole(UILISTE);
             diastoleVærdi = AnalyseKlasse.Diastole_;
-
-            //while (isRunningLogik())
-            //{
-            //   AnalyseKlasse.Diastole(diastoleListe);
-            //}
-            //return AnalyseKlasse.Diastole_;
         }
         public void getSys()
         {
@@ -161,6 +152,12 @@ namespace LogikLag
         public void nulpunktsJustering(double værdi)
         {
             beregnetNværdi = NulpunktObjekt.Justering(værdi);
+        }
+
+        public List<double> FiltreringLogik(List<double> data)
+        {
+            FiltreretListe = FilterObj.Filtrering(data);
+            return FiltreretListe;
         }
         
     

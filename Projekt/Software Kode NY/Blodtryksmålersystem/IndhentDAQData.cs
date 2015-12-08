@@ -199,5 +199,6 @@ namespace Data
                 obs.Gennemsnit(graf);
             }
         }
+       
     }
 }
