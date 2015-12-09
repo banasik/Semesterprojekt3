@@ -9,27 +9,41 @@ using DTO;
 
 namespace LogikLag
 {
-    public class Logik : ISubject
+    public class Logik : ISubject, IObserver
     {
         private DatabaseAdgang Database = new DatabaseAdgang();
         private IndhentDAQData DAQdata = new IndhentDAQData();
+        private Nulpunktsjustering NulpunktObjekt = new Nulpunktsjustering();
+        private Kalibrering KalibreringObjekt = new Kalibrering();
+        private Filter FilterObj = new Filter();
         private Thread updateUI;
-        public List<double> uiList;
+        private Queue<double> minKø;
+        private double kalibreringKoef;
         private List<IObserver> observers;
+        private List<double> FiltreretListe;
         int counter;
-
+        
+        public double DiastoleVærdi { get; set; }
+        public double SystoleVærdi { get; set; }
+        private double beregnetNværdi;
+        private Analyse AnalyseKlasse = new Analyse();
+        public bool RadioProp { get; set; }
+        
+        
         public Logik()
         {
             updateUI = new Thread(() => updateListe());
-            //updateUI.Start();
-            uiList = new List<double>();
-            observers = new List<IObserver>();
+            kalibreringKoef = KalibreringObjekt.Kalibrer();
             UILISTE = new List<double>();
-            counter = 0;
-            for (int i = 0; i <799; i++)
+            observers = new List<IObserver>();
+            FiltreretListe = new List<double>();
+            minKø = new Queue<double>(100);
+            DAQdata.Attach(this);
+            for (int i = 0; i < 299; i++)
             {
                 UILISTE.Add(0);
             }
+            counter = 0;
         }
 
         public void StartTraad()
@@ -37,34 +51,52 @@ namespace LogikLag
             updateUI.Start();
         }
 
+        public List<double> UILISTE;
+
         private void updateListe()
         {
             while (isRunningLogik())
             {
-                uiList = DAQdata.getList();
-                //List<double> xværdier = new List<double>();
-               
-                //if (uiList.Count > 0)
-                //{
-                //    for (int i = 0; i < 500; i++)
-                //    {
-                if (uiList.Count > 0 && counter < 800)
+                if (minKø.Count > 0)
                 {
-                    UILISTE[counter] = (uiList[uiList.Count-1]);
-                    counter++;
-                    Notify();
+                    double gennemsnitKø = minKø.Dequeue();
+                    gennemsnitKø = (gennemsnitKø + beregnetNværdi) * kalibreringKoef;
+
+                    if (counter < 300)
+                    {
+                        UILISTE[counter] = gennemsnitKø;
+                        counter++;
+                    }
+                    if (counter == 299)
+                    {
+                        counter = 0;
+                    }
                 }
-                if (counter == 799)
+                if (RadioProp == false)
                 {
-                    counter = 0;
+                    Notify(FiltreringLogik(UILISTE));
                 }
-                    //}
-                    //Subject.Value = uiList;
-                    //updateChart();
-                    //Thread.Sleep(1);                
+                else
+                {
+                    Notify(UILISTE);
+                }
             }
+            Thread.Sleep(5);
         }
-        public List<double> UILISTE;
+        
+        
+
+        public void getDia()
+        {
+            AnalyseKlasse.Diastole(UILISTE);
+            DiastoleVærdi = AnalyseKlasse.Diastole_;
+        }
+        public void getSys()
+        {
+            AnalyseKlasse.Systole(UILISTE);
+            SystoleVærdi = AnalyseKlasse.Systole_;
+        }
+
         public bool isRunningLogik()
         {
             return DAQdata.IsRunning();
@@ -96,24 +128,32 @@ namespace LogikLag
             observers.Add(observer);
         }
 
-        public void Notify()
+        public void Notify(List<double> data)
         {
 
             foreach (IObserver obs in observers)
             {
-                obs.UpdateChart();
+                obs.Gennemsnit(data);
             }
         }
-
-        private void Kalibrering()
+        public void Gennemsnit(List<double> graf)
         {
-            double værdi1;
-            double værdi2;
-            double værdi3;
-            double voltVærdi;
 
-          
-
+            minKø.Enqueue(Convert.ToDouble(graf.Average()));
         }
+        public void nulpunktsJustering(double værdi)
+        {
+            beregnetNværdi = NulpunktObjekt.Justering(værdi);
+        }
+
+        public List<double> FiltreringLogik(List<double> data)
+        {
+            FiltreretListe = FilterObj.Filtrering(data);
+            return FiltreretListe;
+        }
+        //public double Nulværdi(List<double> data)
+    //    {
+    //        //DAQdata.
+    //    }
     }
 }

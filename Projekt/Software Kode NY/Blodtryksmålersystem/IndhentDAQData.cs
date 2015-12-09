@@ -8,10 +8,11 @@ using NationalInstruments.DAQmx;
 using NationalInstruments;
 using System.Data;
 using System.Collections;
+using DTO;
 
 namespace Data
 {
-    public class IndhentDAQData
+    public class IndhentDAQData:ISubject
     {
         //De fire væsentlige herunder
         private AnalogMultiChannelReader analogInReader;
@@ -23,6 +24,7 @@ namespace Data
         private DataColumn[] dataColumn = null;
         public DataTable dataTable = null;
         private List<double> dataList;
+        private List<IObserver> observers;
 
         public bool IsRunning() //Metode der tjekker om min task er ledig, hvilket den er så længe den ikke er null. 
         { //IsRunning() metoden har til formål at kontrollere hvornår tråden køres
@@ -36,6 +38,7 @@ namespace Data
         {
             dataTable = new DataTable();
             dataList = new List<double>();
+            observers = new List<IObserver>();
         }
 
         //Skraldespanden
@@ -72,7 +75,7 @@ namespace Data
 
                     // Configure the timing parameters
                     myTask.Timing.ConfigureSampleClock("", Convert.ToDouble(1000),
-                        SampleClockActiveEdge.Rising, SampleQuantityMode.ContinuousSamples,10);
+                        SampleClockActiveEdge.Rising, SampleQuantityMode.ContinuousSamples,20);
 
                     // Verify the Task
                     myTask.Control(TaskAction.Verify);
@@ -87,7 +90,7 @@ namespace Data
                     // Use SynchronizeCallbacks to specify that the object 
                     // marshals callbacks across threads appropriately.
                     analogInReader.SynchronizeCallbacks = true; //Sørger for at sætte trådene til den prioritet som de skal have
-                    analogInReader.BeginReadWaveform(Convert.ToInt32(10),
+                    analogInReader.BeginReadWaveform(Convert.ToInt32(20),
                         analogCallback, myTask);
                 }
                 catch (DaqException exception)
@@ -110,7 +113,7 @@ namespace Data
                     // Plot your data here
                     dataToDataTable(data, ref dataTable);
 
-                    analogInReader.BeginMemoryOptimizedReadWaveform(Convert.ToInt32(10),
+                    analogInReader.BeginMemoryOptimizedReadWaveform(Convert.ToInt32(20),
                         analogCallback, myTask, data);
                 }
             }
@@ -125,6 +128,8 @@ namespace Data
         {
             // Iterate over channels
             int currentLineIndex = 0;
+            List<double> mineTal = new List<double>();
+
             foreach (AnalogWaveform<double> waveform in sourceArray)
             {
                 for (int sample = 0; sample < waveform.Samples.Count; ++sample)
@@ -134,8 +139,14 @@ namespace Data
 
                     //dataTable.Rows[sample][currentLineIndex] = waveform.Samples[sample].Value;
                     //Flytter data fra Waveform-array til dataList:
-                    dataList.Add(waveform.Samples[sample].Value);
+                    mineTal.Add(waveform.Samples[sample].Value);
+                    //dataList.Add(waveform.Samples[sample].Value);
+                    
+                    //dataList.Clear();
                 }
+
+                Notify(mineTal);
+
                 currentLineIndex++;
             }
         }
@@ -176,5 +187,18 @@ namespace Data
                 myTask.Dispose();
             }
         }
+        public void Attach(IObserver observer)
+        {
+            observers.Add(observer);
+        }
+        public void Notify(List<double> graf)
+        {
+
+            foreach (IObserver obs in observers)
+            {
+                obs.Gennemsnit(graf);
+            }
+        }
+       
     }
 }
