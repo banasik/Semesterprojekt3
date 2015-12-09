@@ -19,6 +19,7 @@ namespace Blodtryksmålersystem
         private List<double> guiliste;
         private Analyse diaSystole;
         private System.Timers.Timer myTimer;
+        private string Forsøgsnavn;
 
         public HovedGUI()
         {
@@ -56,6 +57,8 @@ namespace Blodtryksmålersystem
         {
             StartKnap.Enabled = true;
             StartKnap.BackColor = Color.DarkSeaGreen;
+
+            Forsøgsnavn = Convert.ToString(textForsøgsnavn.Text);
         }
 
         private delegate void UpdateUICallback();
@@ -102,7 +105,7 @@ namespace Blodtryksmålersystem
         private void GemKnap_Click(object sender, EventArgs e)
         {
             AutogenNR++; //Kan det laves på denne måde? NR der skal gemmes med i databasen
-            // logiklag.gemData(textForsøgsnavn.Text, AutogenNR, uiList);
+            // logiklag.gemData(textForsøgsnavn.Text);
             // Indsæt igen når logiklag er implementeret
         }
 

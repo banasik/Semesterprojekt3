@@ -22,7 +22,9 @@ namespace LogikLag
         private List<IObserver> observers;
         private List<double> FiltreretListe;
         int counter;
-        
+        private List<double> databasetal;
+
+
         public double DiastoleVærdi { get; set; }
         public double SystoleVærdi { get; set; }
         private double beregnetNværdi;
@@ -38,6 +40,7 @@ namespace LogikLag
             observers = new List<IObserver>();
             FiltreretListe = new List<double>();
             minKø = new Queue<double>(100);
+            databasetal = new List<double>();
             DAQdata.Attach(this);
             for (int i = 0; i < 299; i++)
             {
@@ -118,9 +121,10 @@ namespace LogikLag
             updateUI.Abort();
         }
 
-        public void gemData(string forsøgsnavn, int autogenereretNR, List<double> samplelist)
+        public void gemData(string forsøgsnavn)
         {
-            Database.gemData(forsøgsnavn, autogenereretNR, samplelist);
+
+            Database.gemData(forsøgsnavn, databasetal);
         }
 
         public void Attach(IObserver observer)
@@ -138,7 +142,7 @@ namespace LogikLag
         }
         public void Gennemsnit(List<double> graf)
         {
-
+            databasetal = graf;
             minKø.Enqueue(Convert.ToDouble(graf.Average()));
         }
         public void nulpunktsJustering(double værdi)

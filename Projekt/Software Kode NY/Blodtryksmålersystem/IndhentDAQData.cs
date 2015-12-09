@@ -69,7 +69,7 @@ namespace Data
                     myTask = new Task();
 
                     // Create a virtual channel
-                    myTask.AIChannels.CreateVoltageChannel("Dev1/ai0", "",
+                    myTask.AIChannels.CreateVoltageChannel("Dev2/ai0", "",
                         (AITerminalConfiguration)(-1), Convert.ToDouble(-3.00),
                         Convert.ToDouble(3.00), AIVoltageUnits.Volts);
 
@@ -129,6 +129,7 @@ namespace Data
             // Iterate over channels
             int currentLineIndex = 0;
             List<double> mineTal = new List<double>();
+            
 
             foreach (AnalogWaveform<double> waveform in sourceArray)
             {
@@ -140,8 +141,9 @@ namespace Data
                     //dataTable.Rows[sample][currentLineIndex] = waveform.Samples[sample].Value;
                     //Flytter data fra Waveform-array til dataList:
                     mineTal.Add(waveform.Samples[sample].Value);
+
                     //dataList.Add(waveform.Samples[sample].Value);
-                    
+
                     //dataList.Clear();
                 }
 
