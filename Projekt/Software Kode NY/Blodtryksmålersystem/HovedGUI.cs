@@ -38,12 +38,13 @@ namespace Blodtryksmålersystem
         void myTimer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
         {
             MethodInvoker action = delegate
-            { textDia.Text = Convert.ToInt32(logik.DiastoleVærdi).ToString();
-            textSys.Text = Convert.ToInt32(logik.SystoleVærdi).ToString();
+            {
+                textDia.Text = Convert.ToInt32(logik.DiastoleVærdi).ToString();
+                textSys.Text = Convert.ToInt32(logik.SystoleVærdi).ToString();
             };
             
             textDia.BeginInvoke(action);
-            textSys.BeginInvoke(action);
+            //textSys.BeginInvoke(action);
         }
 
         //private void GUISetNVærdi()

@@ -32,6 +32,7 @@ namespace LogikLag
         
         public Logik()
         {
+            beregnetNværdi = 0.0;
             updateUI = new Thread(() => updateListe());
             kalibreringKoef = KalibreringObjekt.Kalibrer();
             UILISTE = new List<double>();
@@ -138,12 +139,26 @@ namespace LogikLag
         }
         public void Gennemsnit(List<double> graf)
         {
-
+             
             minKø.Enqueue(Convert.ToDouble(graf.Average()));
         }
-        public void nulpunktsJustering(double værdi)
+        public void nulpunktsJustering()
         {
-            beregnetNværdi = NulpunktObjekt.Justering(værdi);
+            DAQdata.indhentData();
+
+            //while (beregnetNværdi == 0.0)
+            //{
+            if (minKø.Count==1)
+            {
+                beregnetNværdi = NulpunktObjekt.Justering(Convert.ToDouble(minKø.Dequeue()));
+            }
+
+            if (beregnetNværdi != 0.0)
+            {
+		DAQdata.stopReadData(); 
+                minKø.Clear();
+            } 
+            
         }
 
         public List<double> FiltreringLogik(List<double> data)
@@ -151,9 +166,6 @@ namespace LogikLag
             FiltreretListe = FilterObj.Filtrering(data);
             return FiltreretListe;
         }
-        //public double Nulværdi(List<double> data)
-    //    {
-    //        //DAQdata.
-    //    }
+        
     }
 }

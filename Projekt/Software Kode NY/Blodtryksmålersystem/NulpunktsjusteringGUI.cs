@@ -22,7 +22,7 @@ namespace Blodtryksmålersystem
 
         private void JaKnapNul_Click(object sender, EventArgs e)
         {
-            //logik.nulpunktsJustering();
+            logik.nulpunktsJustering();
             var hovedgui = new HovedGUI();
             hovedgui.Show();
             this.Hide();
@@ -31,7 +31,7 @@ namespace Blodtryksmålersystem
 
         private void NejKnapNul_Click(object sender, EventArgs e)
         {
-            logik.nulpunktsJustering(0);
+            
             var hovedgui = new HovedGUI();
             hovedgui.Show();
             this.Hide();
