@@ -16,7 +16,7 @@ namespace Blodtryksmålersystem
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new HovedGUI());
+            Application.Run(new NulpunktsjusteringGUI());
         }
     }
 }
