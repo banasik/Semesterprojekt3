@@ -83,13 +83,14 @@ namespace Blodtryksmålersystem
             {
                 //if (uiList.Count > 500) //Vises først i chart når listen indeholder mere end 500 samples
                 {
-                    Chart.Series["Series1"].Points.DataBindY(logik.FiltreringLogik(guiliste)); //De sidste 500 samples i listen vises i chart
-                     logik.getDia();
+                    Chart.Series["Series1"].Points.DataBindY(guiliste); //De sidste 500 samples i listen vises i chart
+                    logik.getDia();
                     logik.getSys();
+                    
                 }
             }
         }
-        
+        //logik.FiltreringLogik(guiliste) skal ændres, sådan at det kun er guiliste der sendes op.
         private void StartKnap_Click(object sender, EventArgs e)
         {
             logik.indhentDataLogik();
@@ -137,6 +138,18 @@ namespace Blodtryksmålersystem
         }
         private void GUIFiltrering()
         {
+        }
+
+        private void filtreret_CheckedChanged(object sender, EventArgs e)
+        {
+            if (filtreret.Checked)
+            {
+                logik.RadioProp = true;
+            }
+            else if (filtreret.Checked != true)
+            {
+                logik.RadioProp = false;
+            }
         }
     }
 }

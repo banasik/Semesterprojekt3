@@ -17,8 +17,10 @@ namespace LogikLag
         private Kalibrering KalibreringObjekt = new Kalibrering();
         private Filter FilterObj = new Filter();
         private Thread updateUI;
-        private Thread updateDia;
-        private Thread updateSys;
+        private Queue<double> minKø;
+        private double gennemsnitKø;
+        //private Thread updateDia;
+        //private Thread updateSys;
         private double kalibreringKoef;
         private List<IObserver> observers;
         private List<double> FiltreretListe;
@@ -28,21 +30,22 @@ namespace LogikLag
         public double systoleVærdi;
         private double beregnetNværdi;
         private Analyse AnalyseKlasse = new Analyse();
+        public bool RadioProp { get; set; }
         
         public List<double> GennemsnitListe;
 
         public Logik()
         {
             updateUI = new Thread(() => updateListe());
-            updateDia = new Thread(() => getDia());
-            updateSys = new Thread(() => getSys());
+            //updateDia = new Thread(() => getDia());
+            //updateSys = new Thread(() => getSys());
             //updateUI.Start();
             kalibreringKoef = KalibreringObjekt.Kalibrer();
             UILISTE = new List<double>();
             GennemsnitListe = new List<double>();
             observers = new List<IObserver>();
             FiltreretListe = new List<double>();
-            
+            minKø = new Queue<double>(100);
             DAQdata.Attach(this);
 
             diastoleVærdi = new double();
@@ -53,13 +56,14 @@ namespace LogikLag
             }
             counter1 = 0;
             counter = 0;
+            
         }
 
         public void StartTraad()
         {
             updateUI.Start();
-            updateDia.Start();
-            updateSys.Start();
+            //updateDia.Start();
+            //updateSys.Start();
         }
 
         
@@ -68,30 +72,50 @@ namespace LogikLag
         {
             while (isRunningLogik())
             {
-                
-                for (int i = 0; i < GennemsnitListe.Count; i++)
+                if (minKø.Count > 0)
                 {
-                    GennemsnitListe[i] = (GennemsnitListe[i] + beregnetNværdi);
-                    GennemsnitListe[i] = (GennemsnitListe[i] * KalibreringObjekt.Kalibrer());
-                }
-            
-                if (GennemsnitListe.Count > 0 && counter1 < 300)
-                {
-                    
-                   UILISTE[counter1] = (GennemsnitListe[GennemsnitListe.Count -1]);
-                   counter1++;
-                   counter++;
-                    Notify(UILISTE);
-                }
+                    //GennemsnitListe.Add(((minKø.Dequeue() + beregnetNværdi) * KalibreringObjekt.Kalibrer()));
+                    double gennemsnitKø = minKø.Dequeue();
+                    gennemsnitKø = (gennemsnitKø + beregnetNværdi) * KalibreringObjekt.Kalibrer();
 
-                if (counter1 == 299)
-                {
-                    counter1 = 0;
+                    
+                        if (counter < 300)
+                        {
+                            UILISTE[counter] = gennemsnitKø;
+                            //UILISTE[counter] = (GennemsnitListe[GennemsnitListe.Count() - 1]);
+                            counter++;
+                        }
+                        if (counter == 299)
+                        {
+                            counter = 0;
+                        }
+                    }
+                    if (RadioProp == true)
+                    {
+                        Notify(FiltreringLogik(UILISTE));
+                    }
+                    else
+                    {
+                        Notify(UILISTE);
+                    }
                 }
-                               
+        
+        
+                //for (int i = 0; i < GennemsnitListe.Count; i++)
+                //{
+                //    GennemsnitListe[i] = (GennemsnitListe[i] + beregnetNværdi);
+                //    GennemsnitListe[i] = (GennemsnitListe[i] * KalibreringObjekt.Kalibrer());
+                //}
+            //Ved tilføjelse af radiobuttons, skal der laves en if/else sådan at en property bliver sat til true/false om et filtreret
+                // signal skal sendes op eller ej.
+
+
+
+
+                Thread.Sleep(5);
             }
         
-        }
+        
 
         public void getDia()
         {
@@ -147,7 +171,9 @@ namespace LogikLag
         }
         public void Gennemsnit(List<double> graf)
         {
-            GennemsnitListe.Add(Convert.ToDouble(graf.Average()));
+            minKø.Enqueue(Convert.ToDouble(graf.Average()));
+           // GennemsnitListe.Add(Convert.ToDouble(graf.Average()));
+            //Der skal laves en queue i stedet for en liste hernede. GennemsnitListe skal fjernes.
         }
         public void nulpunktsJustering(double værdi)
         {
