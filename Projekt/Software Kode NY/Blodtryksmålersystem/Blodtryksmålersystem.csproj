@@ -68,12 +68,6 @@
     </Compile>
     <Compile Include="IndhentDAQData.cs" />
     <Compile Include="IObserver.cs" />
-    <Compile Include="KalibreringGUI.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="KalibreringGUI.Designer.cs">
-      <DependentUpon>KalibreringGUI.cs</DependentUpon>
-    </Compile>
     <Compile Include="KalibreringsKlasse.cs" />
     <Compile Include="Logik.cs" />
     <Compile Include="NulpunktsjusteringKlasse.cs" />
@@ -88,9 +82,6 @@
     <Compile Include="ISubject.cs" />
     <EmbeddedResource Include="HovedGUI.resx">
       <DependentUpon>HovedGUI.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="KalibreringGUI.resx">
-      <DependentUpon>KalibreringGUI.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="NulpunktsjusteringGUI.resx">
       <DependentUpon>NulpunktsjusteringGUI.cs</DependentUpon>

@@ -31,7 +31,7 @@ namespace Blodtryksmålersystem
             myTimer.Interval = 3000;
             myTimer.Elapsed += myTimer_Elapsed;
             logik.Attach(this);
-            GUISetNVærdi();
+            //GUISetNVærdi();
 
         }
 
@@ -46,11 +46,11 @@ namespace Blodtryksmålersystem
             textSys.BeginInvoke(action);
         }
 
-        private void GUISetNVærdi()
-        {
-            double værdi = -2;
-            logik.nulpunktsJustering(værdi);
-        }
+        //private void GUISetNVærdi()
+        //{
+        //    //double værdi = -2;
+        //    logik.nulpunktsJustering(værdi);
+        //}
 
         private void textForsøgsnavn_TextChanged(object sender, EventArgs e)
         {
@@ -113,10 +113,6 @@ namespace Blodtryksmålersystem
             updateChart();
         }
 
-        //private void UpdateSys()
-        //{
-        //    textSys.Text = Convert.ToString(systole.Systolisk());
-        //}
         private void textSys_TextChanged(object sender, EventArgs e)
         {
 
@@ -129,11 +125,11 @@ namespace Blodtryksmålersystem
         {
             if (filtreret.Checked)
             {
-                logik.RadioProp = true;
+                logik.RadioProp = false;
             }
             else if (filtreret.Checked != true)
             {
-                logik.RadioProp = false;
+                logik.RadioProp = true;
             }
         }
     }

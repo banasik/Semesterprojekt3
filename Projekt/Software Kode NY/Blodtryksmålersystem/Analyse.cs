@@ -9,21 +9,12 @@ namespace LogikLag
 {
     public class Analyse
     {
-        
-        public double Diastole_
-        {
-            get;
-            set;
-        }
-        
-        public double Systole_
-        {
-            get; set;
-        }
+
+        public double Diastole_ { get; set; }
+        public double Systole_ { get; set; }
        
         public Analyse()
         {
-            
         }
 
         public void Diastole(List<double> diastoleListe)
