@@ -17,6 +17,7 @@ namespace LogikLag
         private Kalibrering KalibreringObjekt = new Kalibrering();
         private Filter FilterObj = new Filter();
         private Thread updateUI;
+        private Thread updateNul;
         private Queue<double> minKø;
         private double kalibreringKoef;
         private List<IObserver> observers;
@@ -25,15 +26,26 @@ namespace LogikLag
         
         public double DiastoleVærdi { get; set; }
         public double SystoleVærdi { get; set; }
-        private double beregnetNværdi;
+        private double beregnetNulværdiAtt;
+        public double beregnetNværdi
+        {
+            get
+            {
+                return beregnetNulværdiAtt;
+            }
+            set
+            {
+                beregnetNulværdiAtt = beregnetNværdi;
+            }
+        }
         private Analyse AnalyseKlasse = new Analyse();
         public bool RadioProp { get; set; }
         
         
         public Logik()
         {
-            beregnetNværdi = 0.0;
             updateUI = new Thread(() => updateListe());
+            updateNul = new Thread(() => nulpunktsJustering());
             kalibreringKoef = KalibreringObjekt.Kalibrer();
             UILISTE = new List<double>();
             observers = new List<IObserver>();
@@ -51,6 +63,10 @@ namespace LogikLag
         {
             updateUI.Start();
         }
+        public void StartTraadTilNul()
+        {
+            updateNul.Start();
+        }
 
         public List<double> UILISTE;
 
@@ -61,7 +77,7 @@ namespace LogikLag
                 if (minKø.Count > 0)
                 {
                     double gennemsnitKø = minKø.Dequeue();
-                    gennemsnitKø = (gennemsnitKø + beregnetNværdi) * kalibreringKoef;
+                    gennemsnitKø = (gennemsnitKø + beregnetNulværdiAtt) * kalibreringKoef;
 
                     if (counter < 300)
                     {
@@ -142,22 +158,43 @@ namespace LogikLag
              
             minKø.Enqueue(Convert.ToDouble(graf.Average()));
         }
-        public void nulpunktsJustering()
+        public void StartNulpunkt()
         {
             DAQdata.indhentData();
+            
 
-            //while (beregnetNværdi == 0.0)
-            //{
-            if (minKø.Count==1)
+                updateNul = new Thread(() => nulpunktsJustering());
+                updateNul.Start();
+            
+            
+        }
+        public void nulpunktsJustering()
+        {
+            while(isRunningLogik() && minKø.Count == 0)
             {
-                beregnetNværdi = NulpunktObjekt.Justering(Convert.ToDouble(minKø.Dequeue()));
+                if (minKø.Count > 0)
+                {
+                    DAQdata.stopReadData();
+                    beregnetNværdi = NulpunktObjekt.Justering((minKø.Dequeue()));
+
+                    updateNul.Abort();
+                    minKø.Clear();
+                }
             }
+            
+        //    //while (beregnetNværdi == 0.0)
+        //    //{
+        //    while (minKø.Count <1)
+        //    {
+        //        beregnetNværdi = NulpunktObjekt.Justering(Convert.ToDouble(minKø.Dequeue()));
+        //    }
 
-            if (beregnetNværdi != 0.0)
-            {
-		DAQdata.stopReadData(); 
-                minKø.Clear();
-            } 
+        //    if (beregnetNværdi != 0.0)
+        //    {
+        //DAQdata.stopReadData(); 
+        //        minKø.Clear();
+        //        updateNul.Abort();
+        //    } 
             
         }
 
