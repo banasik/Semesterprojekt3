@@ -25,6 +25,8 @@ namespace Data
         public DataTable dataTable = null;
         private List<double> dataList;
         private List<IObserver> observers;
+        public List<double> råData;
+        public List<double> databaseTal;
 
         public bool IsRunning() //Metode der tjekker om min task er ledig, hvilket den er så længe den ikke er null. 
         { //IsRunning() metoden har til formål at kontrollere hvornår tråden køres
@@ -69,7 +71,7 @@ namespace Data
                     myTask = new Task();
 
                     // Create a virtual channel
-                    myTask.AIChannels.CreateVoltageChannel("Dev2/ai0", "",
+                    myTask.AIChannels.CreateVoltageChannel("Dev1/ai0", "",
                         (AITerminalConfiguration)(-1), Convert.ToDouble(-3.00),
                         Convert.ToDouble(3.00), AIVoltageUnits.Volts);
 
@@ -128,8 +130,8 @@ namespace Data
         {
             // Iterate over channels
             int currentLineIndex = 0;
-            List<double> mineTal = new List<double>();
-            
+            råData = new List<double>();
+            //databaseTal = new List<double>();
 
             foreach (AnalogWaveform<double> waveform in sourceArray)
             {
@@ -140,14 +142,15 @@ namespace Data
 
                     //dataTable.Rows[sample][currentLineIndex] = waveform.Samples[sample].Value;
                     //Flytter data fra Waveform-array til dataList:
-                    mineTal.Add(waveform.Samples[sample].Value);
+                    råData.Add(waveform.Samples[sample].Value);
 
+                    //databaseTal.Add(waveform.Samples[sample].Value);
                     //dataList.Add(waveform.Samples[sample].Value);
 
                     //dataList.Clear();
                 }
 
-                Notify(mineTal);
+                Notify(råData);
 
                 currentLineIndex++;
             }

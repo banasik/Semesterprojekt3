@@ -110,6 +110,11 @@ namespace LogikLag
             DAQdata.getList();
         }
 
+        /*public void getId()
+        {
+            Database.getId(); 
+        }*/
+
         public void indhentDataLogik()
         {
             DAQdata.indhentData();
@@ -121,10 +126,15 @@ namespace LogikLag
             updateUI.Abort();
         }
 
-        public void gemData(string forsøgsnavn)
+        public int gemData(string forsøgsnavn)
         {
+            return Database.gemData(forsøgsnavn, databasetal);
+           // databasetal.Clear(); 
+        }
 
-            Database.gemData(forsøgsnavn, databasetal);
+        public void ClearData()
+        {
+            databasetal.Clear(); 
         }
 
         public void Attach(IObserver observer)

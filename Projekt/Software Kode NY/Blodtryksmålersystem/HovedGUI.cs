@@ -93,20 +93,26 @@ namespace Blodtryksmålersystem
 
         private void StopKnap_Click(object sender, EventArgs e)
         {
-            logik.stopReadDataLogik();
-            myTimer.Close();
+            //logik.stopReadDataLogik();
+            //myTimer.Close();
+           int id =  logik.gemData(Forsøgsnavn);
+
+            //int id; 
+            
+            textFilnavn.Text = Forsøgsnavn + '_' + Convert.ToString(id); 
         }
 
         private void AfslutKnap_Click(object sender, EventArgs e)
         {
-            Application.OpenForms["HovedGUI"].Close();
+            logik.stopReadDataLogik();
+            myTimer.Close();
+            //Application.OpenForms["HovedGUI"].Close();
         }
 
         private void GemKnap_Click(object sender, EventArgs e)
         {
-            AutogenNR++; //Kan det laves på denne måde? NR der skal gemmes med i databasen
-            // logiklag.gemData(textForsøgsnavn.Text);
-            // Indsæt igen når logiklag er implementeret
+            //logik.gemData(Forsøgsnavn);
+            logik.ClearData(); 
         }
 
         public void Gennemsnit(List<double> graf)
@@ -116,10 +122,7 @@ namespace Blodtryksmålersystem
             updateChart();
         }
 
-        private void textSys_TextChanged(object sender, EventArgs e)
-        {
 
-        }
         private void GUIFiltrering()
         {
         }
@@ -135,5 +138,7 @@ namespace Blodtryksmålersystem
                 logik.RadioProp = true;
             }
         }
+
+
     }
 }
