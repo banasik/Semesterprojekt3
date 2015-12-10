@@ -2,17 +2,16 @@
 I daglig klinisk praksis er der ofte behov for kontinuert at monitorere patienters blodtryk, i særdeleshed på intensive afdelinger samt operationsstuer, hvor blodtrykket er en vigtig parameter i monitorering af patienters kardiovaskulære status.
 
 
-Denne kontinuere monitorering er også nødvendig i forskningsverdenen. Det er i forskerens interesse at kunne måle blodtrykket når der laves hæmodynamiske undersøgesler. Her skal det være muligt for forskeren at kunne aflæse det diastoliske og systoliske tryk, pulsen samt få vist en pæn kurve over blodtrykket. Det er vores mål at opbygge et produkt, der kan registrere de spændinger i milivolt der kommer fra tryktransduceren og analogt forstærke samt filtrere signalet. Dette signal skal derefter konverteres til det digitale domæne. \\
-Herfra skal vi programmere en brugergrænseflade, der fremfører disse målinger samt gør det muligt for forskeren at gemme målingen i en database, til senere brug. Resultatet bliver derfor et elektronisk kredsløb med forbindelse til et software program.
-For at de gemte data kan sammenlignes, kræver det at de alle er blevet gemt med samme forudsætning, dvs. at målingerne er blevet kalibreret og nulpunktsjusteret. Dette bliver håndteret i softwaret hvor beregninger implementeres. Når forskeren kigger på blodtryksgrafen, vil han normalt se på et filtreret signal. I tilfælde af at det er i hans interesse at se på et ufilteret signal, vil dette være muligt, ved et tryk på en knap.
+Denne kontinuere monitorering er også nødvendig i forskningsverdenen. Det er i forskerens interesse, at kunne måle blodtrykket når der laves hæmodynamiske undersøgelser. Her skal det være muligt for forskeren at kunne aflæse det diastoliske- og systoliske tryk, pulsen samt få vist en pæn kurve over blodtrykket. Det er målet, at opbygge en prototype, der kan registrere de spændinger, i milivolt (mV), der kommer fra tryktransduceren og analogt forstærke samt filtrere signalet. Dette signal skal derefter konverteres til det digitale domæne. \\
+Herfra skal der programmeres en brugergrænseflade, der fremfører disse målinger, samt gør det muligt, for forskeren, at gemme målingen i en database til senere brug. Resultatet bliver derfor et elektronisk kredsløb med forbindelse til et software program.
+For at de gemte data kan sammenlignes, kræver det at de alle er blevet gemt med samme forudsætning, dvs. at målingerne er blevet kalibreret og nulpunktsjusteret. Dette bliver håndteret i softwaredelen, hvor beregninger implementeres. Når forskeren kigger på blodtryksgrafen, vil han normalt se på et filtreret signal. I tilfælde af at det er i hans interesse at se på et ufilteret signal, vil dette være muligt, ved et tryk på en knap.
 
-\textbf{MoSCoW}
+\textbf{MoSCoW \footnote{Metode, der benyttes til at beskrive hvad programmet skal kunne og det der ønskes, men ikke vil ske - Must have, Should have, Could have, og Would like but won't get}}
 \\
 \textit{Must}
 \begin{itemize}
 \item Et elektronisk kredsløb, som forstærker signalet fra tryktranduceren og filtrerer det med ét indbygget analogt filter
 \item Et program til at vise blodtrykket som funktion af tiden. Programmet skal opfylde en række obligatoriske krav. Det skal kunne:
-\end{itemize}
 \begin{itemize}
 \item Programmeres i C\#
 \item Kunne kalibrere blodtrykssignalet og foretage en nulpunktsjustering
@@ -21,15 +20,19 @@ For at de gemte data kan sammenlignes, kræver det at de alle er blevet gemt med
 \item Kunne filtrere blodtrykket i selve programmet via et digitalt filter, som skal kunne slås til og fra (monitor mode = filtreret og afrundet; signaldiagnose mode = råt signal med alle udsving)
 \item Afbildning af systolisk/diastolisk blodtryk med tal
 \end{itemize}
-\textit{Should}
-\begin{itemize}
-\item Alarmering hvis blodtrykket overstiger indbyggede grænseværdier
 \end{itemize}
+\textit{Should}
+
 \textit{Could}
 \begin{itemize}
-\item Hardware skal bestå af ét print med indbyggede komponenter
-\item Forskeren skal kunne hente de gemte data ned igen
+\item Hardwaredelen skal bestå af ét VEVO Board med indbyggede komponenter
+
 \end{itemize} 
+\textit{Would}
+\begin{itemize}
+\item Alarmering, hvis blodtrykket afviger indbyggede grænseværdier
+\item Forskeren skal kunne hente de gemte data ned igen
+\end{itemize}
 
 \subsubsection{Ansvarsområder}
 
