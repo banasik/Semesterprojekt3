@@ -28,9 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.forsøgsnavn = new System.Windows.Forms.Label();
             this.textForsøgsnavn = new System.Windows.Forms.TextBox();
             this.vælg = new System.Windows.Forms.Label();
@@ -98,6 +98,7 @@
             this.filtreret.TabStop = true;
             this.filtreret.Text = "Filtreret signal";
             this.filtreret.UseVisualStyleBackColor = true;
+            this.filtreret.CheckedChanged += new System.EventHandler(this.filtreret_CheckedChanged);
             // 
             // ufiltreret
             // 
@@ -108,7 +109,6 @@
             this.ufiltreret.Name = "ufiltreret";
             this.ufiltreret.Size = new System.Drawing.Size(185, 34);
             this.ufiltreret.TabIndex = 17;
-            this.ufiltreret.TabStop = true;
             this.ufiltreret.Text = "Ufiltreret signal";
             this.ufiltreret.UseVisualStyleBackColor = true;
             // 
@@ -255,22 +255,22 @@
             this.Chart.BackSecondaryColor = System.Drawing.Color.DimGray;
             this.Chart.BorderSkin.BackSecondaryColor = System.Drawing.Color.DimGray;
             this.Chart.BorderSkin.PageColor = System.Drawing.Color.DimGray;
-            chartArea1.AxisX.Title = "Tid [sek]";
-            chartArea1.AxisY.Title = "Tryk [mmHg]";
-            chartArea1.BackColor = System.Drawing.Color.Transparent;
-            chartArea1.Name = "ChartArea1";
-            this.Chart.ChartAreas.Add(chartArea1);
-            legend1.Name = "Legend1";
-            this.Chart.Legends.Add(legend1);
+            chartArea2.AxisX.Title = "Tid [sek]";
+            chartArea2.AxisY.Title = "Tryk [mmHg]";
+            chartArea2.BackColor = System.Drawing.Color.Transparent;
+            chartArea2.Name = "ChartArea1";
+            this.Chart.ChartAreas.Add(chartArea2);
+            legend2.Name = "Legend1";
+            this.Chart.Legends.Add(legend2);
             this.Chart.Location = new System.Drawing.Point(248, 15);
             this.Chart.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.Chart.Name = "Chart";
             this.Chart.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.SemiTransparent;
-            series1.ChartArea = "ChartArea1";
-            series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
-            series1.Legend = "Legend1";
-            series1.Name = "Series1";
-            this.Chart.Series.Add(series1);
+            series2.ChartArea = "ChartArea1";
+            series2.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
+            series2.Legend = "Legend1";
+            series2.Name = "Series1";
+            this.Chart.Series.Add(series2);
             this.Chart.Size = new System.Drawing.Size(1043, 462);
             this.Chart.TabIndex = 31;
             this.Chart.Text = "chart2";

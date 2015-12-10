@@ -13,109 +13,90 @@ namespace LogikLag
     {
         private DatabaseAdgang Database = new DatabaseAdgang();
         private IndhentDAQData DAQdata = new IndhentDAQData();
+        private Nulpunktsjustering NulpunktObjekt = new Nulpunktsjustering();
+        private Kalibrering KalibreringObjekt = new Kalibrering();
+        private Filter FilterObj = new Filter();
         private Thread updateUI;
-        private Thread updateDia;
-        private Thread updateSys;
-        private Thread update20;
-        public List<double> uiList;
+        private Queue<double> minKø;
+        private double kalibreringKoef;
         private List<IObserver> observers;
+        private List<double> FiltreretListe;
         int counter;
-        public double diastoleVærdi;
-        public double systoleVærdi;
+        
+        public double DiastoleVærdi { get; set; }
+        public double SystoleVærdi { get; set; }
+        private double beregnetNværdi;
         private Analyse AnalyseKlasse = new Analyse();
-        public List<double> GennemsnitListe;
-
+        public bool RadioProp { get; set; }
+        
+        
         public Logik()
         {
             updateUI = new Thread(() => updateListe());
-            updateDia = new Thread(() => getDia());
-            updateSys = new Thread(() => getSys());
-            //updateUI.Start();
-            uiList = new List<double>();
+            kalibreringKoef = KalibreringObjekt.Kalibrer();
             UILISTE = new List<double>();
-            GennemsnitListe = new List<double>();
             observers = new List<IObserver>();
-            List<double> ListAfTal = new List<double>();
+            FiltreretListe = new List<double>();
+            minKø = new Queue<double>(100);
             DAQdata.Attach(this);
-
-            diastoleVærdi = new double();
-            systoleVærdi = new double();
-            for (int i = 0; i < 799; i++)
+            for (int i = 0; i < 299; i++)
             {
                 UILISTE.Add(0);
             }
+            counter = 0;
         }
 
         public void StartTraad()
         {
             updateUI.Start();
-            updateDia.Start();
-            updateSys.Start();
         }
 
-        
+        public List<double> UILISTE;
 
         private void updateListe()
         {
             while (isRunningLogik())
             {
-                //uiList = DAQdata.getList();
-                //    counter = 0;
-                //    //double sum = 0.0;
-                //    if (uiList.Count > 0 && counter < 21)
-                //    {
-                //        GennemsnitListe[counter] = (uiList[uiList.Count - 1]);
-                //        counter++;
-                //    }
-                //    if (counter == 20)
-                //    {
-                //        GennemsnitListe.Average();
-                //        counter = 0;
-                //    }
-                int counter1 = 0;
-                //List<double> xværdier = new List<double>();
-
-                //if (uiList.Count > 0)
-                //{
-                //    for (int i = 0; i < 500; i++)
-                //    {
-                if (GennemsnitListe.Count > 0 && counter1 < 800)
+                if (minKø.Count > 0)
                 {
-                    UILISTE[counter1] = (GennemsnitListe[GennemsnitListe.Count - 1]);
-                    counter1++;
+                    double gennemsnitKø = minKø.Dequeue();
+                    gennemsnitKø = (gennemsnitKø + beregnetNværdi) * kalibreringKoef;
+
+                    if (counter < 300)
+                    {
+                        UILISTE[counter] = gennemsnitKø;
+                        counter++;
+                    }
+                    if (counter == 299)
+                    {
+                        counter = 0;
+                    }
+                }
+                if (RadioProp == false)
+                {
+                    Notify(FiltreringLogik(UILISTE));
+                }
+                else
+                {
                     Notify(UILISTE);
                 }
-
-                if (counter1 == 799)
-                {
-                    counter1 = 0;
-                }
-                //}
-                //Subject.Value = uiList;
-                //updateChart();
-                //Thread.Sleep(1);                
             }
+            Thread.Sleep(5);
         }
+        
+        
 
         public void getDia()
         {
             AnalyseKlasse.Diastole(UILISTE);
-            diastoleVærdi = AnalyseKlasse.Diastole_;
-
-            //while (isRunningLogik())
-            //{
-            //   AnalyseKlasse.Diastole(diastoleListe);
-            //}
-            //return AnalyseKlasse.Diastole_;
+            DiastoleVærdi = AnalyseKlasse.Diastole_;
         }
         public void getSys()
         {
             AnalyseKlasse.Systole(UILISTE);
-            systoleVærdi = AnalyseKlasse.Systole_;
+            SystoleVærdi = AnalyseKlasse.Systole_;
         }
 
-
-        public List<double> UILISTE;
         public bool isRunningLogik()
         {
             return DAQdata.IsRunning();
@@ -157,7 +138,22 @@ namespace LogikLag
         }
         public void Gennemsnit(List<double> graf)
         {
-            GennemsnitListe.Add(Convert.ToDouble(graf.Average()));
+
+            minKø.Enqueue(Convert.ToDouble(graf.Average()));
         }
+        public void nulpunktsJustering(double værdi)
+        {
+            beregnetNværdi = NulpunktObjekt.Justering(værdi);
+        }
+
+        public List<double> FiltreringLogik(List<double> data)
+        {
+            FiltreretListe = FilterObj.Filtrering(data);
+            return FiltreretListe;
+        }
+        //public double Nulværdi(List<double> data)
+    //    {
+    //        //DAQdata.
+    //    }
     }
 }
