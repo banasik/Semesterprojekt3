@@ -22,6 +22,7 @@ namespace LogikLag
         private List<IObserver> observers;
         private List<double> FiltreretListe;
         int counter;
+        private List<double> databasetal;
         
         public double DiastoleVærdi { get; set; }
         public double SystoleVærdi { get; set; }
@@ -38,6 +39,7 @@ namespace LogikLag
             observers = new List<IObserver>();
             FiltreretListe = new List<double>();
             minKø = new Queue<double>(100);
+            databasetal = new List<double>();
             DAQdata.Attach(this);
             for (int i = 0; i < 299; i++)
             {
@@ -83,9 +85,6 @@ namespace LogikLag
             }
             Thread.Sleep(5);
         }
-        
-        
-
         public void getDia()
         {
             AnalyseKlasse.Diastole(UILISTE);
@@ -118,9 +117,14 @@ namespace LogikLag
             updateUI.Abort();
         }
 
-        public void gemData(string forsøgsnavn, int autogenereretNR, List<double> samplelist)
+        public int gemData(string forsøgsnavn)
         {
-            Database.gemData(forsøgsnavn, autogenereretNR, samplelist);
+            return Database.gemData(forsøgsnavn, databasetal);
+        }
+
+        public void ClearData()
+        {
+            databasetal.Clear();
         }
 
         public void Attach(IObserver observer)
@@ -138,7 +142,7 @@ namespace LogikLag
         }
         public void Gennemsnit(List<double> graf)
         {
-
+            databasetal = graf;
             minKø.Enqueue(Convert.ToDouble(graf.Average()));
         }
         public void nulpunktsJustering(double værdi)
