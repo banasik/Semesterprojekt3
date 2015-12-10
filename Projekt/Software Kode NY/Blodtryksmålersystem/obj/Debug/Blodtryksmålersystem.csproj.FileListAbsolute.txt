@@ -1,7 +1,9 @@
 C:\Users\Anne\SkyDrive\Sundhedsteknologi AU\3. Semester\ST3PRJ3 - Semesterprojekt, blodtryksmåler\Blodtryksmålersystem\Blodtryksmålersystem\bin\Debug\Blodtryksmålersystem.exe.config
 C:\Users\matim_000\Documents\Semesterprojekt3\Projekt\Software Kode NY\Blodtryksmålersystem\bin\Debug\Blodtryksmålersystem.exe.config
 C:\Users\Anne\Desktop\Semesterprojekt3\Projekt\Software Kode NY\Blodtryksmålersystem\obj\Debug\Blodtryksmålersystem.HovedGUI.resources
+C:\Users\Anne\Desktop\Semesterprojekt3\Projekt\Software Kode NY\Blodtryksmålersystem\obj\Debug\Blodtryksmålersystem.KalibreringGUI.resources
 C:\Users\Anne\Desktop\Semesterprojekt3\Projekt\Software Kode NY\Blodtryksmålersystem\obj\Debug\Blodtryksmålersystem.NulpunktsjusteringGUI.resources
+C:\Users\Anne\Desktop\Semesterprojekt3\Projekt\Software Kode NY\Blodtryksmålersystem\obj\Debug\Blodtryksmålersystem.Properties.Resources.resources
 C:\Users\Anne\Desktop\Semesterprojekt3\Projekt\Software Kode NY\Blodtryksmålersystem\obj\Debug\Blodtryksmålersystem.csproj.GenerateResource.Cache
 C:\Users\Anne\Desktop\Semesterprojekt3\Projekt\Software Kode NY\Blodtryksmålersystem\obj\Debug\Blodtryksmålersystem.csprojResolveAssemblyReference.cache
 C:\Users\Anne\Desktop\Semesterprojekt3\Projekt\Software Kode NY\Blodtryksmålersystem\bin\Debug\Blodtryksmålersystem.exe.config
@@ -24,4 +26,3 @@ C:\Users\matim_000\Documents\Semesterprojekt3\Projekt\Software Kode NY\Blodtryks
 C:\Users\matim_000\Documents\Semesterprojekt3\Projekt\Software Kode NY\Blodtryksmålersystem\obj\Debug\Blodtryksmålersystem.NulpunktsjusteringGUI.resources
 C:\Users\matim_000\Documents\Semesterprojekt3\Projekt\Software Kode NY\Blodtryksmålersystem\obj\Debug\Blodtryksmålersystem.csproj.GenerateResource.Cache
 C:\Users\matim_000\Documents\Semesterprojekt3\Projekt\Software Kode NY\Blodtryksmålersystem\obj\Debug\LogikLag.Properties.Resources.resources
-C:\Users\Anne\Desktop\Semesterprojekt3\Projekt\Software Kode NY\Blodtryksmålersystem\obj\Debug\LogikLag.Properties.Resources.resources

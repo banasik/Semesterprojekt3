@@ -22,16 +22,18 @@ namespace Blodtryksmålersystem
 
         private void JaKnapNul_Click(object sender, EventArgs e)
         {
-            //logik.nulpunktsJustering();
-            var hovedgui = new HovedGUI();
-            hovedgui.Show();
-            this.Hide();
+            logik.StartNulpunkt();
+                var hovedgui = new HovedGUI();
+                hovedgui.Show();
+                this.Hide();
+            
+            
             
         }
 
         private void NejKnapNul_Click(object sender, EventArgs e)
         {
-            logik.nulpunktsJustering(0);
+            
             var hovedgui = new HovedGUI();
             hovedgui.Show();
             this.Hide();
