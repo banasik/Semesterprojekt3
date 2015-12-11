@@ -19,6 +19,7 @@ namespace Blodtryksmålersystem
         private List<double> guiliste;
         private Analyse diaSystole;
         private System.Timers.Timer myTimer;
+        private string Forsøgsnavn;
 
         public HovedGUI()
         {
@@ -56,6 +57,7 @@ namespace Blodtryksmålersystem
         {
             StartKnap.Enabled = true;
             StartKnap.BackColor = Color.DarkSeaGreen;
+            Forsøgsnavn = Convert.ToString(textForsøgsnavn.Text);
         }
 
         private delegate void UpdateUICallback();
@@ -90,20 +92,22 @@ namespace Blodtryksmålersystem
 
         private void StopKnap_Click(object sender, EventArgs e)
         {
-            logik.stopReadDataLogik();
-            myTimer.Close();
+            //logik.stopReadDataLogik();
+            //myTimer.Close();
+            int id = logik.gemData(Forsøgsnavn);
+            textFilnavn.Text = Forsøgsnavn + '_' + Convert.ToString(id); 
         }
 
         private void AfslutKnap_Click(object sender, EventArgs e)
         {
-            Application.OpenForms["HovedGUI"].Close();
+            logik.stopReadDataLogik();
+            myTimer.Close();
+            //Application.OpenForms["HovedGUI"].Close();
         }
 
         private void GemKnap_Click(object sender, EventArgs e)
         {
-            AutogenNR++; //Kan det laves på denne måde? NR der skal gemmes med i databasen
-            // logiklag.gemData(textForsøgsnavn.Text, AutogenNR, uiList);
-            // Indsæt igen når logiklag er implementeret
+            logik.ClearData();
         }
 
         public void Gennemsnit(List<double> graf)
@@ -111,11 +115,6 @@ namespace Blodtryksmålersystem
             guiliste = graf;
             
             updateChart();
-        }
-
-        private void textSys_TextChanged(object sender, EventArgs e)
-        {
-
         }
         private void GUIFiltrering()
         {
