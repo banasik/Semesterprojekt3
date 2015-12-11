@@ -23,7 +23,7 @@
 	1.6 & 04-12-2015 & ABH & SW Implementering, Generelt, Analyse og Digitalt filter \\[-1ex]	 
 	1.7 & 06-12-2015 & ABH & SW Implementering, Kalibrering og nulpunktsjustering \\[-1ex]
 	1.8 & 09-12-2015 & DHC & Rettelser i tekst \\ [-1ex]
-		
+	1.9 & 09-12-2015 & ABH, JMM & SW Implementering Observer-Strategy, Analyse og Digital Filter \\ [-1ex]	
 	
 	\label{version_Systemark}
 \end{longtabu}
@@ -395,9 +395,21 @@ Det er et krav at forsker indtaster et forsøgsnavn inden at en måling startes,
 
 Af figur xx ses det at grafen er en væsentlig del af display’s brugergrænseflade. Grafen implementeres som en Windows Form komponent. Det vælges at få vist signalet som en kurve, og førsteaksen indstilles til tid i sekunder fra 0 til 7 sekunder, og andenaksen til en minimums værdi på 0 mmHg og en maksimum værdi på 250 mmHg, hvilket er givet i kravspecifikationen. 
 
-\subsubsection{Observer / Strategy}
-\textbf{Skriv om princippet bag Observer og Strategy}
+\subsubsection{Observer - Strategy}
+Observer og strategy er to programmeringsmønstre. Der i samarbejde med hinanden er gode til at håndtere at sende data fa et lag til et andet lag. Det er valgt at bygge softwarekoden op efter disse to mønstre. Observer definerer et en til mange forhold mellem objekter således at en ændring i et objekts tilstand medfører at de mange objekter informeres om ændringer og dermed opdateres automatisk.
 
+Dette implementeres ved at oprette to interfaces IObserver og ISubject. Disse interfaces placeres i deres eget namespace, som alle lag kan tilgå, samt gør det muligt for alle nødvendige klasser arve fra disse interfaces. I ISubject placeres de generelle metoder Notify() og Attach(), hvis ansvar er at informere og flytte data fra en klasse til en anden klasse når de kaldes i Subject-klassen. IObserver indeholder metoden der kaldes i Observer når en Notify() fra Subject og ISubject modtages. \\
+Mønstret opbygges som en push, hvilket vil sige at når Subject har ny data klar til at sende op til Observer, kaldes metoden Notify() indeholdende data’en som parametre og dette sendes op til Observer, via ISubject og IObserver. Således fortsætter koden med at arbejde så længe ny data ønskes flyttes op. Mønstret benyttes både mellem data-laget og logik-laget, og mellem logik-laget og præsentations-laget. Skematisk er det i dette projekt givet ved, hvor de relevante metoder i forhold til mønstret er medtaget, se figur 3.23.
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.8\textwidth]{Figurer/ObserverStrategy}
+	\caption{Observer mønstre}
+	%\label{fig:Skitse af implementeret observer mønster}
+\end{figure}
+Strategy mønstret indkapsler algoritmer og gør dem udskiftelige med hinanden. Det vil sige at en metode oprettes i et interface. Klasser vil så arve fra dette interface, afhængig af hvem der bruger metoden vil metoden så blive overskrevet i klassen og den nødvendige funktion tilføjet. I samarbejde med Observer-mønstret bruges det ved at Subject arver fra ISubject, og Observer arver fra IObserver. 
+I projektet blev mønstrene i første omgang først benyttet fra logik-laget til præsentations-laget i forbindelse med at sende data til visning i graf. Men undervejs viste det sig nødvendigt også at implementere mønstrene fra data-laget til logik-laget, således at det kan kontrolleres hvor stor en mængde data der sendes op ad gangen. 
+
+\subsubsection{Samplefrekvens}
 Samplefrekvensen er som krav givet til 1000 Hertz. Hvilket svarer til at systemet modtager 1000 samples i sekunder. Varigheden af en sample er givet ved: 
 \begin{equation}
 \frac{1}{f_s}=\frac{1}{1000}=0.001 sek
@@ -412,25 +424,26 @@ faktor_{jus}=0-(x)
 Af ligningen ses det at justeringsfaktoren både vil kunne blive positiv og negativ, afhængig af om offset værdien skal rykkes op eller ned for at blive placeret i nul. Optimalt set vil det atmosfæriske tryk være en konstant værdi ved den samme måling, men det opleves at der er en smule støj på signalet og derfor vil den målte værdi være en tilnærmelse af det atmosfæriske tryk. Systemet ønskes nulpunktsjusteret for at sikre at alle de målte blodtrykssignaler har samme udgangspunkt. Hvilket gør at målingerne kan sammenlignes. Justeringsfaktoren skal lægges til samtlige samples fra DAQ’en som ønskes udskrevet i graf på display. 
 
 \subsubsection{Kalibrering}
-Ved kalibrering ønskes det at bestemme hardwarens visningsfejl. I dette projekt betyder det at omsætningsfaktoren fra volt til millimeter kviksølv bestemmes. Denne bestemmes ved at tilkoble en væskesøjle til systemet. Væskesøjlen fyldes med vand til den vil give et kendt mængde tryk på systemet angivet i mmHg. Herefter kan output i volt fra hardwaren måles. Omsætningsfaktor er givet ved:
+Ved kalibrering ønskes det at bestemme hardwarens visningsfejl. I dette projekt betyder det at kalibreringsfaktoren fra volt til millimeter kviksølv bestemmes. Denne bestemmes ved at tilkoble en væskesøjle til systemet. Væskesøjlen fyldes med vand til den vil give et kendt mængde tryk på systemet angivet i mmHg. Herefter kan output i volt fra hardwaren måles. kalibreringsfaktor er givet ved:
 \begin{equation}
 faktor=\dfrac{x [mmHg]}{y [Volt]}
 \end{equation}
-
-x angiver trykket fra væskesøjlen, denne hardcodes til 50 mmHg. y angiver den målte spændingsoutput på hardwaren. Denne indtaster forsker i implementeret teksboks i KalibreringsForm. Optimalt set er omsætningsfaktoren givet ved 
+x angiver trykket fra væskesøjlen, denne hardcodes til 50 mmHg. y angiver den målte spændingsoutput på hardwaren. Optimalt set er kalibreringsfaktoren givet ved: 
 \begin{equation}
 \dfrac{250 [mmHg]}{5 [V]}=50
 \end{equation}
-, hvor 250 mmHg er det maksimale blodtryk systemet kan måle og 5 Volt er maks spændingen i volt. Grafisk vil det se ud som vist på figur 3.8 under hardware modultest. Af figur 3.8 kan det aflæses at den optimale outputspænding ved 50 mmHg er 1 Volt. Omsætningsfaktoren skal ganges på samtlige sample-værdier der kommer fra DAQ’en og som ønskes udskrevet på graf i display. 
-
-Det er vigtigt at pointere at nulpunktsjusteringsfaktoren lægges til samtlige værdier i signalet førend at kalibreringsfaktoren ganges på. Dette implementeres med en for-løkke i logik-klassen som vist på figur 3.23.
+hvor 250 mmHg er det maksimale blodtryk systemet kan måle og 5 Volt er maks spændingen i volt. Grafisk vil det se ud som vist på figur 3.8 under hardware modultest. Af figur 3.8 kan det aflæses at den optimale outputspænding ved 50 mmHg er 1 Volt. Kalibreringsfaktoren skal ganges på samtlige sample-værdier der kommer fra DAQ’en og som ønskes udskrevet på graf i display. 
+Kaliberingen implementeres i softwaren ved brug af konfiguration. Forskeren beregner omsætningsværdien udfra ligning 3.16. Resultatet af denne beregning indtaster forsker i konfigurations xml-filen under App.settings. XML-filen kan tilgås uden opstart af systemet, derfor bliver kalibreringen uafhængig af hvornår systemet kører og kalibreringen kan dermed foretages på et vilkårligt tidspunkt. Værdien der ændres i XML-filen er den tilhørende "Value" til "KalibreringsKoefficient". Den er markeret med grøn firkant omkring på figur 3.24.
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=1.0\textwidth]{Figurer/AktKaliNul}
-	\caption{Aktivitetsdiagram}
-	%\label{fig:Aktivitetsdiagram for omregning af signalet}
+	\includegraphics[width=1.0\textwidth]{Figurer/XMLConfig}
+	\caption{Konfigurations XML-fil}
+	%\label{fig:Konfigurations XML-fil til kalibrering}
 \end{figure}
+Metoden Kalibrering() i Kalibreringsklassen, som er en del af logik-laget læser så "Kalibreringskoefficienten" fra konfigurations-filen hver gang kalibreringsfaktoren skal ganges på et signal. 
 
+Det er vigtigt at pointere at nulpunktsjusteringsfaktoren lægges til samtlige værdier i signalet førend at kalibreringsfaktoren ganges på. Dette udføres i kodens logik-lag.
+ 
 \subsubsection{Digitalt Filter}
 \cite{DSBsoft} Formålet med implementering af et digitalt filter er at fjerne støj fra det indhentede signal. Dette gøres ved at udglatte signalet. Til dette kan en række forskellige filtre benyttes. Vi har valgt at implementere et glidende middelværdifilter (moving average filter). Fordelen ved dette filter er at det er simpelt at forstå og at det er optimalt at bruge på signaler i tidsdomænet. Skulle signalet være vist i frekvensdomænet ville valget have faldet på et helt andet filter. 
 
@@ -439,21 +452,33 @@ Det glidende middelværdifilter fungerer ved midling af en række punkter fra in
 y[i]=\frac{1}{M}\cdot\sum\limits_{j=0}^{M-1} x[i+j]
 \end{equation}
 
-Hvor x[] er inputsignalet, y[] er outputsignalet og M er antallet af punkter der benyttes i det glidende middelværdifilter. Denne beregning benytter sig udelukkende af punkter placeres på den samme side af output sample nummeret, hvilket vil føre til en relativ forskydning mellem input og output. M sættes til 50. Implementeringen af filtret er vist i et aktivitetsdiagram på figur 3.24.
+Hvor x[] er inputsignalet, y[] er outputsignalet og M er antallet af punkter der benyttes i det glidende middelværdifilter. Denne beregning benytter sig udelukkende af punkter placeres på den samme side af output sample nummeret, hvilket vil føre til en relativ forskydning mellem input og output. M sættes til 5. Implementeringen af filtret er vist i et aktivitetsdiagram på figur 3.25.
+
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=1.0\textwidth]{Figurer/AktFiltrering}
 	\caption{Aktivitetsdiagram af metoden Filtrering()}
 	%\label{fig:Aktivitetsdiagram for metoden filtrering() i klassen Digitalt filter}
 \end{figure}
-Systemet gør det muligt for forsker selv at vælge om signalet ønskes vist filtreret eller ufiltreret. Dette vælges på brugergrænsefladen. Vælges visning af det ufiltrede signal sendes det indhentede signal naturligvis ikke gennem det digitale filter. 
+
+Måden hvorpå filtret er implementeret gør at der ikke sker en filtrering af de første fire samples, det ses af følgende i koden. AVG\_LENGTH er defineret til 5, og mængden af punkter der benyttes i filtret i ligning 3.18 svarer dette til M.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.7\textwidth]{Figurer/UdsnitFilter}
+	\caption{Udsnit af koden til det glidende middelværdifilter}
+	%\label{fig:Kode udsnit af det glidende middelværdifilter}
+\end{figure}
+
+Det ses at der skal være minimum 5 samples i data.Count førend at listen avgPoints oprettes. Det er en begrænsning vi er opmærksom på, men som accepteres da de første fire samples ved visning i graf er kørt så hurtigt igennem, at det ikke skaber en begrænsning for brugen af systemet for forsker. Optimalt set vil der sættes en begrænsning på filtret således når første måling modtages vil gennemsnittet findes af en sample, dernæst af to samples, tre samples osv. Indtil der er fem samples og gennemsnittet vil så altid bestemmes af de fem seneste samples. 
+
+Systemet gør det muligt for forsker selv at vælge om signalet ønskes vist filtreret eller ufiltreret. Dette vælges på brugergrænsefladen. Vælges visning af det ufiltrede signal sendes det indhentede signal naturligvis ikke gennem det digitale filter. Det er muligt at skifte mellem filtreret og ufiltreret signal, mens systemet kører. I det tilfælde skifter hele det viste signal til det valgte, da alt data i listen der indhentes dermed skifter. Filtreringen vil dermed ikke vise sig som en løbende kurve grafisk.
 
 \subsubsection{Analyse}
-Analyse dækker over indhentningen af de systoliske-, diastoliske- og puls-værdi ud fra blodtrykssignalet. Dette er implementeret i en klasse kaldet Analyse(). Heri er placeret algoritmer der gemmer målinger i et array[] med 3000, når dette array så er fyldt op sendes det op til præsentationslaget, hvor den pågældende maximum og minimums værdi udskrives på display. I en blodtrykskurve er den systoliske værdi givet ved maximum på kurven og den diastoliske er givet ved minimums værdien på kurven. Når dette er sket tømmes array’et og processen kører igen og igen, så værdierne opdateres i display hvert 3 sekund. I løbet af 3 sekunder vil der være gennemløbet 3-5 blodtryksperioder, afhængig af pulsfrekvensen. Dermed vil samtlige systoliske og diastoliske værdier ikke blive udskrevet. Intervallet på 3 sekunder er valgt da det er passende tid til at kunne nå og aflæse den pågældende værdi.
+Analyse dækker over indhentningen af de systoliske-, diastoliske- og puls-værdi ud fra blodtrykssignalet. Dette er implementeret i en klasse kaldet Analyse. Heri er placeret metoder for henholdsvis systole og diastole. I en blodtrykskurve er den systoliske værdi givet ved maximum på kurven og den diastoliske er givet ved minimums værdien på kurven. \\
+Metoderne bestemmer derfor den maksimale værdi og den mindste værdi i listen, der medtages som parametre til metoderne. Listen der bruges som parametre er UILIST indeholdende 350 tal ad gangen. UILIST er listen der sendes fra logik-laget til præsentations-laget med de behandlede data, som vises i grafen. I præsentations-laget er implementeret en timer, der håndterer at de systoliske- og diastoliske værdier i display kun opdateres hvert 3 sekund. I løbet af 3 sekunder vil der være gennemløbet 3-5 blodtryksperioder, afhængig af pulsfrekvensen. Dermed vil samtlige systoliske og diastoliske værdier ikke blive udskrevet. Intervallet på 3 sekunder er valgt da det er passende tid til at kunne nå og aflæse den pågældende værdi.
 
 Pulsen bestemmes ved at tælle antallet af systoliske-værdier på 10 sekunder, hvorefter denne værdi ganges med 6. Da puls er angivet i slag pr. minut. Det er en udfordring at bestemme hvornår der præcist er gået 10 sekunder, da det er usikkert om den systoliske- og diastoliske værdi opdateres præcist hvert tredje sekund. Dette skyldes at der er implementeres en timer i programmet, som er baseret på tråde. Ved implementering af mange tråde kan det føre til et langsomt gennemløb af koden. Parametre som computerens processer og RAM størrelse spiller også ind på hvor hurtigt en kode kan gennemløbes. 
-
-\textbf{Gennemsnit af værdier?}
 
 \subsubsection{Database}
 I systemet er der implementeret en lokal database. Formålet med databasen er at lagre de målte ufiltrerede blodtrykssignaler. Det er valgt at implementere databasen som typen SQL, da denne database-type indeholder de funktioner som er nødvendige for dette system. Data gemmes i tabeller i denne type database, derfor er relevante tabeller oprettet. Et blodtrykssignal indeholder en stor mængde datapunkter, derfor gemmes signalet i en BLOB (Binar Large OBject) hvor en række binære datapunkter gemmes som en enkelt enhed i databasen. Dette er valgt for at spare på data pladsen i databasen. 
