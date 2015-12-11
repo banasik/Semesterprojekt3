@@ -128,7 +128,7 @@ namespace Data
         {
             // Iterate over channels
             int currentLineIndex = 0;
-            List<double> mineTal = new List<double>();
+            List<double> råData = new List<double>();
 
             foreach (AnalogWaveform<double> waveform in sourceArray)
             {
@@ -139,13 +139,13 @@ namespace Data
 
                     //dataTable.Rows[sample][currentLineIndex] = waveform.Samples[sample].Value;
                     //Flytter data fra Waveform-array til dataList:
-                    mineTal.Add(waveform.Samples[sample].Value);
+                    råData.Add(waveform.Samples[sample].Value);
                     //dataList.Add(waveform.Samples[sample].Value);
                     
                     //dataList.Clear();
                 }
 
-                Notify(mineTal);
+                Notify(råData);
 
                 currentLineIndex++;
             }

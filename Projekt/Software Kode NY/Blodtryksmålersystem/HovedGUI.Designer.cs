@@ -28,9 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.forsøgsnavn = new System.Windows.Forms.Label();
             this.textForsøgsnavn = new System.Windows.Forms.TextBox();
             this.vælg = new System.Windows.Forms.Label();
@@ -142,12 +142,12 @@
             // 
             this.StopKnap.BackColor = System.Drawing.SystemColors.ButtonShadow;
             this.StopKnap.Font = new System.Drawing.Font("Segoe UI", 19.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.StopKnap.Location = new System.Drawing.Point(300, 481);
+            this.StopKnap.Location = new System.Drawing.Point(809, 481);
             this.StopKnap.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.StopKnap.Name = "StopKnap";
             this.StopKnap.Size = new System.Drawing.Size(234, 148);
             this.StopKnap.TabIndex = 21;
-            this.StopKnap.Text = "STOP";
+            this.StopKnap.Text = "STOP GEM";
             this.StopKnap.UseVisualStyleBackColor = false;
             this.StopKnap.Click += new System.EventHandler(this.StopKnap_Click);
             // 
@@ -156,25 +156,25 @@
             this.GemKnap.BackColor = System.Drawing.SystemColors.ButtonShadow;
             this.GemKnap.Enabled = false;
             this.GemKnap.Font = new System.Drawing.Font("Segoe UI", 19.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.GemKnap.Location = new System.Drawing.Point(557, 481);
+            this.GemKnap.Location = new System.Drawing.Point(553, 481);
             this.GemKnap.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.GemKnap.Name = "GemKnap";
             this.GemKnap.Size = new System.Drawing.Size(237, 148);
             this.GemKnap.TabIndex = 22;
-            this.GemKnap.Text = "GEM";
+            this.GemKnap.Text = "START GEM";
             this.GemKnap.UseVisualStyleBackColor = false;
             this.GemKnap.Click += new System.EventHandler(this.GemKnap_Click);
             // 
             // AfslutKnap
             // 
-            this.AfslutKnap.BackColor = System.Drawing.Color.IndianRed;
+            this.AfslutKnap.BackColor = System.Drawing.Color.DarkGray;
             this.AfslutKnap.Font = new System.Drawing.Font("Segoe UI", 19.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.AfslutKnap.Location = new System.Drawing.Point(816, 482);
+            this.AfslutKnap.Location = new System.Drawing.Point(295, 481);
             this.AfslutKnap.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.AfslutKnap.Name = "AfslutKnap";
             this.AfslutKnap.Size = new System.Drawing.Size(237, 148);
             this.AfslutKnap.TabIndex = 23;
-            this.AfslutKnap.Text = "AFSLUT";
+            this.AfslutKnap.Text = "STOP MÅLING";
             this.AfslutKnap.UseVisualStyleBackColor = false;
             this.AfslutKnap.Click += new System.EventHandler(this.AfslutKnap_Click);
             // 
@@ -182,12 +182,12 @@
             // 
             this.textPuls.BackColor = System.Drawing.Color.DimGray;
             this.textPuls.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.textPuls.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textPuls.ForeColor = System.Drawing.Color.White;
+            this.textPuls.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textPuls.ForeColor = System.Drawing.Color.YellowGreen;
             this.textPuls.Location = new System.Drawing.Point(1162, 381);
             this.textPuls.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.textPuls.Name = "textPuls";
-            this.textPuls.Size = new System.Drawing.Size(112, 28);
+            this.textPuls.Size = new System.Drawing.Size(112, 55);
             this.textPuls.TabIndex = 37;
             this.textPuls.Text = "--/-";
             // 
@@ -195,12 +195,12 @@
             // 
             this.textDia.BackColor = System.Drawing.Color.DimGray;
             this.textDia.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.textDia.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textDia.ForeColor = System.Drawing.Color.White;
+            this.textDia.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textDia.ForeColor = System.Drawing.Color.Firebrick;
             this.textDia.Location = new System.Drawing.Point(1162, 249);
             this.textDia.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.textDia.Name = "textDia";
-            this.textDia.Size = new System.Drawing.Size(112, 28);
+            this.textDia.Size = new System.Drawing.Size(112, 55);
             this.textDia.TabIndex = 36;
             this.textDia.Text = "--/-";
             // 
@@ -208,15 +208,14 @@
             // 
             this.textSys.BackColor = System.Drawing.Color.DimGray;
             this.textSys.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.textSys.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textSys.ForeColor = System.Drawing.Color.White;
+            this.textSys.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textSys.ForeColor = System.Drawing.Color.Firebrick;
             this.textSys.Location = new System.Drawing.Point(1162, 119);
             this.textSys.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.textSys.Name = "textSys";
-            this.textSys.Size = new System.Drawing.Size(112, 28);
+            this.textSys.Size = new System.Drawing.Size(112, 55);
             this.textSys.TabIndex = 35;
             this.textSys.Text = "--/-";
-            this.textSys.TextChanged += new System.EventHandler(this.textSys_TextChanged);
             // 
             // Puls
             // 
@@ -255,22 +254,22 @@
             this.Chart.BackSecondaryColor = System.Drawing.Color.DimGray;
             this.Chart.BorderSkin.BackSecondaryColor = System.Drawing.Color.DimGray;
             this.Chart.BorderSkin.PageColor = System.Drawing.Color.DimGray;
-            chartArea2.AxisX.Title = "Tid [sek]";
-            chartArea2.AxisY.Title = "Tryk [mmHg]";
-            chartArea2.BackColor = System.Drawing.Color.Transparent;
-            chartArea2.Name = "ChartArea1";
-            this.Chart.ChartAreas.Add(chartArea2);
-            legend2.Name = "Legend1";
-            this.Chart.Legends.Add(legend2);
-            this.Chart.Location = new System.Drawing.Point(248, 15);
+            chartArea1.AxisX.Title = "Tid [sek]";
+            chartArea1.AxisY.Title = "Tryk [mmHg]";
+            chartArea1.BackColor = System.Drawing.Color.Transparent;
+            chartArea1.Name = "ChartArea1";
+            this.Chart.ChartAreas.Add(chartArea1);
+            legend1.Name = "Legend1";
+            this.Chart.Legends.Add(legend1);
+            this.Chart.Location = new System.Drawing.Point(283, 11);
             this.Chart.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.Chart.Name = "Chart";
             this.Chart.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.SemiTransparent;
-            series2.ChartArea = "ChartArea1";
-            series2.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
-            series2.Legend = "Legend1";
-            series2.Name = "Series1";
-            this.Chart.Series.Add(series2);
+            series1.ChartArea = "ChartArea1";
+            series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
+            series1.Legend = "Legend1";
+            series1.Name = "Series1";
+            this.Chart.Series.Add(series1);
             this.Chart.Size = new System.Drawing.Size(1043, 462);
             this.Chart.TabIndex = 31;
             this.Chart.Text = "chart2";

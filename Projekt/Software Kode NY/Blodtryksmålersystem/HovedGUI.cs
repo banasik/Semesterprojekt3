@@ -15,15 +15,15 @@ namespace Blodtryksmålersystem
     public partial class HovedGUI : Form, IObserver
     {
         private Logik logik;
-        private int AutogenNR; //AutogeneretNR der skal tælles 1 op hver gang der trykkes på GEM-knappen.
         private List<double> guiliste;
         private Analyse diaSystole;
         private System.Timers.Timer myTimer;
+        private string Forsøgsnavn;
 
-        public HovedGUI()
+        public HovedGUI(Logik logik_)
         {
             InitializeComponent();
-            logik = new Logik();
+            logik = logik_;
             diaSystole = new Analyse();
             logik.Attach(this);
             myTimer = new System.Timers.Timer();
@@ -55,8 +55,10 @@ namespace Blodtryksmålersystem
 
         private void textForsøgsnavn_TextChanged(object sender, EventArgs e)
         {
+
             StartKnap.Enabled = true;
             StartKnap.BackColor = Color.DarkSeaGreen;
+            Forsøgsnavn = Convert.ToString(textForsøgsnavn.Text);
         }
 
         private delegate void UpdateUICallback();
@@ -91,20 +93,20 @@ namespace Blodtryksmålersystem
 
         private void StopKnap_Click(object sender, EventArgs e)
         {
-            logik.stopReadDataLogik();
-            myTimer.Close();
+            int id = logik.gemData(Forsøgsnavn);
+            textFilnavn.Text = Forsøgsnavn + '_' + Convert.ToString(id); 
         }
 
         private void AfslutKnap_Click(object sender, EventArgs e)
         {
-            Application.OpenForms["HovedGUI"].Close();
+            
+            logik.stopReadDataLogik();
+            myTimer.Close();
         }
 
         private void GemKnap_Click(object sender, EventArgs e)
         {
-            AutogenNR++; //Kan det laves på denne måde? NR der skal gemmes med i databasen
-            // logiklag.gemData(textForsøgsnavn.Text, AutogenNR, uiList);
-            // Indsæt igen når logiklag er implementeret
+            logik.ClearData();
         }
 
         public void Gennemsnit(List<double> graf)
@@ -114,10 +116,7 @@ namespace Blodtryksmålersystem
             updateChart();
         }
 
-        private void textSys_TextChanged(object sender, EventArgs e)
-        {
 
-        }
         private void GUIFiltrering()
         {
         }

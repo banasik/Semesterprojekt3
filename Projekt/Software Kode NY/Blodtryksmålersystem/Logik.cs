@@ -22,34 +22,25 @@ namespace LogikLag
         private double kalibreringKoef;
         private List<IObserver> observers;
         private List<double> FiltreretListe;
+        private List<double> databasetal;
         int counter;
         
         public double DiastoleVærdi { get; set; }
         public double SystoleVærdi { get; set; }
-        private double beregnetNulværdiAtt;
-        public double beregnetNværdi
-        {
-            get
-            {
-                return beregnetNulværdiAtt;
-            }
-            set
-            {
-                beregnetNulværdiAtt = beregnetNværdi;
-            }
-        }
+        private double beregnetNværdi;
         private Analyse AnalyseKlasse = new Analyse();
         public bool RadioProp { get; set; }
         
         
         public Logik()
         {
+            beregnetNværdi = 0.0;
             updateUI = new Thread(() => updateListe());
-            updateNul = new Thread(() => nulpunktsJustering());
             kalibreringKoef = KalibreringObjekt.Kalibrer();
             UILISTE = new List<double>();
             observers = new List<IObserver>();
             FiltreretListe = new List<double>();
+            databasetal = new List<double>();
             minKø = new Queue<double>(100);
             DAQdata.Attach(this);
             for (int i = 0; i < 299; i++)
@@ -63,10 +54,6 @@ namespace LogikLag
         {
             updateUI.Start();
         }
-        public void StartTraadTilNul()
-        {
-            updateNul.Start();
-        }
 
         public List<double> UILISTE;
 
@@ -77,7 +64,7 @@ namespace LogikLag
                 if (minKø.Count > 0)
                 {
                     double gennemsnitKø = minKø.Dequeue();
-                    gennemsnitKø = (gennemsnitKø + beregnetNulværdiAtt) * kalibreringKoef;
+                    gennemsnitKø = (gennemsnitKø + beregnetNværdi) * kalibreringKoef;
 
                     if (counter < 300)
                     {
@@ -105,12 +92,12 @@ namespace LogikLag
 
         public void getDia()
         {
-            AnalyseKlasse.Diastole(UILISTE);
+            AnalyseKlasse.Diastole(FiltreringLogik(UILISTE));
             DiastoleVærdi = AnalyseKlasse.Diastole_;
         }
         public void getSys()
         {
-            AnalyseKlasse.Systole(UILISTE);
+            AnalyseKlasse.Systole(FiltreringLogik(UILISTE));
             SystoleVærdi = AnalyseKlasse.Systole_;
         }
 
@@ -135,11 +122,15 @@ namespace LogikLag
             updateUI.Abort();
         }
 
-        public void gemData(string forsøgsnavn, int autogenereretNR, List<double> samplelist)
+        public int gemData(string forsøgsnavn) 
         {
-            Database.gemData(forsøgsnavn, autogenereretNR, samplelist);
+            return Database.gemData(forsøgsnavn, databasetal);
         }
 
+        public void ClearData()
+        {
+            databasetal.Clear();
+        }
         public void Attach(IObserver observer)
         {
             observers.Add(observer);
@@ -155,47 +146,31 @@ namespace LogikLag
         }
         public void Gennemsnit(List<double> graf)
         {
-             
+            databasetal = graf;
             minKø.Enqueue(Convert.ToDouble(graf.Average()));
         }
-        public void StartNulpunkt()
+        public void StartNulPunkt()
         {
+             {
             DAQdata.indhentData();
-            
+            updateNul = new Thread(() => nulpunktsJustering());
+            updateNul.Start();
 
-                updateNul = new Thread(() => nulpunktsJustering());
-                updateNul.Start();
-            
-            
+
+             }
         }
         public void nulpunktsJustering()
         {
-            while(isRunningLogik() && minKø.Count == 0)
+            while(isRunningLogik())
             {
-                if (minKø.Count > 0)
+                if(minKø.Count > 0)
                 {
                     DAQdata.stopReadData();
                     beregnetNværdi = NulpunktObjekt.Justering((minKø.Dequeue()));
-
-                    updateNul.Abort();
                     minKø.Clear();
                 }
+                Thread.Sleep(2);
             }
-            
-        //    //while (beregnetNværdi == 0.0)
-        //    //{
-        //    while (minKø.Count <1)
-        //    {
-        //        beregnetNværdi = NulpunktObjekt.Justering(Convert.ToDouble(minKø.Dequeue()));
-        //    }
-
-        //    if (beregnetNværdi != 0.0)
-        //    {
-        //DAQdata.stopReadData(); 
-        //        minKø.Clear();
-        //        updateNul.Abort();
-        //    } 
-            
         }
 
         public List<double> FiltreringLogik(List<double> data)
