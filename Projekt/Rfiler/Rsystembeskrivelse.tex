@@ -10,7 +10,7 @@ Hardwaren består af en forstærker og et filter. Forstærkerens opgave består 
 	\caption{Skitse af signalændring}
 	%\label{fig:Skitse der viser signalændring}
 \end{figure}
-Database-laget består af en lukket database samt indhentningen af blodtrykssignalet fra måleobjektet til transduceren, gennem hardware, inden det rammer software-delen. I den lukkede database gemmes det indhentede blodtrykssignal i en tabel. Signalet gemmes med et tidsstempel, samt under et autogenereret nummer, sammensat med det forsøgsnavn som forskeren indtaster på brugergrænsefladen ved begyndelsen af en måling. \\
+Database-laget består af en lukket database samt indhentningen af blodtrykssignalet fra måleobjektet til transduceren, gennem hardware, inden det rammer software-delen. I den lukkede database gemmes det indhentede blodtrykssignal i en tabel. Signalet gemmes med et tidsstempel, samt under et autogenereret Id, sammensat med det forsøgsnavn som forskeren indtaster på brugergrænsefladen ved begyndelsen af en måling. \\
 Logik-laget er handlingslaget, og alt kommunikation til de resterende lag går gennem dette lag. Laget indeholder flere klasser, der indeholder metoder til indhentning af systoliske-, diastoliske og puls-værdier, ud fra det indhentede blodtrykssignal. Derudover indeholder laget også klasser, der har ansvaret for at foretage en filtrering af signalet når dette er valgt. \\ 
 Præsentationslaget er forskerens vej ind i systemet, dette lag har til ansvar, at udskrive valgte data på brugergrænsefladen. 
 

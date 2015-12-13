@@ -27,25 +27,25 @@ Use Case diagrammet viser de tre aktører: Forsker, Database og Transducer. Heru
 
 \textbf{Transducer} er en sekundær aktør. Transduceren har til formål at modtage blodtrykssignalet fra måleobjektet, som kan bestå af In Vitro, patient eller anden, som kan skabe et blodtrykssignal. 
 
-\textbf{Database} er en sekundær aktør. Denne aktør er en database, hvori det ufiltrerede blodtrykssignal gemmes. Ligeledes gemmes det indtastede forsøgsnavn og det autogenerede nummer.
+\textbf{Database} er en sekundær aktør. Denne aktør er en database, hvori blodtrykssignalets rådata gemmes. Ligeledes gemmes det indtastede forsøgsnavn og det autogenerede Id.
 
 \subsubsection{Use Case beskrivelse}
-Use Case diagrammet viser ligeledes de fem Use Cases, der er for systemet: Foretag nulpunktsjustering, Foretag kalibrering, Start Måling, Gem data, Afslut måling. Disse Use Cases beskriver interaktionen mellem aktørerne og systemet. Herunder er der en kort beskrivelse formålet med hver Use Case.
+Use Case diagrammet viser ligeledes de fem Use Cases, der er for systemet: Foretag nulpunktsjustering, Bestem kalibreringskoefficient, Start Måling, Gem data, Stop måling. Disse Use Cases beskriver interaktionen mellem aktørerne og systemet. Herunder er der en kort beskrivelse formålet med hver Use Case.
 
 \textbf{UC1: Foretag nulpunktsjustering}
-Forskeren tager stilling til om en nulpunktsjustering ønskes foretaget. Hvis nej, går systemet videre til næste Use Case. Hvis ja, påbegynder systemet en nulpunktsjustering, hvor en offset-værdi ud fra et kendt signal bestemmes. Denne offset-værdi justeres ind, så en offset-værdi på nul indstillet. Således er en nulpunktsjustering foretaget.
+Når systemet startes op vil det første der møder forskeren være en GUI, hvorfra nulpunktsjustering kan foretages. Det forudsættes at forskeren har åbnet for transduceren, så den modtager atmosfærisk tryk inden at forskeren trykker på foretag. Systemet indhenter så en nulpunktsjusteringsværdi, denne værdi gemmes i softwaren og alt indhentet signal herefter vil dermed være indstillet til en offset på nul. Herefter går systemet videre til næste Use Case
 
-\textbf{UC2: Foretag kalibrering}
-Forskeren tager stilling til om en kalibrering ønskes foretaget. Hvis nej, går systemet videre til næste Use Case. Hvis ja, foretages en kalibrering. Det kræver at forskeren åbner for ventilen på transduceren, der er placeret på måleobjektet. Herefter modtager systemet en værdi for det atmosfæriske tryk. Denne værdi korrigeres af en algoritme i systemet. Dermed er en kalibrering foretaget.  
+\textbf{UC2: Bestem kalibreringskoefficient}
+Kalibreringen foregår uafhængig af om systemet kører. Forsker tilslutter hardware til væskesøjle ved 50 mmHg. Så aflæses output spænding fra hardwaren. Kalibreringskoefficienten kan så bestemmes ved en simpel beregning ud fra tryk og output spænding. Denne værdi indtastet så i fil, hvorfra softwaren kan tilgå koefficienten og derefter benytte den som omsætningskoefficient mellem volt og mmHg. Dermed er en kalibrering udført.   
 
 \textbf{UC3: Start måling}
 Det kræves at måleobjekt, hvorpå blodtrykssignal ønskes fra, er tilsluttet. Derfor tilslutter forskeren transduceren til måleobjektet. Derpå kan målingen startes ved, at forskeren trykker på knappen START MÅLING. Herefter indhenter systemet blodtrykssignalet, som bliver udskrevet på display. Værdier for puls, systolisk- og diastolisk blodtryk udskrives på display. 
 
 \textbf{UC4: Gem data}
-Det er muligt for forskeren at gemme det indhentet ufiltrerede blodtrykssignal, indenfor en periode, valgt af forskeren. Dette gøres ved, at forskeren trykker på knappen GEM. Systemet vil herefter begynde at sende signaldata ind i databasen, hvor dataene gemmes. Dette vil systemet blive ved med at udføre indtil forskeren trykker på knappen GEM igen eller knappen AFSLUT.  
+Det er muligt for forskeren at gemme det indhentede blodtrykssignals rådata, indenfor en periode, valgt af forskeren. Dette gøres ved, at forskeren trykker på knappen START GEM. Systemet vil herefter begynde at sende rådata ind i databasen, hvor dataene gemmes. Dette vil systemet blive ved med at udføre indtil forskeren trykker på knappen STOP GEM. Ved tryk på STOP GEM vises filnavn på display. 
 
-\textbf{UC5: Afslut måling}
-Det er muligt for forskeren at lukke systemet ned. Dette gøres ved, at forskeren trykker på knappen AFSLUT. Systemet vil herefter afslutte igangværende processer og lukke ned.
+\textbf{UC5: Stop måling}
+Det er muligt for forskeren at stoppe visning af blodtrykssignalet. Dette gøres ved, at forskeren trykker på knappen STOP MÅLING. Systemet vil herefter lukke forbindelsen til indhentning af data og grafen i chart vil fastholdes. 
 
 \subsubsection{Ikke-funktionelle krav beskrivelse}
 Ikke-funktionelle krav er struktureret efter (F)URPS+, hvor krav til systemets funktionalitet, brugervenlighed, pålidelighed, præsentation samt vedligehold er beskrevet. Disse krav er primært software-krav. Der opstilles bl.a. et krav om en maksimal tid, der må gå fra, at der er trykket på en knap, til at systemet reagerer. Når der er trykket på en knap, skal systemet foretage den ønskede proces, hvilket eksempelvis er, at ved tryk på GEM-knappen, at sende det ufiltrerede blodtrykssignal til databasen, hvor signaldata bliver gemt. Ligeledes er opbygning af display også en del af de ikke-funktionelle krav.

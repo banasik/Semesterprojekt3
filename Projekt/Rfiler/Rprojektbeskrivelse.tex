@@ -235,6 +235,16 @@ Under projektet er vores tidsplan skredet adskillige gange. Blandt andet pga. ma
 Ved hardware har der været en manglende forståelse for de signaler som sendes ind og måles ved udgangen. Det har givet en stor usikkerhed for, hvornår de forskellige blokke har virket korrekt. Derfor er der blevet spildt tid på at tro at systemet ikke virkede, mens det i virkeligheden gjorde som det skulle.  
 De udefrakommende faktorer som har spillet ind var en eksamen, som har lagt midt i det hele. Den har naturligvis være kendt hele forløbet, men det satte en stopper for projektet på ca. 1 uge.  
 
+Resultatet af projektforløbet blev en prototype af et softwaresysteme, hvis egenskab er at diagnosticere ST-elevation på en EKG måling. Det kunne være en mulighed at videreudvikle systemet således, det kan bruges på sygehuse. Der var i begyndelsen af projektet blevet stillet krav til softwaresystem, som endte med at blive opfyldt. Der er dog nogle punkter i accepttesten, som ikke var testbare, hvilket selvfølgelig bør opfyldes førend det ville være muligt at videreudvikle systemet. 
+Ved gennemgangen af accepttesten stødte var der et problem med simuleringen af en udebleven måling. Fejlen er beskrevet yderligere i problemrapporten. 
+I de ikke-funktionelle krav, var målsætningen en MTTR (Mean Time To Restore) på maksimalt 4 timer. Dette har ikke været testbart, da systemet stadig er en prototype og ikke et færdigt produkt.
+Det tænkes ydermere at det endelige produkts hardwaredele forefindes som en sammenkobling af alle dele, således plejepersonalet kun skal udskifte en HW-del. Under forudsætningen af tilstedeværende reservedele, ville sundhedspersonalet nemt have mulighed for at gendanne systemet indenfor 4 timer.
+Da systemet stadig er en prototype, bestående af en flere løse komponenter, der let kan frakobles, er risikoen for nedbrud relativt høj. Dette er ikke optimalt for et færdigt produkt og derfor ville en sammenkobling af alle løse komponenter som nævnt ovenfor, være med til at sikre en længere MTBF (Mean Time Between Failure).
+I forhold til projektformuleringen er det med det netop udviklede program blevet muligt at detektere ST-elevation i et EKG-signal. Prototype kan på under 20 sekunder   vise en graf og fortælle om patienten har tegn på ST-elevation. Formålet og projektformulering er dermed indfriet. 
+Der er arbejdet med, flyttet rundt med og designet en GUI, som i sidste ende har fået et relativt professionelt design, og som vil være let at benytte og implementere i et dagligt arbejde. Det er således muligt at følge med i programmet, når det tænker og fremstiller en graf over et EKG-signal. Ydermere blev programmet sat op med en zoomfunktion, hvilket forventes at gøre det lettere for sundhedspersonalet at fokusere på ST-segmentet (Figur 8).
+Skal der påpeges en negativ ting om projektet og den endelige rapport, så må det siges at være den evige forvirring omkring Black Box. Hensigten har oprindeligt været at samle de oprindelige hardware dele under en enhed, idet fokus ikke har ligget på hardware design. Derimod endte det med både eksterne og interne forvirringer omkring, hvor meget Black Box egentlig indeholder, og hvad funktionen har været.
+
+
 
 
 \section{Udviklingsværktøjer}
