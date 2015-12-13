@@ -96,24 +96,30 @@ For at få den rette forstærkning er det blevet valgt, at benytte instrumentati
 \end{itemize}
 For at udregne den korrekte forstærkning, bruges følsomheden fra transduceren og eksistationsspændingen.
 Først udregnes det maksimale output fra transduceren:   
+\begin{ceqn}
 \begin{equation}
 9V\cdot 250mmHg \cdot 5\mu\cdot 10^{-5} uV/V/mmHg  = 11.25mV
 \end{equation} 
-Da det er besluttet at det maksimale input til DAQ'en \cite{DSB} er 5V, kan forstærkningen (Gain) nu udregnes: 
+\end{ceqn}
+Da det er besluttet at det maksimale input til DAQ'en \cite{DSB} er 5V, kan forstærkningen (Gain) nu udregnes:
+\begin{ceqn}
 \begin{equation}
 \begin{split}
-5V= 11.25mV \cdot G \\
-G = 444.44
+5V=& 11.25mV \cdot G \\
+G =& 444.44
 \end{split}
 \end{equation}
+\end{ceqn}
 For at få den rette forstærkning udregnes den eksterne modstand ($ R_g $) til INA-114 \cite{INA}.\\ 
 INA-114's forstærkning afhænger af størrelsen på $ R_g $, hvis modstanden er stor, er forstærkningen lille og omvendt.  $ R_g $ udregnes ved formlen: 
+\begin{ceqn}
 \begin{equation}
 \begin{split}
-G=1+\frac{50k\Omega}{R_g}\\
-444.44= 1+\frac{50k\Omega}{R_g} \Rightarrow R_g= 112.75 \Omega
+G=&1+\frac{50k\Omega}{R_g}\\
+444.44=& 1+\frac{50k\Omega}{R_g} \Rightarrow R_g= 112.75 \Omega
 \end{split}
 \end{equation}
+\end{ceqn}
 Derved fås en værdi for den eksterne modstand til INA-114, som skaber den ønskede forstærkning.\\
 \newline
 Den ønskede forstærkning kan bruges, da det passer over ens med båndbredden. Dette kan undersøges da produktet af forstærkning og båndbredde er konstant og båndbredden skal ligge over knækfrekvensen for filteret. Se beregning i Dokumentation ligning 3.4.\\
@@ -133,23 +139,29 @@ På figur \ref{fig:HW} ses et diagram af det endelige kredsløb med komponentvæ
 \subsubsection{Lavpas}
 For at opnå den ønskede effekt i lavpasfilteret, blev det oplyst at $ f_c=50$ Hz, $ f_s = 1$kHz, $ R_1 = R_2 $ og $ C_2=680 nF$. Ud fra disse værdier, udregnes de resterende komponentværdier for filteret.
 
-Overføringsfunktionen for et 2. ordens filter er: 
+Overføringsfunktionen for et 2. ordens filter er:
+\begin{ceqn} 
 \begin{equation}
 H(z)=\frac{\omega_n^2}{(s^2 + 2\cdot\zeta \cdot \omega_n \cdot s+\omega_n^2)}
 \end{equation}
+\end{ceqn}
 
-For at finde overføringsfunktionen for det gældende system, vides det at følgende ligninger gælder \cite{Wikilavpas}: 
+For at finde overføringsfunktionen for det gældende system, vides det at følgende ligninger gælder \cite{Wikilavpas}:
+\begin{ceqn}
 \begin{equation}
 \begin{split}
-\omega_n = 2\cdot \pi\ 50 = \dfrac{1}{\sqrt{R1\cdot R2\cdot C1\cdot C2}}\\
-2\cdot \zeta\cdot\omega_n =\frac{1}{C2}\cdot \left( \frac{R1+R2}{R1\cdot R2}\right)
+\omega_n = 2\cdot \pi\ 50 =& \dfrac{1}{\sqrt{R1\cdot R2\cdot C1\cdot C2}}\\
+2\cdot \zeta\cdot\omega_n =&\frac{1}{C2}\cdot \left( \frac{R1+R2}{R1\cdot R2}\right)
 \end{split}
 \end{equation}
+\end{ceqn}
 Dette indsættes i den generelle overføringsfunktion og det simplificeres, blandt andet ved at det vides at $ R1=R2 $. 
-Se Beregning af overføringsfunktion i Bilag for nærmere udregninger: 
+Se Beregning af overføringsfunktion i Bilag for nærmere udregninger:
+\begin{ceqn} 
 \begin{equation}
 H(z)=\dfrac{\dfrac{1}{C1 \cdot C2\cdot R^2}}{s^2+s\cdot \dfrac{2}{R\cdot C2}+ \dfrac{1}{C1\cdot C2\cdot R^2}}
 \end{equation}
+\end{ceqn}
 Når der arbejdes med et 2. ordens Butterworth filter, vides det at udsvinget$ \zeta $ skal have værdien 0.7 \cite{ASB}.
 Under beregningerne, var der usikkerhed omkring, hvad værdien af $ \zeta $ skulle være. Da kredsløbet skulle realiseres og dokumenteres blev det derfor overvejet at ændre samtlige komponentværdier så de passede med en $ \zeta = 1 $. Inden dette blev gjort blev det dokumenteret at det gælder at $ \zeta $ skal have en værdi på 0.7. \\
   
@@ -160,9 +172,11 @@ Alle komponentværdierne til lavpasfilteret er fundet og det kan nu realiseres. 
 
 Under udviklingen af lavpasfilteret er komponentstørrelserne, blevet ændret for at kunne realisere det. De brugte komponentværdier er: $ R= 6.6 k\Omega $, $ C1= 330\cdot 10 ^{-9} nF$ og $ C2= 680\cdot 10^{-9} nF$.   
 For at være sikker på at filteret har de ønskede karakteristika, laves et bodeplot for den endelig overføringsfunktion: 
+\begin{ceqn}
 \begin{equation}
 H(z)=\dfrac{62500000000}{610929\cdot \left( s^2+\dfrac{250000}{561}\cdot s + \dfrac{62500000000}{610929} \right)}
 \end{equation}
+\end{ceqn}
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=0.5\textwidth]{Figurer/Bodeplot}
