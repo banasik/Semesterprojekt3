@@ -10,3 +10,8 @@ C:\Users\matim_000\Documents\Semesterprojekt3\Projekt\Software Kode NY\Blodtryks
 C:\Users\matim_000\Documents\Semesterprojekt3\Projekt\Software Kode NY\Blodtryksmålersystem\obj\Debug\Blodtryksmålersystem.csproj.GenerateResource.Cache
 C:\Users\matim_000\Documents\Semesterprojekt3\Projekt\Software Kode NY\Blodtryksmålersystem\obj\Debug\Blodtryksmålersystem.exe
 C:\Users\matim_000\Documents\Semesterprojekt3\Projekt\Software Kode NY\Blodtryksmålersystem\obj\Debug\Blodtryksmålersystem.pdb
+C:\Users\matim_000\Documents\Semesterprojekt3\Projekt\Software Kode NY\Blodtryksmålersystem\bin\Debug\NationalInstruments.Common.dll
+C:\Users\matim_000\Documents\Semesterprojekt3\Projekt\Software Kode NY\Blodtryksmålersystem\bin\Debug\NationalInstruments.NiLmClientDLL.dll
+C:\Users\matim_000\Documents\Semesterprojekt3\Projekt\Software Kode NY\Blodtryksmålersystem\bin\Debug\NationalInstruments.MStudioCLM.dll
+C:\Users\matim_000\Documents\Semesterprojekt3\Projekt\Software Kode NY\Blodtryksmålersystem\bin\Debug\NationalInstruments.Common.xml
+C:\Users\matim_000\Documents\Semesterprojekt3\Projekt\Software Kode NY\Blodtryksmålersystem\obj\Debug\Blodtryksmålersystem.csprojResolveAssemblyReference.cache

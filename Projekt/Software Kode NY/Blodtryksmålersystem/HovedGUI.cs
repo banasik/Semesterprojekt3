@@ -31,10 +31,12 @@ namespace Blodtryksmålersystem
             myTimer.Interval = 3000;
             myTimer.Elapsed += myTimer_Elapsed;
             logik.Attach(this);
+            Chart.ChartAreas[0].AxisY.Minimum = 0;
+            Chart.ChartAreas[0].AxisY.Maximum = 250;
             //GUISetNVærdi();
 
         }
-
+        
         void myTimer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
         {
             MethodInvoker action = delegate
@@ -71,9 +73,9 @@ namespace Blodtryksmålersystem
             }
             else
             {
-                //if (uiList.Count > 500) //Vises først i chart når listen indeholder mere end 500 samples
+                
                 {
-                    Chart.Series["Series1"].Points.DataBindY(guiliste); //De sidste 500 samples i listen vises i chart
+                    Chart.Series["Series1"].Points.DataBindY(guiliste); 
                     logik.getDia();
                     logik.getSys();
                     
