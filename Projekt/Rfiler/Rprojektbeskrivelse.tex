@@ -66,12 +66,10 @@ Til udarbejdelsen af kredsløb blev Analog Discovery brugt til at simulerer sign
 	\label{fig:Domaene Model}
 \end{figure}
 
-\subsection{Hardware}
+\section{Hardware}
 I hardwaredelen skal der ligge en forstærkning og et lavpasfilter. Det differentieret signal fra transduceren skal forstærkes og filtrers før det kan sendes ind i DAQ'en.
-\subsection{Software}
 
-\section{Problemidentifikation (design)}
-\subsection{Hardware}
+\subsection{Problemidentifikation (design)}
 \subsubsection{Forstærkning}
 Transduceren måler en trykændring, som den omsætter til en spænding. Dette er udtrykt ved et differentieret signal, som sendes ind i forstærker-blokken. \\
 Signalet fra transduceren er en lav spænding, som skal forstærkes op, for at passe med DAQ'ens input. Denne forstærkning udregnes ud fra det maksimale output fra transduceren og det maksimale input til DAQ'en. Se beregningerne under implementering.  
@@ -84,10 +82,8 @@ Aliasering \cite{DSB} er, hvor signalet bliver gentaget. Når man har signalet i
 Det skal sikres, at der ikke kommer overlap mellem signalet og et alias. Da det ellers kunne give anledning til misforståelser. Derfor laves et lavpasfilter, som sikre at der ikke ligger noget signal ved den halve samplingsfrekvens.\\
 Lavpasfilteret skal være et Sallen-Key Butterworth-filter med en knækfrekvens på 50 Hz og en samplingsfrekvens på 1kHz. Ud fra oplysninger givet til projektet, vides det at filteret skal dæmpe signalet med 20 dB, under antagelse af at den forekommende støj er mindre end signalet, også når det forekommer over knækfrekvensen.\\
 Ved en typisk blodtryksmåling forekommer der ikke signal over 50 Hz, samtidigt er signalet her aftaget med ca. 70 dB. For at få signalet, ved den halve samplingsfrekvens til at være $ 1/2 \cdot LSB $ (Least Significant Bit), skal det ydeligere dæmpes 20 dB. Derfor oplyses filteret til at være 50 Hz, da dette giver en minimum dæmpning på 20 dB pr. dekade.
-\subsection{Software}
 
-\section{Implementering}
-\subsection{Hardware}
+\subsection{Implementering}
 \subsubsection{Forstærkning}
 For at få den rette forstærkning er det blevet valgt, at benytte instrumentationsforstærkeren INA-114. Her kan transduceren sættes på med det differentierede signal. INA-114 er valgt da følgende gælder\cite{Instrumentation} for instrumentationsforstærkere: 
 \begin{itemize}
@@ -187,15 +183,7 @@ H(z)=\dfrac{62500000000}{610929\cdot \left( s^2+\dfrac{250000}{561}\cdot s + \df
 \end{figure}
 Ud fra den nye overføringsfunktion udregnes en nu $ \zeta $ for at kontrollere at værdien ikke har ændret sig. Denne udregnes til $ \zeta = 0.709 $. Derfor kan det konkluderes at filteret stadig har den ønskede funktionalitet. 
 
-\subsection{Software}
-
-\section{GUI-beskrivelse}
-\subsection{Algoritmer (grænseværdier)}
-\subsection{Filteret/Ufiltreret}
-\subsection{Lagring af data i Database}
-
-\section{Test}
-\subsection{Hardware}
+\subsection{Test}
 \subsubsection{Forstærkning}
 For at teste forstærkningen, sendes et differentieret signal ind vha. Analog Discovery. Her observeres der hvor meget signalet bliver forstærket. 
 På figur \ref{fig:forstaerkning} ses det signal, som sendes ind i forstærkningsblokken og det, der måles på udgangen af blokken. 
@@ -243,8 +231,10 @@ Ud fra grafen i figur \ref{fig:graf_vandtest} vides, hvad svaret til hver målin
 \end{figure}
 Ud fra figur \ref{fig:graf_vandtest} kendes udgangsspændingen også for de to andre målepunkter. Se under Modeltest i Dokumentationen for billeder af målingerne ved 10 mmHg og 100 mmHg. Målingen for 50 mmHg er her valgt ud, da denne måling ligger til baggrund for kalibreringen i softwaren. 
 
-\subsection{Software}
-
+\section{Software}
+\subsection{Problemidentifikation (design)}
+\subsection{Implementering}
+\subsection{Test}
 
 \subsection{Integrationstest}
 Til sidst i projekt forløbet blev en integrationstest udført. En integrationstest laves primært for at teste om softwaren fungerer korrekt og om enhederne/modulerne deri anvender hinanden. Testen retter sig mod afprøvning af det komplette program, med de eksterne systemer, i dette tilfælde sammen med hardwaren. 
@@ -253,9 +243,6 @@ I dette tilfælde blev In Vitro maskinen i Cave Lab brugt til at skabe et blodtr
 Billede af opstilling
 Der startes med at laves en nulpunktsjustering på vores system, som bagefter viste en flot signal, som lå så konstant at det var svært at se cursoren. Samtidig stod systolisk- og diastolisktryk i tal på GUI. Her viste det sig, at vores system konstant afveg fra den anden blodtryksmåler med en værdi på 2, både på systolisk og diastolisk tryk. Da den konstant afveg, vurderes det at afvigelsen skyldes at vores sytem ikke var kalibreret eller at den anden blodtryksmåler ikke var nulpunktjusteret.  Der kunne ikke udføres en kaliberering da væskesøjlen var gået i stykker. Det blev også forsøgt at nulpunktjusterer den anden blodtryksmåler, men heller ikke dette kunne gøres.  Derfor blev resultatet af testen af vores system virker som det skal efter kravene stillet til det.  
 Billeder af vores måling kontra den anden blodtryksmåler : gerne sammensat i et billede. 
-
-
-
 
 \section{Resultater og diskussion}
 Resultatet af dette projektforløb er blevet en prototype af en hardwaredel og et softwaresystem, hvis egenskab er at detektere den systoliske- og diastoliske værdi ud fra et blodtrykssignal. Denne prototype er blevet udviklet til forskningsbrug. Det kunne være en mulighed at videreudvikle systemet således, at det kan detektere hypotension og hypertension og så alarmere. På denne måde kunne systemet altså bruges til patientbrug, på hospitaler, sygehuse, lægehuse osv. \\
