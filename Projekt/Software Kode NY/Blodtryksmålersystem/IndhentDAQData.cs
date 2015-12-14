@@ -116,7 +116,7 @@ namespace Data
                     // Plot your data here
                     dataToDataTable(data, ref dataTable);
 
-                    analogInReader.BeginMemoryOptimizedReadWaveform(Convert.ToInt32(10),
+                    analogInReader.BeginMemoryOptimizedReadWaveform(Convert.ToInt32(20),
                         analogCallback, myTask, data);
                 }
             }
