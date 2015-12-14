@@ -345,6 +345,10 @@ Dermed ses det at denne model er delt op i tre niveauer:
 \item Domæneklasse
 \begin{enumerate}
 \item Database
+\item Nulpunktsjustering - Bestemmer nulpunktsjusteringsværdi
+\item Kalibrering - Bestemmer kalibreringskoefficient
+\item Filter - Indeholder det digitale filter
+\item Analyse - Bestemmer systole, diastole og puls
 \end{enumerate}
 \end{enumerate}
 
@@ -406,7 +410,7 @@ Det er valgt kun at udarbejde aktivitetsdiagrammer for metoder, hvor vi mener de
 \subsubsection{Klasse implementering}
 På baggrund af designmodellerne er det besluttet at opbygge systemkoden efter principperne i en trelagsmodel. Trelagsmodellen indeholder et præsentations-lag, et logik-lag og et data-lag. Præsentations-laget består af de klasser som systemets aktører har tilgang til. Logik-laget er det analyserende lag. Det er således i dette lag at signalet behandles. Logik-laget har tilgang til de andre lag som det eneste. Det betyder at præsentations-laget og data-laget ikke kan kommunikere sammen, derved skal denne kommunikation foregå gennem logik-laget. Data-laget er tilgangen til den implementerede database og til indhentning af blodtrykssignalet fra hardware.
 
-Fordelen ved trelagsmodel opbygningen er at det skaber et godt overblik i koden, og skaber en kode med lav kobling, da hver enkelt klasse har hvert sit specifikke ansvar. Hvilket gør at koden er let at vedligeholde og ændre hvis funktionaliteter ønskes opbygget anderledes. Et overordnet klassediagram over systemet er udarbejdet på baggrund af præcisering af applikationsmodellen, se figur 3.22. Hvilke metoder hver enkelt klasse indeholder kan ses på de følgende sider, hvor klassediagrammet er blevet brudt op i hver klasse for sig. 
+Fordelen ved trelagsmodel opbygningen er at det skaber et godt overblik i koden, og skaber en kode med lav kobling, da hver enkelt klasse har hvert sit specifikke ansvar. Hvilket gør at koden er let at vedligeholde og ændre hvis funktionaliteter ønskes opbygget anderledes. Et overordnet klassediagram over systemet er udarbejdet på baggrund af præcisering af applikationsmodellen, se figur 3.22. Hvilke metoder hver enkelt klasse indeholder kan ses på bilag xx.
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=1.0\textwidth]{Figurer/Klassediagram}
@@ -523,7 +527,12 @@ I forhold til implementering af puls er der gjort en række overvejelser og muli
 
 \subsubsection{Beregnings metode}
 Metoden updateListe() er den vigtigste metode i logik-laget. Den er placeret i logikklassen. Metoden har til ansvar at tage højde for nulpunktsjustering og kalibering ved beregning. Derudover har den til ansvar at lægge data i en liste med 300 pladser, der kan vises i graf på display. Til sidst tjekker metoden om radiobuttom for filtreret eller ufiltreret signal er checked og sender listen gennem filtret, hvis filtret signal er valgt inden listen med Notify() sendes til præsentationslaget. Metodens aktivitetsdiagram er givet ved:
-
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=1.0\textwidth]{Figurer/AktUpdateListe}
+	\caption{Aktivitetsdiagram for metoden updateListe()}
+	%\label{fig:Aktivitetsdiagram for metoden updateListe()}
+\end{figure}
 
 \subsubsection{Database}
 I systemet er der implementeret en lokal database. Databasen er oprettet gennem host webhotel10.iha.dk. Formålet med databasen er at lagre det målte blodtrykssignals rådata. Det er valgt at implementere databasen som typen SQL, da denne database-type indeholder de funktioner som er nødvendige for dette system. Data gemmes i denne type database i tabeller. Indledningsvis for at oprette den nødvendige tabel defineres en type til hver værdi. SQL-koden til oprettelse af tabel er vist på figur xx.
