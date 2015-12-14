@@ -1,10 +1,8 @@
 \chapter{Projektformulering og afgrænsning}
-I daglig klinisk praksis er der ofte behov for kontinuert at monitorere patienters blodtryk, i særdeleshed på intensive afdelinger samt operationsstuer, hvor blodtrykket er en vigtig parameter i monitorering af patienters kardiovaskulære status.
-
-
+I daglig klinisk praksis er der ofte behov for kontinuert at monitorere patienters blodtryk, i særdeleshed på intensive afdelinger samt operationsstuer, hvor blodtrykket er en vigtig parameter i monitorering af patienters kardiovaskulære status.\\
 Denne kontinuere monitorering er også nødvendig i forskningsverdenen. Det er i forskerens interesse, at kunne måle blodtrykket når der laves hæmodynamiske undersøgelser. Her skal det være muligt for forskeren at kunne aflæse det diastoliske- og systoliske tryk, pulsen samt få vist en pæn kurve over blodtrykket. Det er målet, at opbygge en prototype, der kan registrere de spændinger, i milivolt (mV), der kommer fra tryktransduceren og analogt forstærke samt filtrere signalet. Dette signal skal derefter konverteres til det digitale domæne. \\
 Herfra skal der programmeres en brugergrænseflade, der fremfører disse målinger, samt gør det muligt, for forskeren, at gemme målingen i en database til senere brug. Resultatet bliver derfor et elektronisk kredsløb med forbindelse til et software program.
-For at de gemte data kan sammenlignes, kræver det at de alle er blevet gemt med samme forudsætning, dvs. at målingerne er blevet kalibreret og nulpunktsjusteret. Dette bliver håndteret i softwaredelen, hvor beregninger implementeres. Når forskeren kigger på blodtryksgrafen, vil han normalt se på et filtreret signal. I tilfælde af at det er i hans interesse at se på et ufilteret signal, vil dette være muligt, ved et tryk på en knap.
+For at de gemte data kan sammenlignes, kræver det at de alle er blevet gemt med samme forudsætning, dvs. at målingerne er blevet kalibreret og nulpunktsjusteret. Dette bliver håndteret i softwaredelen, hvor beregninger implementeres. Når forskeren kigger på blodtryksgrafen, vil han normalt se på et filtreret signal. I tilfælde af at det er i hans interesse at se på et ufiltreret signal, vil dette være muligt, ved et tryk på en knap.
 
 \textbf{MoSCoW \footnote{Metode, der benyttes til at beskrive hvad programmet skal kunne og det der ønskes, men ikke vil ske - Must have, Should have, Could have, og Would like but won't get}}
 \\
@@ -25,10 +23,10 @@ For at de gemte data kan sammenlignes, kræver det at de alle er blevet gemt med
 
 \textit{Could}
 \begin{itemize}
-\item Hardwaredelen skal bestå af ét VEVO Board med indbyggede komponenter
+\item Hardwaredelen skal bestå af ét Veroboard med indbyggede komponenter
 
 \end{itemize} 
-\textit{Would}
+\textit{Would} \\[-1ex]
 \begin{itemize}
 \item Alarmering, hvis blodtrykket afviger indbyggede grænseværdier
 \item Forskeren skal kunne hente de gemte data ned igen
@@ -50,15 +48,17 @@ Idet gruppens størrelse ikke lægger op til samlet, at arbejde på alle dele sa
 \label{version_Systemark}
 \end{longtabu}
 
-\begin{longtabu} to \linewidth{@{}l l l X[l]@{}}
-    Navn &    Skrevet afsnit \\%[-1ex]
+\begin{longtabu} to \linewidth{@{}l l l X[j]@{}}
+    Navn &    Skrevet afsnit &\\[-1ex]
     \midrule
-    Ditte Heebøll Callesen & Metoder, systemarkitektur, problemidentifikation, projektstyring og perspektivering \\
-    Albert Jakob Fredshavn &  Projektgennemførelse \\
-    Martin Banasik         & Systemarkitektur (hardware) og Opnåede resultater \\
-    Johan Mathias Munk     & Projektformulering og afgrænsning  \\
-    Mette Hammer Nielsen-Kudsk & Resumé, abstract, indledning, blodtryk, resultater og diskussion og konklusion  \\
-   	Anne Hoelgaard   	 	& Krav, Systemarkitektur (software) \\
+    Ditte Heebøll Callesen & Metoder, systemarkitektur, problemidentifikation, projektstyring & \\
+     & og perspektivering & \\
+    Albert Jakob Fredshavn &  Projektgennemførelse & \\
+    Martin Banasik         & Systemarkitektur (hardware) og Opnåede resultater & \\
+    Johan Mathias Munk     & Projektformulering og afgrænsning &  \\
+    Mette Hammer Nielsen-Kudsk & Resumé, abstract, indledning, blodtryk, resultater og diskussion &  \\
+     & og konklusion &  \\
+   	Anne Hoelgaard   	 	& Krav, Systemarkitektur (software) & \\
 %\label{version_Systemark}
 \end{longtabu}
 
