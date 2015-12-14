@@ -74,8 +74,9 @@ namespace Data
                         Convert.ToDouble(3.00), AIVoltageUnits.Volts);
 
                     // Configure the timing parameters
+                    // Her bliver samplerate sat til 1000 samt samples per channel til 20
                     myTask.Timing.ConfigureSampleClock("", Convert.ToDouble(1000),
-                        SampleClockActiveEdge.Rising, SampleQuantityMode.ContinuousSamples,20);
+                        SampleClockActiveEdge.Rising, SampleQuantityMode.ContinuousSamples,10);
 
                     // Verify the Task
                     myTask.Control(TaskAction.Verify);
@@ -85,7 +86,7 @@ namespace Data
 
                     runningTask = myTask;
                     analogInReader = new AnalogMultiChannelReader(myTask.Stream);
-                    analogCallback = new AsyncCallback(AnalogInCallback); //Håndterer de data vi for ind løbende, selvkørende event
+                    analogCallback = new AsyncCallback(AnalogInCallback); //Håndterer de data vi får ind løbende, selvkørende event
 
                     // Use SynchronizeCallbacks to specify that the object 
                     // marshals callbacks across threads appropriately.
@@ -101,6 +102,8 @@ namespace Data
                 }
             }
         }
+        // Denne metode kalder dataToDataTable og sender data og en reference med som parameter.
+        // Samt sker der asynkron callback, hvis DAQ'en kører.
         private void AnalogInCallback(IAsyncResult ar) //Asynkron callback
         {
             try
@@ -113,7 +116,7 @@ namespace Data
                     // Plot your data here
                     dataToDataTable(data, ref dataTable);
 
-                    analogInReader.BeginMemoryOptimizedReadWaveform(Convert.ToInt32(20),
+                    analogInReader.BeginMemoryOptimizedReadWaveform(Convert.ToInt32(10),
                         analogCallback, myTask, data);
                 }
             }
@@ -124,6 +127,7 @@ namespace Data
                 //throw exception;
             }
         }
+        // Denne metode tilføjer alle samples i sourceArray over i råData og kalder Notify der "skubber" sampleværdierne op til Logik laget.
         private void dataToDataTable(AnalogWaveform<double>[] sourceArray, ref DataTable dataTable)
         {
             // Iterate over channels
@@ -134,17 +138,9 @@ namespace Data
             {
                 for (int sample = 0; sample < waveform.Samples.Count; ++sample)
                 {
-                    //if (sample == 1)
-                    //    break;
-
-                    //dataTable.Rows[sample][currentLineIndex] = waveform.Samples[sample].Value;
-                    //Flytter data fra Waveform-array til dataList:
                     råData.Add(waveform.Samples[sample].Value);
-                    //dataList.Add(waveform.Samples[sample].Value);
-                    
-                    //dataList.Clear();
                 }
-
+                
                 Notify(råData);
 
                 currentLineIndex++;
@@ -188,14 +184,13 @@ namespace Data
         {
             observers.Add(observer);
         }
+        //Her bruges der en "Push-Notify", som skubber en liste op til logiklaget. 
         public void Notify(List<double> graf)
         {
-
             foreach (IObserver obs in observers)
             {
                 obs.Gennemsnit(graf);
             }
         }
-       
     }
 }
