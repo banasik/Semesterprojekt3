@@ -247,7 +247,7 @@ Software implementering skrevet til dokumentering. Opdateret versionshistorik.
 
 \underline{\textbf{Logbog}}
 
-Softwaren skal sættes sammen, findes nu i to programmer som skal lægges sammen. 
+Softwaren skal sættes sammen, findes nu i to programmer som skal lægges sammen. Visning af systoliske og diastoliske værdier er blevet implementeret, således at de opdateres hvert 3 sekund. 
 Mette skriver Abstract. 
 Martin opdaterer og tjekker use cases i forhold til krav og accepttest. Der tjekkes op på dokumenter der skal underskrives senere. \\Referencer er blevet ordnet, så de virker til url også. Samtidigt er der blevet lagt flere bilag op.  
 \\
@@ -256,11 +256,12 @@ Martin opdaterer og tjekker use cases i forhold til krav og accepttest. Der tjek
 \hrule
 \textbf{Omhandler:} Software og tekst
 
-\textbf{Ansvarlig:} Albert 
+\textbf{Ansvarlig:} Albert og Anne
 
 \underline{\textbf{Logbog}}
 
-Der arbejdes på at få softwaren til at hænge sammen. Dvs. den tilpasses og der ændres løbene i kravspek og AT., selvom det dog er blevet klart at vi ikke når at kunne færdigøre AT til onsdag d. 09-12. Vi skal derfor om formiddagen planlægge at udføre den selv uden Peter, så vi ved hvad der kommer til at ske, når Peter er med senere på dagen.   
+Der arbejdes på at få softwaren til at hænge sammen. Dvs. den tilpasses og der ændres løbene i kravspek og AT., selvom det dog er blevet klart at vi ikke når at kunne færdigøre AT til onsdag d. 09-12. Vi skal derfor om formiddagen planlægge at udføre den selv uden Peter, så vi ved hvad der kommer til at ske, når Peter er med senere på dagen.
+Det digitale filter er lykkes at få implementeret i dag, og der ses tydelig forskel på filtreret og ufiltreret signal når det vises i graf.  
 \\
 
 \section{Dato: 09-12-2015}
@@ -271,5 +272,42 @@ Der arbejdes på at få softwaren til at hænge sammen. Dvs. den tilpasses og de
 
 \underline{\textbf{Logbog}}
 
-Det er blevet muligt at rykke AT til fredag d. 11-12. Der vil derfor blive arbejdet videre på softwaren for at nå mest muligt før denne deadline. Der er derudover blevet rettet til i diverse dokumenter.
+Det er blevet muligt at rykke AT til fredag d. 11-12. Der vil derfor blive arbejdet videre på softwaren for at nå mest muligt før denne deadline. Der er derudover blevet rettet til i diverse dokumenter. \\
+Kalibreringen er blevet tilføjet med en konfigurations-fil, således at Use Case 2 omdøbes til Bestem kalibreringskoefficient. Use Case kan køres uafhængig af kørsel af systemet. Det mangler stadig at få systemet til at kunne gemme i databasen, I et testprogram er der blevet fundet en mulig løsning. Det vil blive forsøgt torsdag, at implementere dette i det endelig program.
+\\
+
+\section{Dato: 10-12-2015}
+\hrule
+\textbf{Omhandler:} Software, tekst
+
+\textbf{Ansvarlig:} Anne og Ditte
+
+\underline{\textbf{Logbog}}
+
+Systemet kan nu gemme i databasen. Fungere således at signalets rådata gemmes fra der trykkes på START GEM indtil der trykkes på STOP GEM. Rådataen gemmes i en VARBINARY-type. Ved hver eneste gemning autogeneres et Id, der så sendes tilbage til præsentationslaget og udskrives på GUI sammen med det indtastede forsøgsnavn. \\
+Kravspecifikation og accepttest er blevet rettet til så det stemmer overens med software. Vi bliver klar til accepttest fredag.
+\\
+
+\section{Dato: 11-12-2015}
+\hrule
+\textbf{Omhandler:} Software, tekst
+
+\textbf{Ansvarlig:} Anne 
+
+\underline{\textbf{Logbog}}
+
+Mathias arbejder videre fredag formiddag på at få nulpunktsjusteringen helt færdig til AT kl. 13. Det lykkedes. Små rettelser i GUI tilføjes så det stemmer overens med kravspecifikation. 
+Integrationstesten hvor software og hardware sættes sammen går godt, det hele virker. Accepttesten gennemføres med enkelte mangler, såsom at puls ikke er blevet implementeres.\\
+Manglende opgaver deles ud og det aftales at de er færdig skrevet til mandag morgen.
+\\
+
+\section{Dato: 14-12-2015}
+\hrule
+\textbf{Omhandler:} Samle rapport og dokumentation
+
+\textbf{Ansvarlig:} Anne
+
+\underline{\textbf{Logbog}}
+
+Der arbejdes på højtryk for at få færdiggjort de sidste ting, såsom korrektur læsning, klassediagram for det fulde software-system mv.
 \\
