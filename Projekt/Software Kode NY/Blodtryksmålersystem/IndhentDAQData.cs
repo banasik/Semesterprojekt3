@@ -151,10 +151,7 @@ namespace Data
             }
         }
 
-        public List<double> getList()
-        {
-            return dataList; //Returneres så listen kan tilgåes senere
-        }
+       
         public void InitializeDataTable(AIChannelCollection channelCollection, ref DataTable data)
         {
             int numOfChannels = channelCollection.Count;
