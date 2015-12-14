@@ -294,10 +294,10 @@ Ved målingen for 100 mmHg skulle der måles en spænding på 2 V. Som det ses p
    
 \section{Software}
 \subsection{Design}
-I dette beskrives systemets softwaredesign på baggrund af systembeskrivelsen og kravspecifikationen. De overvejelser som er gjort i forbindelse med design af software vil blive præsenteret i dette afsnit.
+I dette afsnit beskrives systemets softwaredesign på baggrund af systembeskrivelsen og kravspecifikationen. De overvejelser, som er gjort i forbindelse med design af software vil blive præsenteret i dette afsnit.
 
 \subsubsection{Overordnet sekvensdiagram}
-Overordnet set ønskes det at udvikle et system, der kan interagerer med en forsker. Diagrammet herunder viser at forskerens opgave består i at starte en måling, en nulpunktsjustering og gemme de ønskede data, samt uafhængigt af systemet at foretage en kalibrering, hvis det ønskes. Diagrammet er en simpel illustration, som viser systemets adfærd gennem alle fem Use Cases. Formålet med dette diagram er udelukkende at skabe et overblik over det samlede system.
+Overordnet set ønskes det at udvikle et system, der kan interagerer med en forsker. Diagrammet herunder viser at forskerens opgave består i at starte en måling, foretage en nulpunktsjustering og gemme de ønskede rådata, samt uafhængigt af systemet at bestemme en kalibreringskoefficient, hvis det ønskes. Diagrammet er en simpel illustration, som viser systemets adfærd gennem alle fem Use Cases. Formålet med dette diagram er at skabe et overblik over det samlede system.
 
 \begin{figure}[H]
 	\centering
@@ -307,7 +307,7 @@ Overordnet set ønskes det at udvikle et system, der kan interagerer med en fors
 \end{figure}
 
 \subsubsection{Problemidentifikation}
-Første step i software designet er at klarlægge hvilke klasser systemet skal bestå af. Til dette er en domænemodel derfor udarbejdet med udgangspunkt i de fem Use Cases. I de fem Use Cases er de konceptuelle klasser blevet identificeret, og derefter indført som klasser i nedestående domænemodel. Modellen har til formål at vise hvilke dele systemet skal holde styr på. 
+Første step i softwaredesignet er at klarlægge, hvilke klasser systemet skal bestå af. Til dette er en domænemodel udarbejdet med udgangspunkt i de fem Use Cases. I de fem Use Cases er de konceptuelle klasser blevet identificeret, og derefter indført som klasser i nedenstående domænemodel. Modellen har til formål at vise, hvilke dele systemet skal holde styr på. 
 
 \begin{figure}[H]
 	\centering
@@ -315,10 +315,10 @@ Første step i software designet er at klarlægge hvilke klasser systemet skal b
 	\caption{Domænemodel}
 	\label{fig:Domaenemodel}
 \end{figure}
-Diagrammet viser forskerens interaktion med display, samt hvilke handlinger denne interaktion starter i system. Hardware-komponenterne er medtaget for at vise signalets vej fra måleobjekt til system. 
+Diagrammet viser forskerens interaktion med displayet, samt hvilke handlinger interaktionen starter i systemet. Hardwarekomponenterne er medtaget for at vise signalets vej fra måleobjekt til systemet. 
 
 \subsubsection{Klasseidentifikation}
-Ud fra domænemodellen kan et klassediagram udarbejdes, dette diagram tager også udgangspunkt i de fem Use Cases. Hensigten med et klassediagram er at klarlægge, hver klasses individuelle formål. 
+Ud fra domænemodellen kan et klassediagram udarbejdes, dette diagram tager også udgangspunkt i de fem Use Cases. Hensigten med et klassediagram er at klarlægge hver klasses individuelle formål. 
 
 \begin{figure}[H]
 	\centering
@@ -353,7 +353,7 @@ På figur \ref{fig:Applikationsmodellen} ses det at denne model er delt op i tre
 \end{enumerate}
 
 \subsubsection{Metodeidentifikation}
-Klasserne i ovenstående klassediagram er med til at definere, hvilke blokke de følgende sekvensdiagrammer må indeholde. Det er yderst vigtigt at der er en sammenhæng mellem klasserne i klassediagrammet og blokkene i sekvensdiagrammet. Vi har valgt at udarbejde et sekvensdiagram for hver enkelt Use Case, hvori systemets interne kommunikation beskrives, når normalforløb og udvidelser gennemløbes. I alle diagrammerne beskrives forløbet via de metodekald, der er nødvendige for at få de ønskede handlinger mellem blokkene udført. I de efterfølgende diagrammer dækker blokken Transducer over alt Hardware og DAQ'en.  
+Klasserne i ovenstående klassediagram er med til at definere, hvilke blokke de følgende sekvensdiagrammer må indeholde. Det er yderst vigtigt, at der er en sammenhæng mellem klasserne i klassediagrammet og blokkene i sekvensdiagrammet. Det er blevet valgt at udarbejde et sekvensdiagram for hver enkelt Use Case, hvori systemets interne kommunikation beskrives, når normalforløbet og udvidelser gennemløbes. I alle diagrammerne beskrives forløbet via de metodekald, der er nødvendige for at få de ønskede handlinger mellem blokkene udført. I de efterfølgende diagrammer dækker Transducer-blokken over alt hardware og DAQ'en.  
 
 \textbf{Use Case 1}
 \begin{figure}[H]
@@ -362,7 +362,7 @@ Klasserne i ovenstående klassediagram er med til at definere, hvilke blokke de 
 	\caption{Sekvensdiagram for Use Case 1}
 	\label{fig:Sekvensdiagram_UC_1}
 \end{figure}
-Det ses af ovenstående sekvensdiagram at forsker interagerer med display ved tryk på en knap. Denne interaktion skal igangsætte en nulpunktsjustering, som systemet udfører ved at læse den første indhentede værdi fra transduceren. 
+Det ses af ovenstående sekvensdiagram at Forsker interagerer med display ved tryk på en knap. Denne interaktion skal igangsætte en nulpunktsjustering, som systemet udfører ved at læse gennemsnittet af de første 20 indhentede værdi fra transduceren. 
 
 \textbf{Use Case 2}
 \begin{figure}[H]
@@ -380,7 +380,7 @@ Af diagrammet på figur \ref{fig:Sekvensdiagram_UC_2} ses det at kalibreringen s
 	\caption{Sekvensdiagram for Use Case 3}
 	\label{fig:Sekvensdiagram_UC_3}
 \end{figure}
-I diagrammet i figur \ref{fig:Sekvensdiagram_UC_3} ses det at display-, transducer-, analyse- og filterklassen vil komme i spil. Her modtages besked ved indtastning af forsøgsnavn og tryk på start-knap på display om, at signaldata fra transduceren skal hentes ind i systemet. Herefter foretages filtrering af signalet, samt visning af signal i graf, systoliske-, diastoliske og puls-værdier på display. Use Casen indeholder en udvidelse hvor filtrering af signal ikke ønskes foretaget, dette er vist ved en optional nederst på figur \ref{fig:Sekvensdiagram_UC_3}. 
+På diagrammet i figur \ref{fig:Sekvensdiagram_UC_3} ses det at display-, transducer-, analyse- og filterklassen vil komme i spil. Her modtages der besked ved indtastning af Forsøgsnavn og tryk på Start Måling-knap på display om, at signaldata fra transduceren skal hentes ind i systemet. Herefter foretages filtrering af signalet, samt visning af signal i graf, systoliske, diastoliske og puls værdier på displayet. Use Casen indeholder en udvidelse hvor filtrering af signal ikke ønskes foretaget, dette er vist ved en Optional nederst på figur \ref{fig:Sekvensdiagram_UC_3}. 
 
 \textbf{Use Case 4}
 \begin{figure}[H]
@@ -389,7 +389,7 @@ I diagrammet i figur \ref{fig:Sekvensdiagram_UC_3} ses det at display-, transduc
 	\caption{Sekvensdiagram for Use Case 4}
 	\label{fig:Sekvensdiagram_UC_4}
 \end{figure}
-Ovenstående diagram viser at for at få gemt data fra signalet, kræver det at der trykkes på START GEM-knap på display, hvorefter systemet skal gemme det fremadrettede signal indtil der trykkes på STOP GEM.
+Ovenstående diagram viser at det kræver, at der trykkes på Start Gem-knap på display, for at få gemt signalets rådata. Hvorefter systemet skal gemme det fremadrettede rådata indtil der trykkes på Stop Gem-knap.
 
 \textbf{Use Case 5}
 \begin{figure}[H]
@@ -398,19 +398,19 @@ Ovenstående diagram viser at for at få gemt data fra signalet, kræver det at 
 	\caption{Sekvensdiagram for Use Case 5}
 	\label{fig:Sekvensdiagram_UC_5}
 \end{figure}
-Ved stop af en måling ses det at forsker trykker på STOP MÅLING-knap på display, hvorefter indhentning af data fra Transducer-blokken stoppes.
+Ved stop af en måling ses det at Forsker trykker på Stop Måling-knap på display, hvorefter indhentning af data fra Transducer-blokken stoppes.
 
 \subsection{Implementering}
 \subsubsection{Indledende implementeringsovervejelser}
-På baggrund af designfasen for softwaren kan implementeringen af softwaren påbegyndes. Softwaredesignet viser at systemet skal implementeres med en GUI applikation, hvor aktøren kan interagere med systemet. Derudover er det kendt at softwaren skal indeholde en række klasser, hvor i funktionalitetér som kalibrering, nulpunktsjustering, digitalt filter og indhentning af systolisk-, diastoliske- og puls-værdier skal placeres. I det følgende beskrives de overvejelser der er gjort i forhold til implementering af disse funktionaliteter og hele softwaresystemet generelt. 
+På baggrund af designfasen for softwaren kan implementeringen påbegyndes. Softwaredesignet viser at systemet skal implementeres med en GUI-applikation, hvor aktøren kan interagere med systemet. Derudover er det kendt at softwaren skal indeholde en række klasser, hvori funktionaliteter som kalibrering, nulpunktsjustering, digitalt filter og indhentning af systolisk, diastoliske og puls værdier skal placeres. I det følgende beskrives de overvejelser, der er gjort i forhold til implementering af disse funktionaliteter og softwaresystemet. 
 
-Implementeringen af softwaren sker i Visual Studio 2013 i sproget C\#. Dette er valgt da programmet er godt til arbejde med GUI applikationer, samt til håndtering af tråde og tråd kommunikation. Tråde benyttes i softwaren da systemet, der skal implementeres er et eventdrevet system. Det vil sige, at systemet skal kunne håndtere mange handlinger på en gang. Handlingerne igangsættes af events, der kommer af aktørens interaktion med systemet. Tråd kommunikationen fungerer således, at en tråd kan sende et signal ud som andre tråde kan reagere på. \\
-Det er valgt kun at udarbejde aktivitetsdiagrammer for metoder, hvor det menes at være med til at skabe et bedre overblik. Flere at metoderne er simple og derfor er et aktivitetsdiagram ikke nødvendig. 
+Implementeringen af softwaren sker i Visual Studio 2013 i sproget C\#. Dette er valgt da programmet er et godt værktøj til at arbejde med GUI-applikationer, samt til håndtering af tråde og trådkommunikation. Tråde benyttes i softwaren da systemet, der skal implementeres, er et eventdrevet system. Det vil sige, at systemet skal kunne håndtere mange handlinger på en gang. Handlingerne igangsættes af events, der kommer af aktørens interaktion med systemet. Trådkommunikationen fungerer således, at en tråd kan sende et signal ud, som andre tråde kan reagere på. \\
+Det er valgt kun at udarbejde aktivitetsdiagrammer for metoder, hvor det menes at skabe et bedre overblik. Flere at metoderne er simple og derfor er et aktivitetsdiagram ikke nødvendigt. 
 
 \subsubsection{Klasse implementering}
-På baggrund af designmodellerne er det besluttet at opbygge systemkoden efter principperne i en trelagsmodel\cite{3lagsmodel}. Trelagsmodellen indeholder et præsentations-lag, et logik-lag og et data-lag. Præsentations-laget består af de klasser som systemets aktører har tilgang til. Logik-laget er det analyserende lag. Det er således i dette lag at signalet behandles. Logik-laget har tilgang til de andre lag som det eneste. Det betyder at præsentations-laget og data-laget ikke kan kommunikere sammen, derved skal denne kommunikation foregå gennem logik-laget. Data-laget er tilgangen til den implementerede database og til indhentning af blodtrykssignalet fra hardware.
+På baggrund af designmodellerne er det besluttet at opbygge systemkoden efter principperne i en trelagsmodel\cite{3lagsmodel}. Trelagsmodellen indeholder et præsentations-lag, et logik-lag og et data-lag. Præsentations-laget består af de klasser som systemets aktører har tilgang til. Logik-laget er det analyserende lag. Det er i dette lag at signalet behandles. Logik-laget har tilgang til de andre lag som det eneste. Det betyder at præsentations-laget og data-laget ikke kan kommunikere sammen, derved skal denne kommunikation foregå gennem logik-laget. Data-laget er tilgangen til den implementerede database og til indhentning af blodtrykssignalet fra hardwaren.
 
-Fordelen ved trelagsmodel opbygningen er, at den skaber et godt overblik i koden, og giver en kode med lav kobling, da hver enkelt klasse har hvert sit specifikke ansvar. Hvilket gør at koden er let at vedligeholde og ændre, hvis funktionaliteter ønskes opbygget anderledes. Et overordnet klassediagram over systemet er udarbejdet på baggrund af præcisering af applikationsmodellen, se figur \ref{fig:KlassediagramSW}. Hvilke metoder hver enkelt klasse indeholder kan ses i Bilag under Klassediagram. 
+Fordelen ved trelagsmodellen er, at den skaber et godt overblik i koden, og giver en kode med lav kobling, da hver enkelt klasse har hvert sit specifikke ansvar. Hvilket gør at koden er let at vedligeholde og ændre, hvis funktionaliteter ønskes opbygget anderledes. Et overordnet klassediagram over systemet er udarbejdet på baggrund af præcisering af applikationsmodellen, se figur \ref{fig:KlassediagramSW}. Hvilke metoder hver enkelt klasse indeholder kan ses i Bilag under "Klassediagram". 
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=1.0\textwidth]{Figurer/Klassediagram}
@@ -419,31 +419,31 @@ Fordelen ved trelagsmodel opbygningen er, at den skaber et godt overblik i koden
 \end{figure}
 
 \subsubsection{Brugergrænseflade}
-Displayet (GUI) er aktørens, i dette tilfælde forskerens, indgang til systemet. Derfor er det vigtigt at den er opbygget efter forskerens logik. Til at klarlægge dette er principperne om en god brugergrænseflade taget i mente. Brugen af disse kommer til udtryk ved, at det tydeligt fremgår af hver knap eller label, hvad dens formål er, samt at størrelsen af det enkelte komponent er tilstrækkelig stor til at det ikke er til at overse. Komponenterne på display er logisk placeret, det vil sige, at de dele som forsker først skal forholde sig til og eventuelt udfylde er placeret i venstre side af display. Dette vil give mening såfremt systemet benyttes af personer fra den vestlige verden, hvor læseretningen er fra venstre mod højre. 
+Displayet (GUI) er Forskerens indgang til systemet. Derfor er det vigtigt at den er opbygget efter forskerens logik. Til at klarlægge dette er principperne om en god brugergrænseflade taget i mente. Brugen af disse kommer til udtryk ved, at det tydeligt fremgår af hver knap eller label, hvad dens formål er, samt at størrelsen af det enkelte komponent er tilstrækkelig stor til at det ikke er til at overse. Komponenterne på displayet er logisk placeret, det vil sige, at de dele som forsker først skal forholde sig til og eventuelt udfylde er placeret i venstre side af display. 
 
-Det er et krav at forsker indtaster et forsøgsnavn inden en måling kan startes, derfor er komponenterne implementeres således at knappen ”Start måling” først bliver aktiveret når der er indtastet noget i tekstboksen til forsøgsnavn. Systoliske-, diastoliske og puls-værdi er placeret efter hvilken rækkefølge det typisk ses på standard blodtryksapparater. 
+Det er et krav at Forsker indtaster et Forsøgsnavn inden en måling kan startes, derfor er komponenterne implementeres således at knappen ”Start måling” først bliver aktiveret, når der er indtastet noget i tekstboksen til Forsøgsnavn. Systoliske, diastoliske og puls værdi er placeret efter hvilken rækkefølge der typisk ses på standard blodtryksapparater. 
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=1.0\textwidth]{Figurer/NulHovedGUI}
 	\caption{NulpunktsjusteringGUI og HovedGUI}
 	\label{fig:FormsSW}
 \end{figure}
-Af figur \ref{fig:FormsSW} ses det at grafen er en væsentlig del af display’s brugergrænseflade. Grafen implementeres som en Windows Form komponent. Det vælges at få vist signalet som en kurve, og førsteaksen indstilles til tid i sekunder fra 0 til 6 sekunder, og andenaksen til en minimums værdi på 0 mmHg og en maksimum værdi på 250 mmHg, hvilket er givet i kravspecifikationen. 
+Af figur \ref{fig:FormsSW} ses det, at grafen er en væsentlig del af displays brugergrænseflade. Grafen implementeres som en Windows Form komponent. Det vælges at få vist signalet som en kurve, og førsteaksen indstilles til samples fra 0-300, og andenaksen til værdier fra 0 til 250 mmHg, hvilket er givet i kravspecifikationen. 
 
 \subsubsection{Observer - Strategy}
-Observer og strategy er to programmeringsmønstre. Der i samarbejde med hinanden er gode til at håndtere at sende data fra et lag til et andet lag. Det er valgt at bygge softwarekoden op efter disse to mønstre. Observer definerer et "en til mange"  forhold mellem objekter således, at en ændring i et objekts tilstand medfører, at de mange objekter informeres om ændringer og dermed opdateres automatisk.
+Observer og Strategy er to programmeringsmønstre. Der i samarbejde med hinanden er gode til at håndtere en overførelse af data fra et lag til et andet. Det er valgt at opbygge softwarekoden efter disse to mønstre. Observer definerer et "en til mange"\ relation mellem objekter således, at en ændring i et objekts tilstand medfører, at de mange objekter informeres om ændringer og dermed opdateres automatisk.
 
 Dette implementeres ved at oprette to interfaces IObserver og ISubject. Disse interfaces placeres i deres eget namespace, som alle lag kan tilgå, samt gør det muligt for de nødvendige klasser at arve fra disse interfaces. \\
 I ISubject placeres de generelle metoder Notify() og Attach(), hvis ansvar er at informere og flytte data fra en klasse til en anden klasse, når de kaldes i en Subject-klasse som fx logik-klassen. IObserver indeholder metoden, der kaldes i Observer når en Notify() fra Subject og ISubject modtages.\\ Mønstret benyttes både mellem data-laget og logik-laget, hvor data-laget fungerer som Subject og logik-laget er Observer, samt mellem logik-laget og præsentations-laget, hvor logik-laget er Subject og præsentations-laget er Observer. \\
-Mønstret opbygges som en push, hvilket vil sige at når Subject har ny data klar til at sende op til Observer, kaldes metoden Notify() indeholdende data’en som parametre og dette sendes op til Observer, via ISubject og IObserver. Således fortsætter koden med at arbejde så længe ny data ønskes flyttes op. Skematisk er det i dette projekt givet ved, hvor de relevante metoder i forhold til mønstret er medtaget, se figur \ref{fig:implementeret_observer_moenster}.
+Mønstret opbygges som en push, hvilket vil sige, at når Subject har ny data klar til at sende op til Observer, kaldes metoden Notify() med data’en som parameter og dette sendes op til Observer, via ISubject og IObserver. Således fortsætter koden med at arbejde så længe ny data ønskes flyttet op. Skematisk er det, i dette projekt givet ved, hvor de relevante metoder i forhold til mønstret er medtaget, se figur \ref{fig:implementeret_observer_moenster}.
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=0.8\textwidth]{Figurer/ObserverStrategy}
 	\caption{Observer mønstre}
 	\label{fig:implementeret_observer_moenster}
 \end{figure}
-Strategy mønstret indkapsler algoritmer og gør dem udskiftelige med hinanden. Det vil sige at en metode oprettes i et interface. Klasser vil så arve fra dette interface, afhængig af hvem der bruger metoden vil den blive overskrevet i klassen og den nødvendige funktion tilføjet. I samarbejde med Observer-mønstret bruges det ved, at Subject arver fra ISubject, og Observer arver fra IObserver. 
-I projektet blev mønstrene i første omgang benyttet fra logik-laget til præsentations-laget i forbindelse med at sende data til visning i graf. Men undervejs viste det sig nødvendigt også at implementere mønstrene fra data-laget til logik-laget, således at det kan kontrolleres hvor stor en mængde data, der sendes op ad gangen. 
+Strategy mønstret indkapsler algoritmer og gør dem udskiftelige med hinanden. Det vil sige at en metode oprettes i et interface. Klasser vil arve fra dette interface. Afhængig af hvem, der bruger metoden vil den blive overskrevet i klassen og den nødvendige funktion tilføjet. I samarbejde med Observer-mønstret bruges det ved, at Subject arver fra ISubject, og Observer arver fra IObserver. 
+I projektet blev mønstrene i første omgang benyttet fra logik-laget til præsentations-laget i forbindelse med at overføre data til visning i graf. Men undervejs viste det sig nødvendigt også at implementere mønstrene fra data-laget til logik-laget, således at det kan kontrolleres, hvor stor en mængde data, der sendes op af gangen. 
 
 \subsubsection{Samplefrekvens}
 Samplefrekvensen er som krav givet til 1000 Hertz. Hvilket svarer til at systemet modtager 1000 samples i sekunder. Varigheden af en sample er givet ved: 
@@ -452,54 +452,54 @@ Samplefrekvensen er som krav givet til 1000 Hertz. Hvilket svarer til at systeme
 \frac{1}{f_s}=\frac{1}{1000}=0.001 sek
 \end{equation}
 \end{ceqn}
-Det har vist sig under arbejdet med softwaren, at systemet ikke kan følge med til at modtage så mange målinger i sekundet. Derfor er det valgt at skære i antallet af målinger pr. sekund, der skal videre bearbejdes i logik-laget og udskrives i præsentations-laget. Antallet skæres ned til 50 målinger pr. sekund. Dette gøres ved at gennemsnittet af 20 målinger efter hinanden bestemmes, hvorefter gennemsnitsværdien returneres og gemmes i en liste, der sendes videre i systemet. Herefter findes gennemsnittet af de næste 20 målinger og således forsættende.   
+Det har vist sig under arbejdet med softwaren, at grafen ikke kan følge med, når den modtager så mange målinger i sekundet. Derfor er det valgt at skære i antallet af målinger pr. sekund, der skal viderebearbejdes i logik-laget og udskrives i præsentations-laget. Antallet skæres ned til 50 målinger pr. sekund. Dette gøres ved at gennemsnittet af 20 målinger efter hinanden bestemmes, hvorefter gennemsnitsværdien returneres og gemmes i en liste, der sendes videre i systemet. Herefter findes gennemsnittet af de næste 20 målinger og således fortsætter det. 
 
 \subsubsection{Nulpunktsjustering}
-Formålet med en nulpunktsjustering er at flytte signalets offset enten op eller end, så det atmosfæriske tryk altid er placeret ved 0 volt på outputsignalet. Dette gøres ved at åbne for den tilsluttede transducer til systemet, så det atmosfæriske tryk måles. Ud fra denne værdi kan justeringsfaktoren bestemmes, hvor x er det målte atmosfæriske tryk i volt modtaget gennem DAQ’en:
+Formålet med en nulpunktsjustering er at flytte signalets offset op eller end, så det atmosfæriske tryk altid er placeret ved 0 V på outputsignalet. Dette gøres ved at åbne for den tilsluttede transducer, så det atmosfæriske tryk måles. Ud fra denne værdi kan justeringsfaktoren bestemmes, hvor x er det målte atmosfæriske tryk i Volt modtaget gennem DAQ’en:
 \begin{ceqn}
 \begin{equation}
 faktor_{jus}=0-(x)
 \end{equation}
 \end{ceqn}
-Af ligningen ses det at justeringsfaktoren både vil kunne blive positiv og negativ, afhængig af om offset værdien skal rykkes op eller ned for at blive placeret i nul. Optimalt set vil det atmosfæriske tryk være en konstant værdi ved den samme måling, men det opleves at der er en smule støj på signalet og derfor vil den målte værdi være en tilnærmelse af det atmosfæriske tryk. Systemet ønskes nulpunktsjusteret for at sikre, at alle de målte blodtrykssignaler har samme udgangspunkt. Hvilket gør at målingerne kan sammenlignes.\\
-Systemet foretager automatisk nulpunktsjusteringen når systemet startes ved at retunerer den første værdi fra DAQ'en, når der trykkes på knappen FORETAG. Denne værdi er justeringsfaktoren, der lægges til samtlige samples i det indhentede blodtrykssignal.
+Af ligningen ses det, at justeringsfaktoren både vil kunne blive positiv og negativ, afhængig af om offsetværdien skal rykkes op eller ned for at blive placeret i nul. Optimalt set vil det atmosfæriske tryk være en konstant værdi ved den samme måling, men det opleves, at der er en smule støj på signalet og derfor vil den målte værdi være en tilnærmelse af det atmosfæriske tryk. Systemet ønskes nulpunktsjusteret for at sikre, at alle de målte blodtrykssignaler har samme udgangspunkt. Hvilket gør at målingerne kan sammenlignes.\\
+Systemet foretager nulpunktsjusteringen ved at retunerer gennemsnittet af de første 20 målinger fra DAQ'en, når der trykkes på knappen FORETAG. Denne værdi er justeringsfaktoren, der lægges til samtlige samples i det indhentede blodtrykssignal.
 
 \subsubsection{Kalibrering}
-Ved kalibrering ønskes det at bestemme hardwarens visningsfejl. I dette projekt betyder det, at kalibreringsfaktoren fra volt til millimeter kviksølv bestemmes. Denne bestemmes ved at tilkoble en væskesøjle til systemet. Væskesøjlen fyldes med vand til den vil give et kendt tryk på systemet angivet i mmHg. Herefter kan output i volt fra hardwaren måles. Kalibreringsfaktor er givet ved:
+Ved kalibrering ønskes det at bestemme hardwarens visningsfejl. I dette projekt betyder det, at kalibreringsfaktoren fra volt til millimeter kviksølv bestemmes. Denne bestemmes ved at tilkoble en væskesøjle til systemet. Væskesøjlen fyldes med vand til markering, så den vil give et kendt tryk (mmHg). Herefter kan output i volt fra hardwaren måles. Kalibreringskoefficienten er givet ved:
 \begin{ceqn}
 \begin{equation}
-faktor=\dfrac{x [mmHg]}{y [Volt]}
+koef=\dfrac{x [mmHg]}{y [Volt]}
 \end{equation}
 \end{ceqn}
-x angiver trykket fra væskesøjlen, denne hardcodes til 50 mmHg. Værdien for y angiver det målte spændingsoutput på hardwaren. Optimalt set er kalibreringsfaktoren givet ved:
+x angiver trykket fra væskesøjlen, denne hardcodes til 50 mmHg. Værdien for y angiver det målte spændingsoutput på hardwaren. Optimalt set er kalibreringskoefficienten givet ved:
 \begin{ceqn}
 \begin{equation}
 \dfrac{250 [mmHg]}{5 [V]}=50
 \end{equation}
 \end{ceqn}
-hvor 250 mmHg er det maksimale blodtrykssystemet kan måle og 5 Volt er maks spændingen i volt. Grafisk vil det se ud som vist på figur \ref{fig:graf_vandtest} under hardware modultest. Af figur \ref{fig:graf_vandtest} kan det aflæses at den optimale outputspænding ved 50 mmHg er 1 Volt. Kalibreringsfaktoren skal ganges på samtlige sample-værdier der kommer fra DAQ’en og som ønskes udskrevet på graf i display.\\ 
-Kaliberingen implementeres i softwaren ved brug af konfiguration. Forskeren beregner omsætningsværdien ud fra ligning 3.16. Resultatet af denne beregning indtaster forsker i konfigurations xml-filen under App.settings. XML-filen kan tilgås uden opstart af systemet, derfor bliver kalibreringen uafhængig af, hvornår systemet kører og kalibreringen kan dermed foretages på et vilkårligt tidspunkt. Værdien der ændres i XML-filen er den tilhørende "Value" til "KalibreringsKoefficient". Den er markeret med grøn firkant på figur \ref{fig:XML-fil}.
+hvor 250 mmHg er det maksimale blodtrykssystemet kan måle og 5 V er maks spændingen i volt. Grafisk vil det se ud som vist på figur \ref{fig:graf_vandtest} under Modultest for hardware. Af figur \ref{fig:graf_vandtest} kan det aflæses at den optimale outputspænding ved 50 mmHg er 1 V. Kalibreringskoefficienten skal ganges på samtlige sampleværdier, der kommer fra DAQ’en, som ønskes udskrevet på graf i display.\\ 
+Kaliberingen implementeres i softwaren ved brug af konfiguration. Forskeren beregner omsætningsværdien ud fra ligning 3.16. Resultatet af denne beregning indtaster Forsker i konfigurations XML-filen under App.settings. XML-filen kan tilgås uden opstart af systemet, derfor bliver kalibreringen uafhængig af, hvornår systemet kører og kalibreringen kan dermed foretages på et vilkårligt tidspunkt. Værdien der ændres i XML-filen er den tilhørende "Value" til "KalibreringsKoefficient". Den er markeret med en grøn firkant på figur \ref{fig:XML-fil}.
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=1.0\textwidth]{Figurer/XMLConfig}
 	\caption{Konfigurations XML-fil}
 	\label{fig:XML-fil}
 \end{figure}
-Metoden Kalibrering() i Kalibreringsklassen, som er en del af logik-laget, læser "Kalibreringskoefficienten" fra konfigurations-filen, hver gang kalibreringsfaktoren skal ganges på et signal. 
+Metoden Kalibrering() i Kalibreringsklassen, som er en del af logik-laget, læser "KalibreringsKoefficienten"\ fra konfigurations-filen, hver gang kalibreringskoefficienten skal ganges på et signal. 
 
-Det er vigtigt at pointere at nulpunktsjusteringsfaktoren lægges til samtlige værdier i signalet før kalibreringsfaktoren ganges på. Dette udføres i kodens logik-lag.
+Det er vigtigt at pointere, at nulpunktsjusteringsfaktoren lægges til samtlige værdier i signalet før kalibreringskoefficienten ganges på. Dette udføres i kodens logik-lag.
  
 \subsubsection{Digitalt Filter}
 \cite{DSBsoft} Formålet med implementering af et digitalt filter er at fjerne støj fra det indhentede signal. Dette gøres ved at udglatte signalet. Til dette kan en række forskellige filtre benyttes. I projektet er det valgt at implementere et glidende middelværdifilter (moving average filter).\\ Fordelen ved dette filter er, at det er simpelt at forstå og det er optimalt at bruge på signaler i tidsdomænet. Skulle signalet være vist i frekvensdomænet ville valget have faldet på et andet filter. 
 
-Det glidende middelværdifilter fungerer ved midling af en række punkter fra inputsignalet for at frembringe hvert punkt i outputsignalet. Hvilke punkter der tages fra inputsignalet vil flytte sig en plads for hvert beregnet outputsignal punkt, heraf kommer den glidende effekt. Matematisk er filtret givet ved:
+Det glidende middelværdifilter fungerer ved midling af en række punkter fra inputsignalet for, at frembringe hvert punkt i outputsignalet. Hvilke punkter, der tages fra inputsignalet, vil flytte sig én plads for hvert beregnet outputpunkt, heraf kommer den glidende effekt. Matematisk er filteret givet ved:
 \begin{ceqn}
 \begin{equation}
 y[i]=\frac{1}{M}\cdot\sum\limits_{j=0}^{M-1} x[i+j]
 \end{equation}
 \end{ceqn}
 
-Hvor x[] er inputsignalet, y[] er outputsignalet og M er antallet af punkter, der benyttes i det glidende middelværdifilter. Denne beregning benytter sig udelukkende af punkter placeres på den samme side af output sample nummeret, hvilket vil føre til en relativ forskydning mellem input og output. M sættes til 5. Implementeringen af filtret er vist i et aktivitetsdiagram på figur \ref{fig:Aktivitetsdiagram_Digitalt_filter}.
+Hvor x[] er inputsignalet, y[] er outputsignalet og M er antallet af punkter, der benyttes i det glidende middelværdifilter. Denne beregning benytter sig udelukkende af punkter placeret på den samme side af output samplenummeret, hvilket vil føre til en relativ forskydning mellem input og output. M sættes til en længde på fem. Implementeringen af filteret er vist i et aktivitetsdiagram på figur \ref{fig:Aktivitetsdiagram_Digitalt_filter}.
 
 \begin{figure}[H]
 	\centering
@@ -508,7 +508,7 @@ Hvor x[] er inputsignalet, y[] er outputsignalet og M er antallet af punkter, de
 	\label{fig:Aktivitetsdiagram_Digitalt_filter}
 \end{figure}
 
-Måden hvorpå filtret er implementeret gør, at der ikke sker en filtrering af de første fire samples, det ses i følgende i kode. AVG\_LENGTH er defineret til 5, og mængden af punkter, der benyttes i filtret i ligning 3.18 svarer dette til M.
+Måden hvorpå filtret er implementeret gør, at der ikke sker en filtrering af de første fire samples, det ses i følgende kodeudsnit. AVG\_LENGTH er defineret til fem, og er mængden af punkter, der benyttes i filteret. I ligning 3.18 svarer AVG\_LENGTH til M.
 
 \begin{figure}[H]
 	\centering
@@ -517,18 +517,18 @@ Måden hvorpå filtret er implementeret gør, at der ikke sker en filtrering af 
 	\label{fig:Glidende_middelfilter}
 \end{figure}
 
-Det ses, at der skal være minimum 5 samples i data.Count førend at listen avgPoints oprettes. Det er en begrænsning, som er vigtig at være opmærksom på, men som accepteres da de første fire samples ved visning i graf er kørt så hurtigt igennem, at det ikke skaber en begrænsning for brugen af systemet for forsker. Optimalt set vil der sættes en begrænsning på filtret således, når første måling modtages vil gennemsnittet findes af en sample, dernæst af to samples, tre samples osv. Indtil der er fem samples og gennemsnittet vil så altid bestemmes af de fem seneste samples. 
+Det ses, at der skal være minimum fem samples i data.Count førend at listen avgPoints oprettes. Det er en begrænsning, som er vigtig at være opmærksom på, men som accepteres da de første fire samples ved visning i graf er kørt så hurtigt igennem. Det skaber ikke en begrænsning for Forsker. Optimalt set vil der sættes en begrænsning på filtret således, at når første måling modtages vil gennemsnittet findes af en sample, dernæst af to samples, tre samples osv. Indtil der er fem samples og gennemsnittet vil altid bestemmes af de fem seneste samples. 
 
-Systemet gør det muligt for forsker selv at vælge om signalet ønskes vist filtreret eller ufiltreret. Dette vælges på brugergrænsefladen. Vælges visning af det ufiltrede signal sendes det indhentede signal naturligvis ikke gennem det digitale filter. Det er muligt at skifte mellem filtreret og ufiltreret signal, mens systemet kører. I det tilfælde skifter hele det viste signal til det valgte, da alt data i listen der indhentes dermed skifter. Filtreringen vil dermed ikke vise sig som en løbende kurve grafisk.
+Systemet gør det muligt for Forsker selv at vælge om signalet ønskes vist filtreret eller ufiltreret. Dette vælges på brugergrænsefladen. Vælges visning af det ufiltrede signal, sendes det indhentede signal ikke gennem det digitale filter. Det er muligt at skifte mellem filtreret og ufiltreret signal, mens systemet kører. I det tilfælde skifter hele det viste signal til det valgte, da alt data i listen, der indhentes dermed skifter. 
 
 \subsubsection{Analyse}
-Analyse dækker over indhentningen af de systoliske-, diastoliske- og puls-værdi ud fra blodtrykssignalet. Dette er implementeret i en klasse kaldet Analyse. Heri er placeret metoder for henholdsvis systole og diastole. I en blodtrykskurve er den systoliske værdi givet ved maximum på kurven og den diastoliske er givet ved minimums værdien på kurven. \\
-Metoderne bestemmer derfor den maksimale værdi og den mindste værdi i listen, der medtages som parametre til metoderne. Listen der bruges som parameter er UILIST, indeholdende 350 tal ad gangen. UILIST er listen, der sendes fra logik-laget til præsentations-laget med de behandlede data, som vises i grafen. I præsentations-laget er implementeret en timer, der håndterer de systoliske- og diastoliske værdier i display skal opdateres hvert 3 sekund. I løbet af 3 sekunder vil der være gennemløbet 3-5 blodtryksperioder, afhængig af pulsfrekvensen. Dermed vil samtlige systoliske og diastoliske værdier ikke blive udskrevet. Intervallet på 3 sekunder er valgt da det er passende tid til at aflæse den pågældende værdi.
+Analyse dækker over indhentningen af de systoliske, diastoliske og puls værdi ud fra blodtrykssignalet. Dette er implementeret i en klasse kaldet Analyse. Heri er placeret metoder for henholdsvis systole og diastole. I en blodtrykskurve er den systoliske værdi givet ved maksimum på kurven og den diastoliske er givet ved minimumsværdien på kurven. \\
+Metoderne bestemmer derfor den maksimale værdi og den mindste værdi i listen, der medtages som parameter til metoderne. Listen, der bruges som parameter er UILIST, som indeholder 300 tal ad gangen. UILIST er listen, der sendes fra logik-laget til præsentations-laget med de behandlede data, som vises i grafen. I præsentations-laget er implementeret en timer, der håndterer de systoliske og diastoliske værdier i display skal opdateres hvert 3. sekund. I løbet af 3 sekunder vil der være gennemløbet 3-5 blodtryksperioder, afhængig af pulsfrekvensen. Dermed vil samtlige systoliske og diastoliske værdier ikke blive udskrevet. Intervallet på 3 sekunder er valgt, da det er passende tid til at aflæse den pågældende værdi.
 
-I forhold til implementering af puls er der gjort en række overvejelser og mulige løsninger. Puls er defineret ved slag pr. minut og på en puls vil der være en systole og diastole. Pulsen må derfor kunne bestemmes ved at tælle antallet af systoliske værdier på 6 sekunder, antallet ganges så med 10 for at få den rette enhed. Udfordringer er dog opstået i forhold til at kunne bestemme præcist, hvornår der er gået 6 sekunder i programmet. En anden mulighed er også at bestemme pulsen ved at finde antallet af samples mellem to systoliske værdier. Omregnes samples til sekunder og ganges op til et minut, må dette være ligmed måleobjektets øjeblikkelige puls. Det er dog ikke lykkedes at omsætte overvejelserne til kode, og pulsen er dermed ikke blevet implementeret ved projekts aflevering.
+I forhold til implementering af puls er der gjort en række overvejelser om mulige løsninger. Puls er defineret ved slag pr. minut og på en pulsperiode vil der være en systole og diastole. Pulsen må derfor kunne bestemmes ved at tælle antallet af systoliske værdier på 6 sekunder. Antallet ganges med 10 for at få den rette enhed. Udfordringer er dog opstået i forhold til at kunne bestemme præcist, hvornår der er gået 6 sekunder i programmet. En anden mulighed er også at bestemme pulsen ved at finde antallet af samples mellem to systoliske værdier. Omregnes samples til sekunder og ganges op til et minut, må dette være lig med Måleobjektets øjeblikkelige puls. Det er ikke lykkedes at omsætte overvejelserne til kode, og pulsen er dermed ikke blevet implementeret ved projekts aflevering.
 
 \subsubsection{Beregnings metode}
-Metoden updateListe() er den vigtigste metode i logik-laget. Den er placeret i logik-klassen. Metoden har til ansvar at tage højde for nulpunktsjustering og kalibering ved beregning. Derudover har den til ansvar at lægge data i en liste med 300 pladser, der kan vises i graf på display. Til sidst tjekker metoden om radiobutton for filtreret eller ufiltreret signal er checked og sender listen gennem filtret, hvis filtret signal er valgt inden listen med Notify() sendes til præsentationslaget. Metodens aktivitetsdiagram er givet ved:
+Metoden updateListe() er den vigtigste metode i logik-laget. Den er placeret i logik-klassen. Metoden har til ansvar at tage højde for nulpunktsjustering og kalibrering ved beregning. Derudover har den til ansvar at tilføje data til en liste med 300 pladser, der kan vises i grafen på displayet. Til sidst checker metoden om radiobutton for filtreret eller ufiltreret signal er valgt og sender listen gennem filteret, hvis filtreret signal er valgt inden listen med Notify() sendes til præsentationslaget. Metodens aktivitetsdiagram er givet ved:
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=1.0\textwidth]{Figurer/AktUpdateListe}
@@ -537,22 +537,22 @@ Metoden updateListe() er den vigtigste metode i logik-laget. Den er placeret i l
 \end{figure}
 
 \subsubsection{Database}
-I systemet er der implementeret en lokal database. Databasen er oprettet gennem host webhotel10.iha.dk. Formålet med databasen er at lagre det målte blodtrykssignals rådata. Det er valgt at implementere databasen som typen SQL, da denne database-type indeholder de funktioner, som er nødvendige for dette system. Data gemmes i denne type database i tabeller. Indledningsvis for at oprette den nødvendige tabel defineres en type til hver værdi. SQL-koden til oprettelse af tabel er vist på figur \ref{fig:SQL-kode}.
+I systemet er der implementeret en lokal Database. Databasen er oprettet gennem hosten webhotel10.iha.dk. Formålet med Databasen er at lagre det målte blodtrykssignals rådata. Det er valgt at implementere Databasen af typen SQL, da denne database-type indeholder de funktioner, som er nødvendige for dette system. Data gemmes i tabeller i Databasen. Indledningsvis for at oprette den nødvendige tabel defineres en type til hver værdi. SQL-koden til oprettelse af tabel er vist på figur \ref{fig:SQL-kode}.
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=0.7\textwidth]{Figurer/SQLDatabase}
 	\caption{SQL-kode til oprettelse af tabeller i database}
 	\label{fig:SQL-kode}
 \end{figure}
-Forsøgsnavn referer til det forsøgsnavn, der indtastes i GUI ved påbegyndelse af en ny måling. Dette er af typen NVARCHAR(20), hvilket betyder at forsøgsnavnet maksimalt kan være 20 tegn langt. Id er defineret som primær nøgle, det betyder at denne er unik for hver enkelt sekvens i database, og Id der vil referes til mellem tabeller i databasen, hvis flere tabeller var nødvendigt. \\  
-Et blodtrykssignal indeholder en stor mængde datapunkter, derfor gemmes signalet i en VARBINARY, hvor en række binære datapunkter gemmes som en enkelt enhed i databasen. Dette er valgt for at spare på pladsen i databasen. Denne type besværliggør dog at få vist, hvilke værdier blodtrykssignalets datapunkter består af. \\
-Databasen er implementeret således, at flere sekvens af den samme måling kan gemmes uden at systemet skal startes forfra. Dette er smart for forsker, hvis der testet flere ting på det samme signal.  
+Forsøgsnavn referer til det Forsøgsnavn, der indtastes i GUI ved påbegyndelse af en ny måling. Dette er af typen NVARCHAR(20), hvilket betyder at forsøgsnavnet maksimalt kan være 20 tegn langt. Id er defineret som primær nøgle, det betyder at denne er unik for hver enkelt sekvens i Database, og Id der vil refereres til mellem tabeller i Databasen, hvis flere tabeller var nødvendigt. \\  
+Et blodtrykssignal indeholder en stor mængde datapunkter, derfor gemmes signalet i en VARBINARY, hvor en række binære datapunkter gemmes som en enkelt enhed i Databasen. Dette er valgt for at spare på pladsen i Databasen. Denne type besværliggør at få vist, hvilke værdier blodtrykssignalets datapunkter består af. \\
+Databasen er implementeret således, at flere sekvenser af den samme måling kan gemmes uden at systemet skal startes forfra. Dette er smart for Forsker, hvis der testet flere ting på det samme signal.  
 
 \subsection{Modultest}
 \subsection{Integrationstest}
-Til sidst i projekt forløbet blev en integrationstest\cite{Integration} udført. En integrationstest laves primært for at teste om softwaren fungerer korrekt og om enhederne/modulerne deri anvender hinanden. Testen retter sig mod afprøvning af det komplette program, med de eksterne systemer, i dette tilfælde sammen med hardwaren.\\
-Softwaren er langsomt blevet sammensat af de forskellige enheder som fremvisning af graf, indhentning af data, kalibrering, nulpunktsjustering, digitalt filter og at gemme. Hver gang én enhed har været færdig er den blevet testen, hvorefter en ny færdig enhed er blevet sat på osv. Tilsidst er der blevet udført  en test hvor alle enheder sættes sammen, software og hardware,  og der testes derpå. Testen kan sammenlignes med en ”Big Bang” test, da det var første kan vi satte den færdige software sammen med hardwaren.\\  
-I dette tilfælde blev In Vitro maskinen i Cave Lab brugt til at skabe et blodtrykssignal. Dette blev sendt ind i vores system og sammenlignet med en anden ”rigtig” blodtryksmåler, som var tilkomplet samtidigt.  In vitro maskinen danner et tryk, som efterligner et hjerteslag.Trykket bliver skabt i vand, som presses igennem en falsk hjerteklap, derved er der opbygget en model af et hjerte som kan givet til blodtrykssignal. 
+Til sidst i projektforløbet blev en integrationstest\cite{Integration} udført. En integrationstest laves primært for at teste om softwaren fungerer korrekt, og om enhederne/modulerne deri anvender hinanden. Testen retter sig mod afprøvning af det komplette program, med de eksterne systemer, i dette tilfælde sammen med hardwaren.\\
+Softwaren er langsomt blevet sammensat af de forskellige enheder som fremvisning af graf, indhentning af data, kalibrering, nulpunktsjustering, digitalt filter og at gemme. Hver gang én enhed er færdig, er den blevet testet, hvorefter en ny færdig enhed er blevet sat på osv. Tilsidst er der blevet udført  en test hvor alle enheder sættes sammen, software og hardware,  og der testes derpå. Testen kan sammenlignes med en ”Big Bang” test, da det var første kan vi satte den færdige software sammen med hardwaren.\\  
+I dette tilfælde blev In Vitro maskinen i Cave Lab brugt til at simulere et blodtrykssignal. Dette blev sendt ind i systemet og sammenlignet med en anden ”rigtig” blodtryksmåler, som var tilkoblet samtidigt. In Vitro maskinen danner et tryk, som efterligner et hjerteslag. Trykket bliver skabt i vand, som presses igennem en falsk hjerteklap, derved er der opbygget en model af et hjerte, som kan give et blodtrykssignal. 
 
 \begin{figure}[H]
 	\centering
@@ -561,7 +561,7 @@ I dette tilfælde blev In Vitro maskinen i Cave Lab brugt til at skabe et blodtr
 	\label{fig:Integration_opstilling}
 \end{figure}
 
-Der startes med at laves en nulpunktsjustering på vores system, som bagefter viste en flot signal, som lå så konstant at det var svært at se cursoren. Samtidig stod systolisk- og diastolisktryk i tal på GUI. Her viste det sig, at vores system konstant afveg fra den anden blodtryksmåler med en værdi på 2, både på systolisk og diastolisk tryk. Da den konstant afveg, vurderes det at afvigelsen skyldes at vores sytem ikke var kalibreret eller at den anden blodtryksmåler ikke var nulpunktjusteret.  Der kunne ikke udføres en kaliberering da væskesøjlen var gået i stykker. Det blev også forsøgt at nulpunktjusterer den anden blodtryksmåler, men heller ikke dette kunne gøres.  Derfor blev resultatet af testen af vores system virker som det skal efter kravene stillet til det.  
+Der startes med at lave en nulpunktsjustering på systemet, som bagefter viser et korrekt signal, som lå så konstant, at det var svært at se cursoren. Samtidig stod systolisk og diastolisk tryk i tal på GUI. Her viste det sig, at systemet konstant afveg fra den anden blodtryksmåler med en værdi på 3-4, både på systolisk og diastolisk tryk. Da den konstant afveg, vurderes det at afvigelsen skyldes at systemet ikke var kalibreret eller at den anden blodtryksmåler ikke var nulpunktjusteret. Der kunne ikke udføres en kalibrering, da væskesøjlen var gået i stykker. Det blev også forsøgt at nulpunktsjustere den anden blodtryksmåler, men heller ikke dette kunne udføres. Derfor blev resultatet af testen, at systemet virker som det skal, efter de opstillede krav.  
 
 \begin{figure}[H]
 	\centering
