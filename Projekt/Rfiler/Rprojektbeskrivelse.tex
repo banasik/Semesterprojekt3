@@ -34,9 +34,11 @@ Vandfaldsmodellen \cite{ISE} er også benyttet under dette projekt. Softwareudvi
 
 
 \section{Projektstyring}
-Projektet er udarbejdet over et helt semester, hvor undervisningen og forelæsningerne delvist har udgjort grundlaget for teorien benyttet i dette projekt. Der blev i starten udarbejdet en tidsplan, som dog var mulig at ændre undervejs, men med faste deadlines, der skulle overholdes. Den endelige tidsplan kan ses i bilag. \\
-Projektgruppen har bestået af 6 gruppemedlemmer, som er blevet delt i 2 fokusområder, hardware og software. Fordelingen blev udarbejdet efter den enkeltes ønske. Gruppen har derfor været afhængig af at der var god kommunikation mellem de to undergrupper, derfor har hver arbejdsgang været i samarbejde. Da gruppen har været opdelt, har der været projektmøde hver uge, hvor gruppen har opdateret hinanden og vejleder. \\
-Under projektet har alle medlemmer været med til, at sikre en administrativ kæde af deadlines til individuelle opgaver, samt dagsordener til hvert møde. Disse deadlines har sikret at opgaverne er blevet opfyldt op til møderne, for at hindre langsomme arbejdsprocesser. Da der har været overlap mellem de forskellige opgaver er arbejdet foregået flydende for at sikre, at der blev testet. 
+Projektet er udarbejdet over et semester, hvor undervisningen og forelæsningerne delvist har udgjort grundlaget for teorien benyttet i projekt. Der blev i starten udarbejdet en tidsplan med enkelte faste deadlines og med mulighed for at sætte andre deadlines løbende i processen. Se Tidsplan under Bilag.\\ 
+Projektgruppen har bestået af 6 gruppemedlemmer, som er blevet delt i to fokusområder, hardware og software. Fordelingen blev udarbejdet efter den enkeltes ønske. Projektet  har  været afhængig af, at der var god kommunikation mellem de to undergrupper.
+Da gruppen har været opdelt, har der været projektmøde hver uge, hvor gruppen har opdateret hinanden og vejleder. Samtidigt har gruppen forsøgt at sidde samlet, så på den måde at kunne opdatere hinanden løbende.\\
+Under projektet har alle medlemmer været med til, at sikre en administrativ kæde af deadlines til individuelle opgaver, samt dagsordener til hvert møde. Disse deadlines har sikret at opgaverne er blevet opfyldt op til møderne og det har derfor været nemt at følge op på. Da der har været overlap mellem forskellige opgaver er der løbende blevet kørt og lavet adskillige teste for at sikre at opgaverne har været vellykket.  
+ 
 
 \section{Metoder}
 Til at kunne overskue arkitektur og designet af projektet, er flere forskellige arbejdsmetoder benyttet for at skabe det bedst mulige resultat. 
@@ -240,7 +242,20 @@ Ud fra grafen i figur \ref{fig:graf_vandtest} vides, hvad svaret til hver målin
 	\label{fig:vandtest_måling50}
 \end{figure}
 Ud fra figur \ref{fig:graf_vandtest} kendes udgangsspændingen også for de to andre målepunkter. Se under Modeltest i Dokumentationen for billeder af målingerne ved 10 mmHg og 100 mmHg. Målingen for 50 mmHg er her valgt ud, da denne måling ligger til baggrund for kalibreringen i softwaren. 
+
 \subsection{Software}
+
+
+\subsection{Integrationstest}
+Til sidst i projekt forløbet blev en integrationstest udført. En integrationstest laves primært for at teste om softwaren fungerer korrekt og om enhederne/modulerne deri anvender hinanden. Testen retter sig mod afprøvning af det komplette program, med de eksterne systemer, i dette tilfælde sammen med hardwaren. 
+Softwaren er langsomt blevet sammensat af de forskellige enheder som fremvisning af graf, indhentning af data, kalibrering, nulpunktsjustering, digitalt filter og at gemme. Hver gang én enhed har været færdig er den blevet testen, hvorefter en ny færdig enhed er blevet sat på osv. Tilsidst er der blevet udført  en test hvor alle enheder sættes sammen, software og hardware,  og der testes derpå. Testen kan sammenlignes med en ”Big Bang” test, da det var første kan vi satte den færdige software sammen med hardwaren.  
+I dette tilfælde blev In Vitro maskinen i Cave Lab brugt til at skabe et blodtrykssignal. Dette blev sendt ind i vores system og sammenlignet med en anden ”rigtig” blodtryksmåler, som var tilkomplet samtidigt.  In vitro maskinen danner et tryk, som efterligner et hjerteslag.Trykket bliver skabt i vand, som presses igennem en falsk hjerteklap, derved er der opbygget en model af et hjerte som kan givet til blodtrykssignal. 
+Billede af opstilling
+Der startes med at laves en nulpunktsjustering på vores system, som bagefter viste en flot signal, som lå så konstant at det var svært at se cursoren. Samtidig stod systolisk- og diastolisktryk i tal på GUI. Her viste det sig, at vores system konstant afveg fra den anden blodtryksmåler med en værdi på 2, både på systolisk og diastolisk tryk. Da den konstant afveg, vurderes det at afvigelsen skyldes at vores sytem ikke var kalibreret eller at den anden blodtryksmåler ikke var nulpunktjusteret.  Der kunne ikke udføres en kaliberering da væskesøjlen var gået i stykker. Det blev også forsøgt at nulpunktjusterer den anden blodtryksmåler, men heller ikke dette kunne gøres.  Derfor blev resultatet af testen af vores system virker som det skal efter kravene stillet til det.  
+Billeder af vores måling kontra den anden blodtryksmåler : gerne sammensat i et billede. 
+
+
+
 
 \section{Resultater og diskussion}
 Resultatet af dette projektforløb er blevet en prototype af en hardwaredel og et softwaresystem, hvis egenskab er at detektere den systoliske- og diastoliske værdi ud fra et blodtrykssignal. Denne prototype er blevet udviklet til forskningsbrug. Det kunne være en mulighed at videreudvikle systemet således, at det kan detektere hypotension og hypertension og så alarmere. På denne måde kunne systemet altså bruges til patientbrug, på hospitaler, sygehuse, lægehuse osv. \\
