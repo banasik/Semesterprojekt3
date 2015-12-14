@@ -33,7 +33,6 @@ namespace Blodtryksmålersystem
             logik.Attach(this);
             Chart.ChartAreas[0].AxisY.Minimum = 0;
             Chart.ChartAreas[0].AxisY.Maximum = 250;
-
         }
         
         void myTimer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
@@ -100,7 +99,7 @@ namespace Blodtryksmålersystem
         {
             int id = logik.gemData(Forsøgsnavn);
             textFilnavn.Text = Forsøgsnavn + '_' + Convert.ToString(id);
-            StopGemKnap.Enabled = false;
+            //StopGemKnap.Enabled = false;
         }
 
         public void Gennemsnit(List<double> graf)

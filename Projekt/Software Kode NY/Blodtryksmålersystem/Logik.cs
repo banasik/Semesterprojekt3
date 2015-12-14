@@ -55,7 +55,7 @@ namespace LogikLag
             updateUI.Start();
         }
 
-        public List<double> UILISTE;
+        private List<double> UILISTE;
 
         private void updateListe()
         {
@@ -165,7 +165,7 @@ namespace LogikLag
             }
         }
 
-        public List<double> FiltreringLogik(List<double> data)
+        private List<double> FiltreringLogik(List<double> data)
         {
             FiltreretListe = FilterObj.Filtrering(data);
             return FiltreretListe;
