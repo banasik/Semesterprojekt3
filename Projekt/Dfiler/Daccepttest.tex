@@ -351,9 +351,11 @@ Forskeren har tændt for Blodtryksmåleren. Use Case 1 er kørt succesfuldt, Use
 
 \newpage
 \section{Problemrapport}
-Use Case 3, handling 4: Systolisk og diastolisk blodtryk samt puls bliver vist i bokse på GUI. 
-Alle boksene er oprettet og vises i GUI, men kun systolisk og diastolisk bokse blive udfyldt. Puls er ikke kommet til at virke. 
+Use Case 3, handling 4: Systolisk og diastolisk blodtryk samt puls bliver vist i bokse på GUI. \\ 
+Alle boksene er oprettet og vises i GUI, men kun systolisk og diastolisk bokse blive udfyldt. Puls er ikke kommet til at fungere. 
 
-Ikke-funktionelle krav, handling 17: Grafen vises i ét vindue, hvor y-aksen måles i mmHg og x-aksen i tid i sekunder. y-aksen vises som tænkt i mmHg, men x-aksen vises ikke i tid, men i antal samples. 
+Ikke-funktionelle krav, handling 17: Grafen vises i ét vindue, hvor y-aksen måles i mmHg og x-aksen i tid i sekunder.\\
+Y-aksen vises i mmHg, men x-aksen viser tid i antal samples. Dog passer det overens med at grafen viser 300 samples, så det vides at grafen viser 6 sekunder.  
 
-Ikke-funktionelle krav, handling 21: Systemet skal kunne måle blodtryksværdier fra 0 til 250 mmHg. Dette kan systemet også, det er blot blevet valgt ikke at sætte nogle begrænsninger på, så y-aksen med mmHg stopper ikke ved de 250 mmHg. Hvis dette ønskes kan det uden problemer tilføjes i koden. 
+Ikke-funktionelle krav, handling 21: Systemet skal kunne måle blodtryksværdier fra 0 til 250 mmHg. \\
+Dette kan systemet også, det er blot blevet valgt ikke at sætte nogle begrænsninger på, så y-aksen med mmHg stopper ikke ved de 250 mmHg. Hvis dette ønskes kan det uden problemer tilføjes i koden, ved at låse grafområdets y-akse til at gå fra 0 til 250 mmHg.  
