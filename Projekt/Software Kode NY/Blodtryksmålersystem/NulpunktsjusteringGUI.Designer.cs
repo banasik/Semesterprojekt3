@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.Labelnul = new System.Windows.Forms.Label();
-            this.JaKnapNul = new System.Windows.Forms.Button();
+            this.ForetagNulKnap = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // Labelnul
@@ -43,18 +43,18 @@
             this.Labelnul.TabIndex = 3;
             this.Labelnul.Text = "Nulpunktsjustering";
             // 
-            // JaKnapNul
+            // ForetagNulKnap
             // 
-            this.JaKnapNul.BackColor = System.Drawing.SystemColors.ButtonShadow;
-            this.JaKnapNul.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.JaKnapNul.Location = new System.Drawing.Point(145, 141);
-            this.JaKnapNul.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.JaKnapNul.Name = "JaKnapNul";
-            this.JaKnapNul.Size = new System.Drawing.Size(145, 74);
-            this.JaKnapNul.TabIndex = 4;
-            this.JaKnapNul.Text = "FORETAG";
-            this.JaKnapNul.UseVisualStyleBackColor = false;
-            this.JaKnapNul.Click += new System.EventHandler(this.JaKnapNul_Click);
+            this.ForetagNulKnap.BackColor = System.Drawing.SystemColors.ButtonShadow;
+            this.ForetagNulKnap.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ForetagNulKnap.Location = new System.Drawing.Point(145, 141);
+            this.ForetagNulKnap.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.ForetagNulKnap.Name = "ForetagNulKnap";
+            this.ForetagNulKnap.Size = new System.Drawing.Size(145, 74);
+            this.ForetagNulKnap.TabIndex = 4;
+            this.ForetagNulKnap.Text = "FORETAG";
+            this.ForetagNulKnap.UseVisualStyleBackColor = false;
+            this.ForetagNulKnap.Click += new System.EventHandler(this.ForetagNulKnap_Click);
             // 
             // NulpunktsjusteringGUI
             // 
@@ -62,7 +62,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ControlDarkDark;
             this.ClientSize = new System.Drawing.Size(431, 305);
-            this.Controls.Add(this.JaKnapNul);
+            this.Controls.Add(this.ForetagNulKnap);
             this.Controls.Add(this.Labelnul);
             this.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.Name = "NulpunktsjusteringGUI";
@@ -75,6 +75,6 @@
         #endregion
 
         private System.Windows.Forms.Label Labelnul;
-        private System.Windows.Forms.Button JaKnapNul;
+        private System.Windows.Forms.Button ForetagNulKnap;
     }
 }

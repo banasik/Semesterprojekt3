@@ -21,7 +21,7 @@ namespace Blodtryksmålersystem
             
         }
 
-        private void JaKnapNul_Click(object sender, EventArgs e)
+        private void ForetagNulKnap_Click(object sender, EventArgs e)
         {
             logik.StartNulPunkt();
             var hovedgui = new HovedGUI(logik);

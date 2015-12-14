@@ -33,7 +33,6 @@ namespace Blodtryksmålersystem
             logik.Attach(this);
             Chart.ChartAreas[0].AxisY.Minimum = 0;
             Chart.ChartAreas[0].AxisY.Maximum = 250;
-            //GUISetNVærdi();
 
         }
         
@@ -46,14 +45,7 @@ namespace Blodtryksmålersystem
             };
             
             textDia.BeginInvoke(action);
-            //textSys.BeginInvoke(action);
         }
-
-        //private void GUISetNVærdi()
-        //{
-        //    //double værdi = -2;
-        //    logik.nulpunktsJustering(værdi);
-        //}
 
         private void textForsøgsnavn_TextChanged(object sender, EventArgs e)
         {
@@ -92,23 +84,23 @@ namespace Blodtryksmålersystem
             }
             GemKnap.Enabled = true;
         }
-
         private void StopKnap_Click(object sender, EventArgs e)
         {
-            int id = logik.gemData(Forsøgsnavn);
-            textFilnavn.Text = Forsøgsnavn + '_' + Convert.ToString(id); 
-        }
 
-        private void AfslutKnap_Click(object sender, EventArgs e)
-        {
-            
             logik.stopReadDataLogik();
             myTimer.Close();
         }
-
         private void GemKnap_Click(object sender, EventArgs e)
         {
             logik.ClearData();
+            StopGemKnap.Enabled = true;
+        }
+
+        private void StopGemKnap_Click(object sender, EventArgs e)
+        {
+            int id = logik.gemData(Forsøgsnavn);
+            textFilnavn.Text = Forsøgsnavn + '_' + Convert.ToString(id);
+            StopGemKnap.Enabled = false;
         }
 
         public void Gennemsnit(List<double> graf)
@@ -116,11 +108,6 @@ namespace Blodtryksmålersystem
             guiliste = graf;
             
             updateChart();
-        }
-
-
-        private void GUIFiltrering()
-        {
         }
 
         private void filtreret_CheckedChanged(object sender, EventArgs e)

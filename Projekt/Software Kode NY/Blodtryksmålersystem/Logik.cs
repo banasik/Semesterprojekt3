@@ -88,8 +88,6 @@ namespace LogikLag
             Thread.Sleep(5);
         }
         
-        
-
         public void getDia()
         {
             AnalyseKlasse.Diastole(FiltreringLogik(UILISTE));
@@ -104,11 +102,6 @@ namespace LogikLag
         public bool isRunningLogik()
         {
             return DAQdata.IsRunning();
-        }
-
-        public void getListLogik()
-        {
-            DAQdata.getList();
         }
 
         public void indhentDataLogik()
@@ -155,8 +148,6 @@ namespace LogikLag
             DAQdata.indhentData();
             updateNul = new Thread(() => nulpunktsJustering());
             updateNul.Start();
-
-
              }
         }
         public void nulpunktsJustering()
@@ -168,6 +159,7 @@ namespace LogikLag
                     DAQdata.stopReadData();
                     beregnetNværdi = NulpunktObjekt.Justering((minKø.Dequeue()));
                     minKø.Clear();
+                    updateNul.Abort();
                 }
                 Thread.Sleep(2);
             }
