@@ -549,6 +549,135 @@ Et blodtrykssignal indeholder en stor mængde datapunkter, derfor gemmes signale
 Databasen er implementeret således, at flere sekvenser af den samme måling kan gemmes uden at systemet skal startes forfra. Dette er smart for Forsker, hvis der testet flere ting på det samme signal.  
 
 \subsection{Modultest}
+Koden der bliver kigget igennem er fra når der bliver trykket Start på GUI'en og til at der bliver en graf på charten. Der er brugt debugging i Visual Studios for at sikre at koden bliver udført i korrekt rækkefølge. Stor del af koden i DAQlaget er taget fra et eksempel fra National Instruments. Gennemgangen af hvad der sker i Datalaget, nærmere DAQlaget, hvor oprettelsen til DAQ’en samt sampleliste sker, vil blive overfladisk. Koden i DAQlaget er tilpasset til vores solution. Her er der tale om samplerate og samples per channel. Samples per channel er testet igennem ved at debugge på det kode der tilføjer sampleværdier til råData listen. Her kan der checkes om listens count er på 10 eller 20, hvis sampleraten er henholdsvis 10 eller 20.
+\textbf{Fra DAQ til Logik}
+Programmet startes ved tryk på Start knappen på GUI'en. Det starter følgende event.
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=1.0\textwidth]{FigurerProgram/StartKnap}
+	\caption{Kode for eventet StartKnap\_Click()}
+\end{figure}
+Følgende metoder bliver kaldt i opstillet rækkefølge
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=1.0\textwidth]{FigurerProgram/IndhentDataLogik}
+	\caption{Kode for Logik metoden indhentDataLogik()}
+\end{figure}
+
+Herfra starter data acquisition i DAQ laget.
+\\ IndhentData() opretter en virtual channel samt sørger for kald til InitializeDataTable() og håndterer tråde.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=1.0\textwidth]{FigurerProgram/indhentDataDaq}
+	\caption{kode for IndhentDAQData metoden indhentData() kan ses i REFERENCE}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=1.0\textwidth]{FigurerProgram/InitiDaq}
+	\caption{Kode for InitializeDataTable() kan ses i REFERENCE}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=1.0\textwidth]{FigurerProgram/CallBackDaq}
+	\caption{Kode for IndhentDAQData metoden AnalogInCallBack() kan ses i REFERENCE}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=1.0\textwidth]{FigurerProgram/dtdDaq}
+	\caption{Kode for IndhentDAQData metoden DataToDataTable()}
+\end{figure}
+
+I Logiklaget bliver der kaldt DAQData.Attach(this), derved bliver Logik objektet tilføjet som observer til subjectet IndhentDAQData.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=1.0\textwidth]{FigurerProgram/AttachDaq}
+	\caption{Kode for metoden Attach(), denne bruges på samme måde i klasserne IndhentDAQData som i Logik}
+\end{figure}
+
+Med Logik som liggende i observers listen, kaldes der metoden Gennemsnit med \textit{graf} som parameter.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=1.0\textwidth]{FigurerProgram/NotifyDaq}
+	\caption{Kode for metoden Notify() i IndhentDAQData klassen}
+\end{figure}
+
+Metoden Gennemsnit bliver kaldt i Logiklaget. Her bliver listen lagt i en queue, hvorfra metoden updateListe henter alle samples fra med queue.Dequeue(). updateListe() kører på en tråd for sig selv.
+\\Her slutter gennemgangen af hvordan sample værdierne bliver skubbet op til Logiklaget.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=1.0\textwidth]{FigurerProgram/GennemsnitLogik}
+	\caption{Kode for metoden Gennemsnit() i Logik klassen}
+\end{figure}
+
+\textbf{Fra Logik til GUI}
+I starten blev metoden StartTraad() kaldt hvis IsRunning = true.
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=1.0\textwidth]{FigurerProgram/StartTraad}
+	\caption{Kode for Logik metoden StartTraad()}
+\end{figure}
+
+Metoden updateListe() kører derved på tråden updateUI.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=1.0\textwidth]{FigurerProgram/updateUI}
+	\caption{Kode for tråden updateUI}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=1.0\textwidth]{FigurerProgram/updateListe}
+	\caption{Kode for logik metoden updateListe()}
+\end{figure}
+
+Hvis der fra GUI laget er sat true eller false til en Radiobutton, skal der filtreres eller ikke filtreres. I tilfælde af filtrering, sendes listen først ned til Filter klassen, som parameter og bliver derefter returneret op igen til Logik klassen.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=1.0\textwidth]{FigurerProgram/FiltreringLogik}
+	\caption{Kode for metoden FiltreringLogik()}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=1.0\textwidth]{FigurerProgram/Filter}
+	\caption{Kode for klassen Filter(). Her bliver summen af 5 værdier divideret med 5}
+\end{figure}
+
+Fra updateListe() bliver Notify() kaldt, med en liste som parameter, der bliver sendt op til GUI Laget.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=1.0\textwidth]{FigurerProgram/NotifyLogik}
+	\caption{Kode for metoden Notify() i Logik klassen. Læg mærke til at det er magen til kode, som nede i DAQ klassen}
+\end{figure}
+
+I GUI Laget bliver Gennemsnitsmetoden kaldt via observer pattern.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=1.0\textwidth]{FigurerProgram/GennemsnitGUI}
+	\caption{Kode for metoden i GUI Laget Gennemsnit()}
+\end{figure}
+
+Til sidst bliver charten i GUI'en opdateret ved at updateChart() hele tiden kalder sig selv.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=1.0\textwidth]{FigurerProgram/updateChart}
+	\caption{Kode for metoden i GUI Laget updateChart()}
+\end{figure}
+
+
 \subsection{Integrationstest}
 Til sidst i projektforløbet blev en integrationstest\cite{Integration} udført. En integrationstest laves primært for at teste om softwaren fungerer korrekt, og om enhederne/modulerne deri anvender hinanden. Testen retter sig mod afprøvning af det komplette program, med de eksterne systemer, i dette tilfælde sammen med hardwaren.\\
 Softwaren er langsomt blevet sammensat af de forskellige enheder som fremvisning af graf, indhentning af data, kalibrering, nulpunktsjustering, digitalt filter og at gemme. Hver gang én enhed er færdig, er den blevet testet, hvorefter en ny færdig enhed er blevet sat på osv. Tilsidst er der blevet udført  en test hvor alle enheder sættes sammen, software og hardware,  og der testes derpå. Testen kan sammenlignes med en ”Big Bang” test, da det var første kan vi satte den færdige software sammen med hardwaren.\\  
