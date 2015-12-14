@@ -20,7 +20,7 @@ namespace Data
             conn = new SqlConnection("Data Source=webhotel10.iha.dk;Initial Catalog=" + DB + ";Persist Security Info=True;User ID=" + DB + ";Password=" + DB + "");        
         }
 
-        public int gemData(string Forsøgsnavn, List<double> Rådata)
+            public int gemData(string Forsøgsnavn, List<double> Rådata)
         {
             Datostempel = DateTime.Now;
             double[] BLOBListe = Rådata.ToArray();

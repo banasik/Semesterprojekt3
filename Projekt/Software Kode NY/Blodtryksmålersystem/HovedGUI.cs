@@ -15,16 +15,15 @@ namespace Blodtryksmålersystem
     public partial class HovedGUI : Form, IObserver
     {
         private Logik logik;
-        private int AutogenNR; //AutogeneretNR der skal tælles 1 op hver gang der trykkes på GEM-knappen.
         private List<double> guiliste;
         private Analyse diaSystole;
         private System.Timers.Timer myTimer;
         private string Forsøgsnavn;
 
-        public HovedGUI()
+        public HovedGUI(Logik logik_)
         {
             InitializeComponent();
-            logik = new Logik();
+            logik = logik_;
             diaSystole = new Analyse();
             logik.Attach(this);
             myTimer = new System.Timers.Timer();
@@ -32,29 +31,25 @@ namespace Blodtryksmålersystem
             myTimer.Interval = 3000;
             myTimer.Elapsed += myTimer_Elapsed;
             logik.Attach(this);
-            //GUISetNVærdi();
+            Chart.ChartAreas[0].AxisY.Minimum = 0;
+            Chart.ChartAreas[0].AxisY.Maximum = 250;
 
         }
-
+        
         void myTimer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
         {
             MethodInvoker action = delegate
-            { textDia.Text = Convert.ToInt32(logik.DiastoleVærdi).ToString();
-            textSys.Text = Convert.ToInt32(logik.SystoleVærdi).ToString();
+            {
+                textDia.Text = Convert.ToInt32(logik.DiastoleVærdi).ToString();
+                textSys.Text = Convert.ToInt32(logik.SystoleVærdi).ToString();
             };
             
             textDia.BeginInvoke(action);
-            textSys.BeginInvoke(action);
         }
-
-        //private void GUISetNVærdi()
-        //{
-        //    //double værdi = -2;
-        //    logik.nulpunktsJustering(værdi);
-        //}
 
         private void textForsøgsnavn_TextChanged(object sender, EventArgs e)
         {
+
             StartKnap.Enabled = true;
             StartKnap.BackColor = Color.DarkSeaGreen;
             Forsøgsnavn = Convert.ToString(textForsøgsnavn.Text);
@@ -70,9 +65,9 @@ namespace Blodtryksmålersystem
             }
             else
             {
-                //if (uiList.Count > 500) //Vises først i chart når listen indeholder mere end 500 samples
+                
                 {
-                    Chart.Series["Series1"].Points.DataBindY(guiliste); //De sidste 500 samples i listen vises i chart
+                    Chart.Series["Series1"].Points.DataBindY(guiliste); 
                     logik.getDia();
                     logik.getSys();
                     
@@ -89,25 +84,23 @@ namespace Blodtryksmålersystem
             }
             GemKnap.Enabled = true;
         }
-
         private void StopKnap_Click(object sender, EventArgs e)
         {
-            //logik.stopReadDataLogik();
-            //myTimer.Close();
-            int id = logik.gemData(Forsøgsnavn);
-            textFilnavn.Text = Forsøgsnavn + '_' + Convert.ToString(id); 
-        }
 
-        private void AfslutKnap_Click(object sender, EventArgs e)
-        {
             logik.stopReadDataLogik();
             myTimer.Close();
-            //Application.OpenForms["HovedGUI"].Close();
         }
-
         private void GemKnap_Click(object sender, EventArgs e)
         {
             logik.ClearData();
+            StopGemKnap.Enabled = true;
+        }
+
+        private void StopGemKnap_Click(object sender, EventArgs e)
+        {
+            int id = logik.gemData(Forsøgsnavn);
+            textFilnavn.Text = Forsøgsnavn + '_' + Convert.ToString(id);
+            StopGemKnap.Enabled = false;
         }
 
         public void Gennemsnit(List<double> graf)
@@ -115,9 +108,6 @@ namespace Blodtryksmålersystem
             guiliste = graf;
             
             updateChart();
-        }
-        private void GUIFiltrering()
-        {
         }
 
         private void filtreret_CheckedChanged(object sender, EventArgs e)

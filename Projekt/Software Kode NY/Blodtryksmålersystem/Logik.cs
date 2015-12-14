@@ -17,12 +17,13 @@ namespace LogikLag
         private Kalibrering KalibreringObjekt = new Kalibrering();
         private Filter FilterObj = new Filter();
         private Thread updateUI;
+        private Thread updateNul;
         private Queue<double> minKø;
         private double kalibreringKoef;
         private List<IObserver> observers;
         private List<double> FiltreretListe;
-        int counter;
         private List<double> databasetal;
+        int counter;
         
         public double DiastoleVærdi { get; set; }
         public double SystoleVærdi { get; set; }
@@ -33,13 +34,14 @@ namespace LogikLag
         
         public Logik()
         {
+            beregnetNværdi = 0.0;
             updateUI = new Thread(() => updateListe());
             kalibreringKoef = KalibreringObjekt.Kalibrer();
             UILISTE = new List<double>();
             observers = new List<IObserver>();
             FiltreretListe = new List<double>();
-            minKø = new Queue<double>(100);
             databasetal = new List<double>();
+            minKø = new Queue<double>(100);
             DAQdata.Attach(this);
             for (int i = 0; i < 299; i++)
             {
@@ -85,25 +87,21 @@ namespace LogikLag
             }
             Thread.Sleep(5);
         }
+        
         public void getDia()
         {
-            AnalyseKlasse.Diastole(UILISTE);
+            AnalyseKlasse.Diastole(FiltreringLogik(UILISTE));
             DiastoleVærdi = AnalyseKlasse.Diastole_;
         }
         public void getSys()
         {
-            AnalyseKlasse.Systole(UILISTE);
+            AnalyseKlasse.Systole(FiltreringLogik(UILISTE));
             SystoleVærdi = AnalyseKlasse.Systole_;
         }
 
         public bool isRunningLogik()
         {
             return DAQdata.IsRunning();
-        }
-
-        public void getListLogik()
-        {
-            DAQdata.getList();
         }
 
         public void indhentDataLogik()
@@ -117,7 +115,7 @@ namespace LogikLag
             updateUI.Abort();
         }
 
-        public int gemData(string forsøgsnavn)
+        public int gemData(string forsøgsnavn) 
         {
             return Database.gemData(forsøgsnavn, databasetal);
         }
@@ -126,7 +124,6 @@ namespace LogikLag
         {
             databasetal.Clear();
         }
-
         public void Attach(IObserver observer)
         {
             observers.Add(observer);
@@ -145,9 +142,27 @@ namespace LogikLag
             databasetal = graf;
             minKø.Enqueue(Convert.ToDouble(graf.Average()));
         }
-        public void nulpunktsJustering(double værdi)
+        public void StartNulPunkt()
         {
-            beregnetNværdi = NulpunktObjekt.Justering(værdi);
+             {
+            DAQdata.indhentData();
+            updateNul = new Thread(() => nulpunktsJustering());
+            updateNul.Start();
+             }
+        }
+        public void nulpunktsJustering()
+        {
+            while(isRunningLogik())
+            {
+                if(minKø.Count > 0)
+                {
+                    DAQdata.stopReadData();
+                    beregnetNværdi = NulpunktObjekt.Justering((minKø.Dequeue()));
+                    minKø.Clear();
+                    updateNul.Abort();
+                }
+                Thread.Sleep(2);
+            }
         }
 
         public List<double> FiltreringLogik(List<double> data)
@@ -155,9 +170,6 @@ namespace LogikLag
             FiltreretListe = FilterObj.Filtrering(data);
             return FiltreretListe;
         }
-        //public double Nulværdi(List<double> data)
-    //    {
-    //        //DAQdata.
-    //    }
+        
     }
 }
