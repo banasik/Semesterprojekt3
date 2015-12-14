@@ -56,10 +56,10 @@ Antal sider:  \pageref{LastPage}
 
 \newpage
 \section{Indledning}
-På baggrund af krav fra kunden samt, hvad leverandøren finder muligt, er denne kravspecifikation blevet udarbejdet. Kravspecifikation har til formål at specificere kravene til produktet. Dette projekt tager udgangspunkt i en blodtryksmåler, hvortil der er en række aktører, som interagerer med systemet, der er beskrevet yderligere nedenfor.
+På baggrund af krav fra kunden, samt hvad leverandøren finder muligt, er denne kravspecifikation blevet udarbejdet. Kravspecifikationen har til formål at specificere kravene til produktet. Dette projekt tager udgangspunkt i en blodtryksmåler, hvortil der er en række aktører, som interagerer med systemet. Dette er beskrevet yderligere nedenfor.
 
 \section{Systembeskrivelse}
-Blodtryksmålersystemet ønskes udviklet således at systolisk og diastolisk blodtryk samt puls kan bestemmes ud fra en invasiv ateriel blodtryksmåling. Der udvikles instrumentering til den udleverede transducer som hardware og et software-program til kontinuerligt visning af målt blodtryk, samt til udskrivelse af løbende systoliske, diastoliske og puls værdier. Disse to dele udgør til sammen systemet. 
+Blodtryksmålersystemet ønskes udviklet således, at systolisk og diastolisk blodtryk, samt puls kan bestemmes ud fra en invasiv arteriel blodtryksmåling. Der udvikles instrumentering til den udleverede transducer, som er hardware og et softwareprogram til kontinuerligt visning af et målt blodtryk. Dette softwareprogram vil blive brugt til udskrivelse af løbende systoliske, diastoliske og puls værdier. Disse to dele udgør tilsammen systemet. 
 
 \section{Funktionelle krav}
  
@@ -81,9 +81,9 @@ På figur \ref{fig:aktoerbeskrivelse} ses aktørerne til at være: Forsker, Mål
 \begin{table}[H]
 \begin{tabularx}{\textwidth}{l l X}
      Aktørnavn	&	Type		&	Beskrivelse \\ \midrule
-     Forsker   	& 	Primær  	& 	Forskeren er aktøren, der starter måling, giver besked om at data ønskes gemt, navngiver målingen samt afslutter måling af blodtryk \\ 			  \addlinespace[2mm]
-     Database	&	Sekundær	&	Databasen er aktøren, hvori måledata bliver gemt \\   \addlinespace[2mm]
-     Måleobjekt	&	Sekundær	&	Måleobjekt er aktøren, hvorfra blodtrykssignalet indhentes. Måleobjektet er tilkoblet transduceren
+     Forsker   	& 	Primær  	& 	Forskeren starter måling, giver besked om at data ønskes gemt, navngiver målingen, samt bestemmer kalibreringskoefficient  \\ 			  \addlinespace[2mm]
+     Database	&	Sekundær	&	Databasen er hvor rådata bliver gemt \\   \addlinespace[2mm]
+     Måleobjekt	&	Sekundær	&	Måleobjektet, hvorfra blodtrykssignalet indhentes. Måleobjektet er tilkoblet transduceren.
      I den endelige version er måleobjektet In Vitro maskinen, som findes i Cave Lab
      Under løbende test i udviklingsprocessen benyttes Analog Discovery og Waveform \\   \addlinespace[2mm]
      
@@ -106,9 +106,9 @@ På figur \ref{fig:aktoerbeskrivelse} ses aktørerne til at være: Forsker, Mål
 
 Diagrammet ovenfor viser systemets fem Use Cases: Foretag nulpunktsjustering, Bestem kalibreringskoefficient, Start måling, Gem data og Stop måling. Herunder følger en nærmere beskrivelse af de enkelte Use Cases, gennem et fully-dressed Use Case skema. \\
 \newline
-Systemet består af en computer, hvor softwaren er placeret, en NI-DAQ, en Analog Discovery samt en transducer med tilhørende implementering. Systemet gør det muligt at foretage en blodtryksmåling på et måleobjekt, som er tilsluttet og sender disse signaldata ind i systemet via transduceren og det tilhørende hardware, hvor signalet vises. Det ønskede interval af blodtrykssignalet gemmes så i databasen. \\
-I softwaren benyttes algoritmer til at analysere signalet, ud fra opsatte grænseværdier, så systolisk, diastolisk og puls værdier hentes frem. Disse algoritmer undersøger signalet for, hvor signalets bølgetoppe og -bunde er placeret. Da top er signalets systoliske værdi og bund er signalets diastoliske. Puls bestemmes ved at tælle antallet af blodtryksperioder pr. minut. \\    
-Brugergrænseflade er det, som forsker initierer med, altså hvorfra systemet aktiveres. Brugergrænsefladen forkortes til GUI. 
+Systemet består af en softwaredel, en DAQ og en transducer med tilhørende hardware. Systemet gør det muligt at foretage en blodtryksmåling på et måleobjekt, hvor transduceren er tilsluttet. Den sender rådata ind i systemet via DAQ'en, hvor signalet vises. Det ønskede stykke af blodtrykssignalet gemmes i databasen. \\
+I softwaren benyttes der algoritmer til at analysere signalet, så systolisk, diastolisk og puls værdier udregnes og vises. Disse algoritmer undersøger signalet for, hvor signalets bølgetoppe og -bunde er placeret. Da toppen(maksimum) er signalets systoliske værdi og bund(minimum) er den diastoliske værdi. Puls bestemmes ved at tælle antallet af blodtryksperioder pr. minut. \\    
+Brugergrænsefladen er det som forskeren initierer med, altså hvorfra systemet aktiveres.  
 
 \subsection{Use Cases}
 
@@ -123,10 +123,10 @@ Brugergrænseflade er det, som forsker initierer med, altså hvorfra systemet ak
 	Referencer 				&& 	\\
 	Samtidige forekomster  	&& 	Én nulpunktsjustering pr. kørsel \\
 	Forudsætninger 			&&	Alle systemer er ledige og operationelle\\ 
-	Resultat 				&& 	Nulpunktsjustering er blevet fortaget efter ønske\\ \midrule
-	Hovedscenarie 			&    1. 	&	Pop-up vindue for nulpunktsjustering er åbent\\				 	
+	Resultat 				&& 	Nulpunktsjustering er blevet foretaget efter ønske\\ \midrule
+	Hovedscenarie 			&    1. 	&	Pop-up vindue for nulpunktsjustering er åben\\				 	
 							&    2. 	& 	Forsker trykker på Foretag-knap:\\ 
-							& 	 3.		&	 Systemet fortager nulpunktsjustering og vinduet lukker ned.\\[-1ex]
+							& 	 3.		&	 Systemet foretager nulpunktsjustering og vinduet lukker ned.\\[-1ex]
 	Undtagelser 			&			& 	-  \\ \bottomrule
 	
 	\caption{Fully dressed Use Case 1}
@@ -137,20 +137,20 @@ Brugergrænseflade er det, som forsker initierer med, altså hvorfra systemet ak
 \begin{longtabu} to \linewidth{@{}l r X[l]@{}} %UC2%
 	{\large \textbf{Use Case 2}} && \\
 	\toprule
-	Scenarie && Hovedscenarie\\
-	Navn && Bestem kalibreringskoefficient\\
-	Mål && At få bestemt kalibreringskoefficienten\\
-	Initiering && Startes af Forsker\\
-	Aktører && Forsker (primær)\\
-	Referencer && Ingen\\
+	Scenarie 	&& Hovedscenarie\\
+	Navn 		&& Bestem kalibreringskoefficient\\
+	Mål 		&& At få bestemt kalibreringskoefficienten\\
+	Initiering 	&& Startes af Forsker\\
+	Aktører 	&& Forsker (primær)\\
+	Referencer 	&& Ingen\\
 	Samtidige forekomster  && Én kalibrering pr. måling\\
-	Forudsætninger && Alle systemer er ledige og operationelle. Væskesøjle og computer med en WaveForm er tilgængeligt\\ 
-	Resultat && Kalibreringskoefficient er blevet indtastet i XML-fil\\ \midrule
-	Hovedscenarie &    1. &		Forsker tilslutter WaveForm og væskesøjle ved 50 mmHg til systemets hardware.\\[-1ex]
+	Forudsætninger 	&& Alle systemer er ledige og operationelle. Væskesøjle og computer med en WaveForm er tilgængeligt. Væskesøjlen er fyldt op med vand, transducer er tilkoblet målepunkt for 50 mmHg\\ 
+	Resultat 		&& Kalibreringskoefficienten er blevet indtastet i XML-fil\\ \midrule
+	Hovedscenarie &    1. &		Forsker tilslutter WaveForm og væskesøjle ved 50 mmHg til systemets hardware\\[-1ex]
 	&     2. & 	Output spænding fra hardware aflæses i WaveForm\\	 	
 	&    3. & Beregning foretages\\[-1ex]
 	&    4. & Forsker indtaster beregnet kalibreringskoefficient i konfigurations XML-fil\\[-1ex] 
-	&    5. & Kalibreringskoefficienten kan tilgås af systemet\\ \midrule
+	&    5. & Kalibreringskoefficienten tilgås af systemet\\ \midrule
 	
 	Undtagelser && - \\ 
 	\bottomrule
@@ -161,23 +161,23 @@ Brugergrænseflade er det, som forsker initierer med, altså hvorfra systemet ak
 \begin{longtabu} to \linewidth{@{}l r X[l]@{}} %UC3%
     {\large \textbf{Use Case 3}} && \\
     \toprule
-    Scenarie && Hovedscenarie\\
-    Navn && Start Måling\\
-    Mål && At få foretaget en blodtryksmåling\\
-    Initiering && Startes af Forsker\\
-    Aktører && Forsker (primær), Måleobjekt (sekundær)\\
-    Referencer && Use Case 1\\
+    Scenarie 	&& Hovedscenarie\\
+    Navn 		&& Start Måling\\
+    Mål 		&& At få foretaget en blodtryksmåling\\
+    Initiering 	&& Startes af Forsker\\
+    Aktører 	&& Forsker (primær), Måleobjekt (sekundær)\\
+    Referencer 	&& Use Case 1\\
     Samtidige forekomster  && Ét signal pr. måling\\
-    Forudsætninger && Use Case 1 er kørt succesfuldt, samt alle systemer kører og er klar til at foretage en måling\\ 
-    Resultat && Systolisk-, diastolisk blodtryk, puls og blodtryksgraf bliver vist på GUI\\ \midrule
+    Forudsætninger 	&& Use Case 1 er kørt succesfuldt, samt alle systemer kører og er klar til at foretage en måling\\ 
+    Resultat 		&& Systolisk og diastolisk blodtryk, puls og blodtryksgraf bliver vist på GUI\\ \midrule
     Hovedscenarie &    1. &		Forsker indtaster Forsøgsnavn\\[-1ex]
-    &     2. & 	Filteret signal er valgt per default af systemet\\	 	
+    &     2. & 	Filtreret signal er valgt per default af systemet\\	 	
                 &    3. & Forsker trykker på Start-knap på GUI\\[-1ex]
                 &    4. & Signal for blodtryk vises på GUI\\[-1ex]
-                &    5. & Systolisk og diastolisk blodtryk samt puls bliver vist i bokse på GUI\\ 
+                &    5. & Systolisk og diastolisk blodtryk, samt puls bliver vist i bokse på GUI\\ 
                 &    & [\textit{Udvidelse 1:}] Forsker vælger filtreret/ufiltreret signal	\\ \midrule
                 
-    Undtagelser og Udvidelser && [\textit{Udvidelse 1}]	Forsker vælger filtreret/ufiltreret signal\\ 
+    Undtagelser og udvidelser && [\textit{Udvidelse 1:}]	Forsker vælger filtreret/ufiltreret signal\\ 
     &	a. & Forsker vælger ufiltreret signal\\
     &   b. & Det viste signal er nu ufiltreret \\
     & 	c. & Forsker vælger filtreret signal \\
@@ -191,22 +191,22 @@ Brugergrænseflade er det, som forsker initierer med, altså hvorfra systemet ak
 \begin{longtabu} to \linewidth{@{}l r X[l]@{}} %UC4%
     {\large \textbf{Use Case 4}} && \\
     \toprule
-    Scenarie && Hovedscenarie\\
-    Navn && Gem data\\
-    Mål && At gemme data i databasen\\
-    Initiering && Startes af Forsker\\
-    Aktører && Forsker (primær), Database(sekundær)\\
-    Referencer && Use Case 1 og Use Case 3 \\
+    Scenarie 		&& Hovedscenarie\\
+    Navn 			&& Gem data\\
+    Mål 			&& At gemme rådata i Databasen\\
+    Initiering 		&& Startes af Forsker\\
+    Aktører 		&& Forsker (primær), Database (sekundær)\\
+    Referencer 		&& Use Case 1 og Use Case 3 \\
     Samtidige forekomster  &&  Ét signal pr. måling\\
-    Forudsætninger && Use Case 1 er kørt succesfuldt, Use Case 3 kører. VPN er tilsluttet\\
-    Resultat && Signalets rådata er blevet gemt i en Database under Forsøgsnavn og et autogenereret Id\\ \midrule
+    Forudsætninger 	&& Use Case 1 er kørt succesfuldt, Use Case 3 kører. VPN er tilsluttet\\
+    Resultat 		&& Signalets rådata er blevet gemt i en Database under Forsøgsnavn og et autogenereret Id\\ \midrule
     Hovedscenarie &    1. &		Forsker trykker på Start Gem-knap\\[-1ex] 
     &	2. & Systemet gemmer det fremadrettede signals rådata i Databasen\\
                   &    3. &  Forsker trykker på Stop Gem-knap for at stoppe med at gemme\\
     &	&			[\textit{Undtagelse 1:}] Forsker trykker på Stop Måling-knap\\
-                    &    4. &   Det vises at data er gemt ved at filnavnet(Forsøgsnavn og Id) for målingen vises på GUI. \\ \midrule	 	
+                    &    4. &   Det vises at rådata er gemt ved at filnavnet (Forsøgsnavn og Id) for målingen vises på GUI \\ \midrule	 	
  Undtagelser &    & [\textit{Undtagelse 1:}] Forsker trykker på Stop Måling-knap\\
- & a. 	&  Systemet gemmer ikke målingen og blodtryksgrafen fastholdes.\\  
+ & a. 	&  Systemet gemmer ikke målingen og blodtryksgrafen fastholdes\\  
 
  \\ \bottomrule
 \caption{Fully dressed Use Case 4}
@@ -216,17 +216,17 @@ Brugergrænseflade er det, som forsker initierer med, altså hvorfra systemet ak
 \begin{longtabu} to \linewidth{@{}l r X[l]@{}} %UC5%
 	{\large \textbf{Use Case 5}} && \\
 	\toprule
-	Scenarie && Hovedscenarie\\
-	Navn && Stop måling \\
-	Mål && At stoppe målingen af blodtryk\\
-	Initiering && Startes af Forsker\\
-	Aktører && Forsker (primær)\\
-	Referencer && Use Case 1 og 3  \\
+	Scenarie	 	&& Hovedscenarie\\
+	Navn 			&& Stop måling \\
+	Mål 			&& At stoppe målingen af blodtryk\\
+	Initiering 		&& Startes af Forsker\\
+	Aktører 		&& Forsker (primær)\\
+	Referencer 		&& Use Case 1 og 3  \\
 	Samtidige forekomster  &&  Ét signal pr. måling\\
-	Forudsætninger && Use Case 1 er kørt succesfuldt, Use Case 3 kører\\
-	Resultat && Måling af blevet stoppet\\ \midrule
+	Forudsætninger 	&& Use Case 1 er kørt succesfuldt, Use Case 3 kører\\
+	Resultat 		&& Måling af blevet stoppet\\ \midrule
 	Hovedscenarie &    1. &		Forsker trykker på Stop Måling-knap\\[-1ex] 
-	&    2. &   Målingen stopper og blodtryksgrafen fastholdes. \\ \midrule	 	
+	&    2. &   Målingen stopper og blodtryksgrafen fastholdes \\ \midrule	 	
 	Undtagelser &    & - 	\\ \bottomrule
 	\caption{Fully dressed Use Case 5}
 	\label{UC5}
@@ -239,15 +239,15 @@ Brugergrænseflade er det, som forsker initierer med, altså hvorfra systemet ak
 
 \textbf{Functionality}
 \begin{enumerate}
-\item Blodtryksmåleren skal indeholde en Start Måling-knap til at igangsætte målingerne. 
-\item Blodtryksmåleren skal indeholde en Stop Måling-knap, hvorfra måling kan stoppes.
-\item Blodtryksmåleren skal indeholde en Start Gem-knap til påbegyndelses af at gemme måling i Database.
-\item Blodtryksmåleren skal indeholde en Stop Gem-knap til afslutning af at gemme måling i Database. 
-\item Blodtryksmåleren skal indeholde en tekstboks til forsøgsnavn, hvori forsker indtaster det pågældende forsøgsnavn.
-\item Blodtryksmåleren skal indeholde radiobutton til filtreret signal, denne skal være default valget.
-\item Blodtryksmåleren skal indeholde radiobutton til ufiltreret signal.
-\item Blodtryksmåleren skal indeholde tekstbokse til puls, systolisk og diastolisk blodtryk som vises med op til tre cifre.
-\item Blodtryksmåleren skal indeholde en tekstboks som viser filnavn(forsøgsnavn og id) på målingen, efter måling er gemt. 
+\item Blodtryksmåleren skal indeholde en Start Måling-knap til at igangsætte målingerne 
+\item Blodtryksmåleren skal indeholde en Stop Måling-knap, hvorfra måling kan stoppes
+\item Blodtryksmåleren skal indeholde en Start Gem-knap til påbegyndelses af at gemme måling i Database
+\item Blodtryksmåleren skal indeholde en Stop Gem-knap til afslutning af at gemme måling i Database 
+\item Blodtryksmåleren skal indeholde en tekstboks til forsøgsnavn, hvori forsker indtaster det pågældende forsøgsnavn
+\item Blodtryksmåleren skal indeholde radiobutton til filtreret signal, denne er default
+\item Blodtryksmåleren skal indeholde radiobutton til ufiltreret signal
+\item Blodtryksmåleren skal indeholde tekstbokse til puls, systolisk og diastolisk blodtryk som vises med op til tre cifre
+\item Blodtryksmåleren skal indeholde en tekstboks, som viser filnavn (forsøgsnavn og id) på målingen, efter måling er gemt 
 \item GUI’en skal se ud som vist på figur \ref{fig:Skitse af GUI}:
 \begin{figure}[H]
 	\centering
@@ -260,13 +260,13 @@ Brugergrænseflade er det, som forsker initierer med, altså hvorfra systemet ak
 
 \textbf{Usability}
 \begin{enumerate}
-\item Forskeren skal kunne starte en default-måling maksimalt 30 sekunder efter systemet er startet.
+\item Forskeren skal kunne starte en default-måling maksimalt 30 sekunder efter systemet er startet
 \end{enumerate}
-
+                                                                                                
 \textbf{Reliability}
 \begin{enumerate}
 \item Det skal maksimalt tage 5 timer at gendanne systemet (MTTR - Mean Time To Restore)
-\item Systemet skal have en oppetid uden nedbrud på minimum 1 måned (720 timer) (MTBF - Mean Time Between Failure).   
+\item Systemet skal have en oppetid uden nedbrud på minimum 1 måned (720 timer) (MTBF - Mean Time Between Failure)   
 \item Systemet skal have en oppetid/køretid på: 
 \end{enumerate}
 \begin{ceqn}
@@ -277,11 +277,11 @@ Availability = \frac{MTBF}{MTBF+MTTR}\cdot100 = \frac{720}{720+5}\cdot100 = 99,3
 					
 \textbf{Performance}
 \begin{enumerate}
-\item Blodtryksmåleren skal, indenfor 3 sekunder, kunne vise systolisk og diastolisk blodtryk via graf. Dette accepteres med en tolerance på +/- 15 \%.
-\item Blodtryksmåleren skal, indenfor 5 sekunder fra der er trykket på Stop Gem-knap, have gemt målingerne i Databasen. Dette accepteres med en tolerance på +/- 15 \%.
-\item Grafen vises i ét vindue, hvor y-aksen måles i mmHg (millimeter kviksølv) og x-aksen i tid i sekunder. 
-\item Hvert 3. sekund skal værdier for systolisk og diastolisk blodtryk samt puls opdateres. Dette accepteres med en tolerance på +/- 15 \%.
-\item Graf for blodtryk skal køre kontinuerligt i GUI efter følgende princip(figur \ref{fig:Graf for blodtryks visning}), hvor det blå signal erstatter det orange signal ved, at den seneste måling altid sættes ved cursorens placering.
+\item Blodtryksmåleren skal, indenfor 3 sekunder, kunne vise systolisk og diastolisk blodtryk via grafen. Dette accepteres med en tolerance på +/- 15 \%
+\item Blodtryksmåleren skal, indenfor 5 sekunder fra der er trykket på Stop Gem-knap, have gemt målingerne i Databasen. Dette accepteres med en tolerance på +/- 15 \%
+\item Grafen vises i ét vindue, hvor y-aksen måles i mmHg (millimeter kviksølv) og x-aksen i tid pr. sekund
+\item Hvert 3. sekund skal værdier for systolisk og diastolisk blodtryk, samt puls opdateres. Dette accepteres med en tolerance på +/- 15 \%
+\item Grafen for blodtryk skal køre kontinuerligt i GUI efter følgende princip (figur \ref{fig:Graf for blodtryks visning}), hvor det blå signal erstatter det orange signal ved, at den seneste måling altid sættes ved cursorens placering
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=0.6\textwidth]{Figurer/Cursor}
@@ -289,15 +289,15 @@ Availability = \frac{MTBF}{MTBF+MTTR}\cdot100 = \frac{720}{720+5}\cdot100 = 99,3
 	\label{fig:Graf for blodtryks visning}
 \end{figure}
 
-\item Når der trykkes på Stop Gem-knap gemmes signals rådata under det indtastede forsøgsnavn og et autogenereret id. \textit{"forsøgsnavn\_id"}.
-\item Systemet skal kunne måle blodtryksværdier fra 0 til 250 mmHg.
+\item Når der trykkes på Stop Gem-knap gemmes signals rådata under det indtastede Forsøgsnavn og et autogenereret Id. \textit{"Forsøgsnavn\_Id"}
+\item Systemet skal kunne måle blodtryksværdier fra 0 til 250 mmHg
 \end{enumerate}
 
 
 \textbf{Supportability}
 \begin{enumerate}
-\item Forskeren skal kunne udskifte batterierne til hardwaren på 2 minutter. 
-\item Softwaren skal opbygges med lav kobling. 
+\item Forskeren skal kunne udskifte batterierne til hardwaren inden for 2 minutter 
+\item Softwaren skal opbygges med lav kobling
 \end{enumerate}
 
 
