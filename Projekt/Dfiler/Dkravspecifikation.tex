@@ -22,26 +22,36 @@
 
 \newpage
 \section{Godkendelsesformular}
-\begin{longtabu} to \linewidth{@{}l X[j]@{}}
-	Forfattere	&	Anne Hoelgaard, Ditte Heebøll Callesen, Martin Banasik, Albert Fredshavn, Mathias Munk og Mette Hammer Nielsen-Kudsk \\
-	\midrule
-	Godkendes af & Peter Johansen \\
-	Antal sider & \pageref{LastPage} \\
-	Kunde	&	IHA \\
-\end{longtabu}
+Antal sider:  \pageref{LastPage}
 
-Ved underskrivelse af dette dokument accepteres det af begge parter, som værende kravene til udviklingen af det ønskede system.
-\\
-\\
-\\
-\\
-\noindent \begin{tabular}{lll} 
-	& 	\makebox[2.5in]{\hrulefill} 	& 	\makebox[2.5in]{\hrulefill}\\
-	&	Sted						&	Dato\\[7ex]
-	& 	\makebox[2.5in]{\hrulefill} 	& 	\makebox[2.5in]{\hrulefill}\\
-	& 	Kundens underskrift 		& 	Leverandørens underskrift\\[7ex]
+%\begin{longtabu} to \linewidth{@{}l X[j]@{}}
+%	Forfattere	&	Anne Hoelgaard, Ditte Heebøll Callesen, Martin Banasik, %Albert Fredshavn, Mathias Munk og Mette Hammer Nielsen-Kudsk \\
+%	\midrule
+%	Godkendes af & Peter Johansen \\
+%	 \\
+%	Kunde	&	IHA \\
+%\end{longtabu}
 
-\end{tabular}
+%Ved underskrivelse af dette dokument accepteres det af begge parter, som %værende kravene til udviklingen af det ønskede system.
+%\\
+%\\
+%\\
+%\\
+%\noindent \begin{tabular}{lll} 
+%	& 	\makebox[2.5in]{\hrulefill} 	& 	\makebox[2.5in]{\hrulefill}\\
+%	&	Sted						&	Dato\\[7ex]
+%	& 	\makebox[2.5in]{\hrulefill} 	& 	\makebox[2.5in]{\hrulefill}\\
+%	& 	Kundens underskrift 		& 	Leverandørens underskrift\\[7ex]
+
+%\end{tabular}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=1.0\textwidth]{Figurer/underskriftGodkendt}
+	\caption{Use Case-diagram}
+	\label{fig:Use Cases}
+\end{figure}
+
 
 \newpage
 \section{Indledning}
@@ -258,13 +268,12 @@ Brugergrænseflade er det, som forsker initierer med, altså hvorfra systemet ak
 \item Systemet skal have en oppetid uden nedbrud på minimum 1 måned (720 timer) (MTBF - Mean Time Between Failure).   
 \item Systemet skal have en oppetid/køretid på: 
 \end{enumerate}
-
-				\begin{align}
-					Availability = \frac{MTBF}{MTBF+MTTR}\cdot100 = \frac{720}{720+5}\cdot100 = 99,31 \%
-				\end{align}
-
-
-
+\begin{ceqn}
+\begin{equation}
+Availability = \frac{MTBF}{MTBF+MTTR}\cdot100 = \frac{720}{720+5}\cdot100 = 99,31 \%
+\end{equation}
+\end{ceqn}
+					
 \textbf{Performance}
 \begin{enumerate}
 \item Blodtryksmåleren skal, indenfor 3 sekunder, kunne vise systolisk og diastolisk blodtryk via graf. Dette accepteres med en tolerance på +/- 15 \%.

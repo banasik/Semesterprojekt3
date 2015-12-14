@@ -59,8 +59,9 @@ Under simulering bruges Analog Discovery som en funktionsgenerator, der simulere
 I projektet skal der laves et 2. ordens lavpasfilter. Filteret skal laves for at sikre, at der ikke opstår aliasering.\\
 Aliasering \cite{DSB} er, hvor signalet bliver gentaget. Når man har signalet i det digitale domæne, bliver spektret for signalet en periodisk funktion. Det vil sige, at den gentager sig selv, efter et bestemt stykke tid. \\
 Det skal sikres, at der ikke kommer overlap mellem signalet og et alias. Da det ellers kunne give anledning til misforståelser. Derfor laves et lavpasfilter, som sikre at der ikke ligger noget signal ved den halve samplingsfrekvens. Signalet her kan med fordel gøres så lille at DAQ'en ikke kan læse det, dvs. signalet skal være mindre end $ 1/2 \cdot LSB $ (Least Significant Bit).    
-\newline  
-Lavpasfilteret skal være et Sallen-Key Butterworth-filter med en knækfrekvens på 50 Hz og en samplingsfrekvens på 1kHz. Ud fra oplysninger givet til projektet, vides det at filteret skal dæmpe signalet med 20 dB, under antagelse af at, den forekommende støj er mindre end signalet, også når støjen forekommer over knækfrekvensen.\\
+
+Lavpasfilteret skal være et Sallen-Key Butterworth-filter med en knækfrekvens på 50 Hz og en samplingsfrekvens på 1kHz. Ud fra oplysninger givet til projektet, vides det at filteret skal dæmpe signalet med 20 dB, under antagelse af at, den forekommende støj er mindre end signalet, også når støjen forekommer over knækfrekvensen.
+
 Ved en typisk blodtryksmåling forekommer der ikke signal over 50 Hz, samtidigt er signalet her aftaget med ca. 70 dB. For at få signalet, ved den halve samplingsfrekvens til at være $ 1/2 \cdot LSB $, skal det ydeligere dæmpes 20 dB. Derfor oplyses filterets til at være 50 Hz, da dette giver en minimums dæmpning på 20 dB pr. dekade.
 
 \subsection{Implementering}
@@ -74,108 +75,134 @@ For at få den rette forstærkning er det blevet valgt, at benytte instrumentati
 \end{itemize}
 Under opbygning og modultestning vil det differentierede signal blive simuleret af Analog Discovery. \\
 For at udregne den korrekte forstærkning, bruges følsomheden fra transduceren og eksistationsspændingen.
-Først udregnes det maksimale output fra transduceren:   
+Først udregnes det maksimale output fra transduceren: 
+\begin{ceqn}  
 \begin{equation}
 9V\cdot 250mmHg \cdot 5\mu\cdot 10^{-5} uV/V/mmHg  = 11.25mV
-\end{equation} 
-Da det er besluttet at det maksimale input til DAQ'en \cite{DSB} er 5V, kan forstærkningen (Gain) nu udregnes: 
+\end{equation}
+\end{ceqn}
+Da det er besluttet at det maksimale input til DAQ'en \cite{DSB} er 5V, kan forstærkningen (Gain) nu udregnes:
+\begin{ceqn}
 \begin{equation}
 \begin{split}
-5V= 11.25mV \cdot G \\
-G = 444.44
+5V& =11.25mV\cdot G\\   
+G& =444.44
 \end{split}
 \end{equation}
+\end{ceqn}
 \cite{INA} For at få den rette forstærkning udregnes den eksterne modstand ($ R_g $) til INA114.\\ 
-INA114's forstærkning afhænger af størrelsen på $ R_g $, hvis modstanden er stor, er forstærkningen lille og omvendt.  $ R_g $ udregnes ved formlen: 
+INA114's forstærkning afhænger af størrelsen på $ R_g $, hvis modstanden er stor, er forstærkningen lille og omvendt.  $ R_g $ udregnes ved formlen:
+\begin{ceqn}
 \begin{equation}
 \begin{split}
-G=1+\frac{50k\Omega}{R_g}\\
-444.44= 1+\frac{50k\Omega}{R_g} \Rightarrow R_g= 112.75 \Omega
+G&=1+\frac{50k\Omega}{R_g}\\
+444.44&= 1+\frac{50k\Omega}{R_g} \Rightarrow R_g= 112.75 \Omega
 \end{split}
 \end{equation}
+\end{ceqn}
 Derved fås en værdi for den eksterne modstand til INA114, som skaber den ønskede forstærkning.\\
 Det skal nu sikres at dette kan lade sig gøre. Derfor sikres det, at den ønskede forstærkning kan ske ved båndbredden. Dette kan undersøges da produktet af forstærkning og båndbredde er en konstant. Konstanten aflæses i databladet for INA114\cite{INA}. 
+\begin{ceqn}
 \begin{equation}
 \begin{split}
-1000000 Hz = G\cdot BW \\
-BW = 2250 Hz
+1000000 Hz& = G\cdot BW \\
+BW& = 2250 Hz
 \end{split}
 \end{equation}
+\end{ceqn}
 Da båndbredden ligger over knækfrekvensen for lavpas filtret, er dette godkendt. Hvis båndbredde havde ligget under knækfrekvensen vil operationsforstærkeren ikke have kunnet arbejde med de ønskede frekvenserne. Derfor er det vigtigt at båndbredden er bred nok til at kunne indeholde frekvenser fra begge side af knækfrekvensen.\\
 \newline 
 For at imødekomme usikkerheden ved Analog Discovery med lave spændinger, laves et kredsløb efter spændingsdelerprincippet. Signalerne fra Analog Discovery skal sendes igennem dette kredsløb, hvor de efter spændingsdelerprincippet gøres mindre. I kredsløbet benyttes to modstande, hvis værdier er $ R_1=100k\Omega $ og $ R_2 = 1k\Omega $. Da vi kender signalet som skal ind i INA114 og modstandene i kredsløbet, kan størrelsen af den spænding, som skal sendes fra Analog Discovery, findes:
+\begin{ceqn}
 \begin{equation}
 \begin{split}
-U_{INA} = U_{analog} \cdot \frac{R_2}{R_1 + R_2} \\
-11.25mV = U_{analog}\cdot \frac{1k\Omega}{100k\Omega+1k\Omega} \Rightarrow U_{analog}=1.1362 V
+U_{INA}& = U_{analog} \cdot \frac{R_2}{R_1 + R_2} \\
+11.25mV& = U_{analog}\cdot \frac{1k\Omega}{100k\Omega+1k\Omega} \Rightarrow U_{analog}=1.1362 V
 \end{split}
-\end{equation} 
+\end{equation}
+\end{ceqn}
 Derved kan Analog Discovery sende signaler med en højere spænding ud og usikkerheden mindskes. Der er taget højde for at, hvis modstandene i kredsløbet bliver for store, vil det skabe en termisk usikkerhed. Derfor er modstandene valgt som de er. Dette er kun under simulering, når transduceren benyttes, bruges spændingsdeleren ikke.  
   
 \subsubsection{Lavpas}
 For at opnå den ønskede effekt i lavpasfilteret, blev det oplyst at $ f_c=50$ Hz, $ f_s = 1$kHz, $ R_1 = R_2 $ og $ C_2=680 nF$. Ud fra disse værdier, udregnes de resterende komponentværdier for filteret.
 
-Overføringsfunktionen for et 2. ordens filter er: 
+Overføringsfunktionen for et 2. ordens filter er:
+\begin{ceqn}
 \begin{equation}
 H(z)=\frac{\omega_n^2}{(s^2 + 2\cdot\zeta \cdot \omega_n \cdot s+\omega_n^2)}
 \end{equation}
+\end{ceqn}
 
-For at finde overføringsfunktionen for det gældende system, vides det at følge ligninger gælder \cite{Wikilavpas}: 
+For at finde overføringsfunktionen for det gældende system, vides det at følge ligninger gælder \cite{Wikilavpas}:
+\begin{ceqn} 
 \begin{equation}
 \begin{split}
-\omega_n = 2\cdot \pi\ 50 = \dfrac{1}{\sqrt{R1\cdot R2\cdot C1\cdot C2}}\\
-2\cdot \zeta\cdot\omega_n =\frac{1}{C2}\cdot \left( \frac{R1+R2}{R1\cdot R2}\right)
+\omega_n = 2\cdot \pi\ 50 &= \dfrac{1}{\sqrt{R1\cdot R2\cdot C1\cdot C2}}\\
+2\cdot \zeta\cdot\omega_n& =\frac{1}{C2}\cdot \left( \frac{R1+R2}{R1\cdot R2}\right)
 \end{split}
 \end{equation}
+\end{ceqn}
 Derved fås en overføringsfunktion som hedder: 
+\begin{ceqn}
 \begin{equation}
 H(z)=\frac{\left(\dfrac{1}{\sqrt{R1\cdot R2 \cdot C1\cdot C2}}\right)^2}{s^2+ \left( \dfrac{1}{C2} \cdot \left( \dfrac{R1+R2}{R1\cdot R2}\right) \cdot s \right) +\left( \dfrac{1}{\sqrt{R1\cdot R2 \cdot C1\cdot C2}}\right)^2 }
 \end{equation}
-Da det bliver oplyst at $ R1=R2 $, kan funktionen reduceres. Den kan samtidig simplificeres. I sidste ende fås overføringsfunktionen, se Beregninger til overføringsfunktion under Bilag for nærmere udregninger: 
+\end{ceqn}
+Da det bliver oplyst at $ R1=R2 $, kan funktionen reduceres. Den kan samtidig simplificeres. I sidste ende fås overføringsfunktionen, se Beregninger til overføringsfunktion under Bilag for nærmere udregninger:
+\begin{ceqn}
 \begin{equation}
 H(z)=\dfrac{\dfrac{1}{C1 \cdot C2\cdot R^2}}{s^2+s\cdot \dfrac{2}{R\cdot C2}+ \dfrac{1}{C1\cdot C2\cdot R^2}}
 \end{equation}
+\end{ceqn}
 Da der arbejdes med at 2. ordens Butterworth filter, vides det at udsvinget$ \zeta $ skal være 0.7 \cite{ASB}. 
-Den sidste overføringsfunktion sammenlignes med den generelle for 2. ordens systemer. Det gælder at $ C2 = 680\cdot 10^{-9} nF $. Det er muligt at isolerer forskellige led. Først isoleres for modstanden: 
+Den sidste overføringsfunktion sammenlignes med den generelle for 2. ordens systemer. Det gælder at $ C2 = 680\cdot 10^{-9} nF $. Det er muligt at isolerer forskellige led. Først isoleres for modstanden:
+\begin{ceqn}
 \begin{equation}
 \begin{split}
-\dfrac{2}{R\cdot C2}= 2\cdot \zeta \cdot \omega_n\\
-\dfrac{2}{R\cdot 680\cdot 10^-9}=2\cdot 0.7 \cdot(2\cdot\pi\cdot 50)\\
+\dfrac{2}{R\cdot C2}=& 2\cdot \zeta \cdot \omega_n\\
+\dfrac{2}{R\cdot 680\cdot 10^-9}=&2\cdot 0.7 \cdot(2\cdot\pi\cdot 50)\\
 \Downarrow\\
- R= 6687 \Omega
+ R=& 6687 \Omega
 \end{split}
 \end{equation}
-Derved er modstandene udregnet til $ R = 6687\Omega $. Nu kan der isoleres for kondensator C1: 
+\end{ceqn}
+Derved er modstandene udregnet til $ R = 6687\Omega $. Nu kan der isoleres for kondensator C1:
+\begin{ceqn} 
 \begin{equation}
 \begin{split}
-\dfrac{1}{C1\cdot C2\cdot R^2}= \omega^2\\
-\dfrac{1}{C1\cdot 680\cdot 10^{-9}\cdot 6687^2}= (2\cdot \pi \cdot 50)^2\\
+\dfrac{1}{C1\cdot C2\cdot R^2}=& \omega^2\\
+\dfrac{1}{C1\cdot 680\cdot 10^{-9}\cdot 6687^2}=& (2\cdot \pi \cdot 50)^2\\
 \Downarrow\\
-C1=333\cdot 10^{-9} nF
+C1= &333\cdot 10^{-9} nF
 \end{split}
 \end{equation}
+\end{ceqn}
 Dette betyder, at $ C1 = 333\cdot 10^{-9} nF $  og  $ C2 = 680\cdot 10^{-9} nF$. Derved er alle komponentværdierne til lavpasfilteret fundet og det kan nu realiseres. \\ 
 \newline
 Under udviklingen af lavpasfilteret er komponent størrelserne, blevet ændret for at kunne realisere det. De brugte komponent størrelser er: $ R= 6.6 k\Omega $, $ C1= 330\cdot 10 ^{-9} nF$ og $ C2= 680\cdot 10^{-9} nF$.   
-For at være sikker på at filteret har de ønskede karakteristika, laves et bodeplot for den endelig overføringsfunktion: 
+For at være sikker på at filteret har de ønskede karakteristika, laves et bodeplot for den endelig overføringsfunktion:
+\begin{ceqn}
 \begin{equation}
 H(z)=\dfrac{62500000000}{610929\cdot \left( s^2+\dfrac{250000}{561}\cdot s + \dfrac{62500000000}{610929} \right)}
 \end{equation}
+\end{ceqn}
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=0.5\textwidth]{Figurer/Bodeplot}
 	\caption{Bodeplot}
 	\label{fig:bodeplot}
 \end{figure}
-Udregning af den præcise oversving $ \zeta $ ud fra de benyttet komponentværdier: 
+Udregning af den præcise oversving $ \zeta $ ud fra de benyttet komponentværdier:
+\begin{ceqn} 
 \begin{equation}
 \begin{split}
-\dfrac{2}{R\cdot C1}= 2\cdot \zeta\cdot \omega_n\\
-\dfrac{2}{6600\cdot 680\cdot 10^{-9}}= 2\cdot \zeta\cdot (2\cdot \pi \cdot 50)\\
+\dfrac{2}{R\cdot C1}=& 2\cdot \zeta\cdot \omega_n\\
+\dfrac{2}{6600\cdot 680\cdot 10^{-9}}=& 2\cdot \zeta\cdot (2\cdot \pi \cdot 50)\\
 \Downarrow\\
-\zeta = 0.709
+\zeta =& 0.709
 \end{split}
 \end{equation}
+\end{ceqn}
 Dvs. de små ændringer i komponent værdierne ikke har haft betydende indflydelse på værdien for $ \zeta $. 
 
 \begin{figure}[H]
@@ -310,28 +337,32 @@ Dermed ses det at denne model er delt op i tre niveauer:
 \item Kontrolklasse
 \begin{enumerate}
 \item UC1: Foretag nulpunktsjustering
-\item UC2: Foretag kalibrering
+\item UC2: Bestem kalibreringskoefficient
 \item UC3: Start måling
-\item UC4: Gem måling
-\item UC5: Afslut måling
+\item UC4: Gem data
+\item UC5: Stop måling
 \end{enumerate}
 \item Domæneklasse
 \begin{enumerate}
 \item Database
+\item Nulpunktsjustering - Bestemmer nulpunktsjusteringsværdi
+\item Kalibrering - Bestemmer kalibreringskoefficient
+\item Filter - Indeholder det digitale filter
+\item Analyse - Bestemmer systole, diastole og puls
 \end{enumerate}
 \end{enumerate}
 
 \subsubsection{Metodeidentifikation}
-Klasserne i ovenstående klassediagram er med til at definere, hvilke blokke de følgende sekvensdiagrammer må indeholde. Det er yderst vigtigt at der er en sammenhæng mellem klasserne i klassediagrammet og blokkene i sekvensdiagrammet. Vi har valgt at udarbejde et sekvensdiagram for hver enkelt Use Case, hvori systemets interne kommunikation beskrives, når både normalforløb og undtagelser gennemløbes. I alle diagrammerne beskrives forløbet via de metodekald, der er nødvendige for at få de ønskede handlinger mellem blokkene udført. 
+Klasserne i ovenstående klassediagram er med til at definere, hvilke blokke de følgende sekvensdiagrammer må indeholde. Det er yderst vigtigt at der er en sammenhæng mellem klasserne i klassediagrammet og blokkene i sekvensdiagrammet. Vi har valgt at udarbejde et sekvensdiagram for hver enkelt Use Case, hvori systemets interne kommunikation beskrives, når normalforløb og udvidelser gennemløbes. I alle diagrammerne beskrives forløbet via de metodekald, der er nødvendige for at få de ønskede handlinger mellem blokkene udført. 
 
 \textbf{Use Case 1}
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=0.7\textwidth]{Figurer/UC1}
+	\includegraphics[width=1.0\textwidth]{Figurer/UC1}
 	\caption{Sekvensdiagram for Use Case 1}
 	%\label{fig:Sekvensdiagram for Use Case 1 - Foretag nulpunktsjustering}
 \end{figure}
-Det ses af ovenstående sekvensdiagram at forsker interagerer med display. Her er der to mulige udfald "Vælger nulpunktsjustering" og "Vælger ikke nulpunktsjustering", disse implementeres som to muligheder forsker kan vælge imellem. 
+Det ses af ovenstående sekvensdiagram at forsker interagerer med display ved tryk på en knap. Denne interaktion skal igangsætte en nulpunktsjustering, som systemet udfører ved at læse den første indhentede værdi fra transduceren. 
 
 \textbf{Use Case 2}
 \begin{figure}[H]
@@ -340,16 +371,16 @@ Det ses af ovenstående sekvensdiagram at forsker interagerer med display. Her e
 	\caption{Sekvensdiagram for Use Case 2}
 	%\label{fig:Sekvensdiagram for Use Case 2 - Foretag kalibrering}
 \end{figure}
-Diagrammet ovenfor viser at forsker interagerer med display, hvor der ved tryk enten vælges ja eller nej til kalibering. Afhængig af valg foretager systemet de nødvendige kald.
+Af diagrammet på figur 3.18 ses det at kalibreringen skal implementeres simpelt i softwaren, hvor kaliberingskoefficienten hentes frem så den kan ganges på samtlige indhentede samples.
 
 \textbf{Use Case 3}
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=0.7\textwidth]{Figurer/UC3}
+	\includegraphics[width=1.0\textwidth]{Figurer/UC3}
 	\caption{Sekvensdiagram for Use Case 3}
 	%\label{fig:Sekvensdiagram for Use Case 3 - Start måling}
 \end{figure}
-Ved Use Case 3 - Start måling ses det at display, transducer og filtreringsklassen vil komme i spil. Her modtages besked ved indtastning af forsøgsnavn og tryk på start-knap på display om, at signaldata fra transduceren skal hentes ind i systemet. Herefter foretages filtrering af signalet, samt visning af signal i graf, systoliske-, diastoliske og puls-værdier på display. Use Casen indeholder en undtagelse hvor filtrering af signal ikke ønskes foretaget, denne er ikke medtaget i sekvensdiagrammet.
+Ved Use Case 3 - Start måling ses det at display-, transducer-, analyse- og filterklassen vil komme i spil. Her modtages besked ved indtastning af forsøgsnavn og tryk på start-knap på display om, at signaldata fra transduceren skal hentes ind i systemet. Herefter foretages filtrering af signalet, samt visning af signal i graf, systoliske-, diastoliske og puls-værdier på display. Use Casen indeholder en udvidelse hvor filtrering af signal ikke ønskes foretaget, dette er vist ved en optional nederst i diagrammet. 
 
 \textbf{Use Case 4}
 \begin{figure}[H]
@@ -358,7 +389,7 @@ Ved Use Case 3 - Start måling ses det at display, transducer og filtreringsklas
 	\caption{Sekvensdiagram for Use Case 4}
 	%\label{fig:Sekvensdiagram for Use Case 4 - Gem data}
 \end{figure}
-Ovenstående diagram viser at for at få gemt data fra signalet, kræver det at der trykkes på Gem-knap på display, hvor efter systemet konstant vil sende data ned i databasen indtil der igen trykkes på Gem-knappen, for at stoppe gemning af data. 
+Ovenstående diagram viser at for at få gemt data fra signalet, kræver det at der trykkes på START GEM-knap på display, hvorefter systemet skal gemme det fremadrettede signal indtil der trykkes på STOP GEM.
 
 \textbf{Use Case 5}
 \begin{figure}[H]
@@ -367,18 +398,19 @@ Ovenstående diagram viser at for at få gemt data fra signalet, kræver det at 
 	\caption{Sekvensdiagram for Use Case 5}
 	%\label{fig:Sekvensdiagram for Use Case 5 - Afslut måking}
 \end{figure}
-Ved afslutning af en måling ses det at forsker trykker på Afslut-knap på display, hvorefter indhentening af data fra DAQ stoppes og programmet lukker ned.
+Ved stop af en måling ses det at forsker trykker på STOP MÅLING-knap på display, hvorefter indhentening af data fra transduceren stoppes.
 
 \subsection{Implementering}
 \subsubsection{Indledende implementeringsovervejelser}
 På baggrund af designfasen for softwaren kan implementeringen af softwaren påbegyndes. Softwaredesignet viser at systemet skal implementeres med en GUI applikation, som aktøren kan interagere med systemet gennem. Derudover er det kendt at softwaren skal indeholde en række klasser, hvor i funktionalitetér som kalibrering, nulpunktsjustering, digitalt filter og indhentning af systolisk-, diastoliske- og puls-værdier skal placeres. I det følgende beskrives de overvejelser vi har gjort i forhold til implementering af disse funktionaliteter og hele softwaresystemet generelt. 
 
-Implementeringen af softwaren sker i Visual Studio 2013 i sproget C\#. Dette er valgt da programmet er godt til arbejde med GUI applikationer, samt til håndtering af tråde og tråd kommunikation. Tråde benyttes i softwaren, da systemet der skal implementeres er et eventdrevet system, hvilket vil sige at systemet skal kunne håndtere mange handlinger på en gang. Handlingerne igangsættes af events der kommer af aktørens interaktion med systemet. Tråd kommunikationen fungerer således at en tråd kan sende et signal ud som andre tråde kan reagere på. 
+Implementeringen af softwaren sker i Visual Studio 2013 i sproget C\#. Dette er valgt da programmet er godt til arbejde med GUI applikationer, samt til håndtering af tråde og tråd kommunikation. Tråde benyttes i softwaren, da systemet der skal implementeres er et eventdrevet system, hvilket vil sige at systemet skal kunne håndtere mange handlinger på en gang. Handlingerne igangsættes af events der kommer af aktørens interaktion med systemet. Tråd kommunikationen fungerer således at en tråd kan sende et signal ud som andre tråde kan reagere på. \\
+Det er valgt kun at udarbejde aktivitetsdiagrammer for metoder, hvor vi mener det er med til at skabe et bedre overblik. Flere at metoderne er simple og derfor er et aktivitetsdiagram ikke nødvendig. 
 
 \subsubsection{Klasse implementering}
 På baggrund af designmodellerne er det besluttet at opbygge systemkoden efter principperne i en trelagsmodel. Trelagsmodellen indeholder et præsentations-lag, et logik-lag og et data-lag. Præsentations-laget består af de klasser som systemets aktører har tilgang til. Logik-laget er det analyserende lag. Det er således i dette lag at signalet behandles. Logik-laget har tilgang til de andre lag som det eneste. Det betyder at præsentations-laget og data-laget ikke kan kommunikere sammen, derved skal denne kommunikation foregå gennem logik-laget. Data-laget er tilgangen til den implementerede database og til indhentning af blodtrykssignalet fra hardware.
 
-Fordelen ved trelagsmodel opbygningen er at det skaber et godt overblik i koden, og skaber en kode med lav kobling, da hver enkelt klasse har hvert sit specifikke ansvar. Hvilket gør at koden er let at vedligeholde og ændre hvis funktionaliteter ønskes opbygget anderledes. Et overordnet klassediagram over systemet er udarbejdet på baggrund af præcisering af applikationsmodellen, se figur 3.22.
+Fordelen ved trelagsmodel opbygningen er at det skaber et godt overblik i koden, og skaber en kode med lav kobling, da hver enkelt klasse har hvert sit specifikke ansvar. Hvilket gør at koden er let at vedligeholde og ændre hvis funktionaliteter ønskes opbygget anderledes. Et overordnet klassediagram over systemet er udarbejdet på baggrund af præcisering af applikationsmodellen, se figur 3.22. Hvilke metoder hver enkelt klasse indeholder kan ses på bilag xx.
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=1.0\textwidth]{Figurer/Klassediagram}
@@ -390,10 +422,13 @@ Fordelen ved trelagsmodel opbygningen er at det skaber et godt overblik i koden,
 Displayet (GUI) er aktørens, i dette tilfælde forskerens, indgang til systemet. Derfor er det vigtigt at den er opbygget efter hvad der følger forskerens logik. Til at klarlægge dette er principperne om en god brugergrænseflade taget i mente. Brugen af disse kommer til udtryk ved, at det tydeligt fremgår af hver knap eller label hvad dens formål er, samt at størrelsen af det enkelte komponent er tilstrækkelig stor til at det ikke er til at overse. Komponenterne på display er logisk placeret, det vil sige at de dele som forsker først skal forholde sig til og eventuelt udfylde er placeret i venstre side af display. Dette vil give mening såfremt systemet benyttes af personer fra den vestlige verden, hvor læseretningen er fra venstre mod højre. 
 
 Det er et krav at forsker indtaster et forsøgsnavn inden at en måling startes, derfor er komponenterne implementeres således at knappen ”Start måling” først bliver aktiveret når der er indtastet noget i tekstboksen hvori forsøgsnavn skal indtastes. Systoliske-, diastoliske og puls-værdi er placeret efter hvilken rækkefølge det typisk ses på standard blodtryksapparater. 
-
-\textbf{Indsæt figur - Evt. alle tre form i et billede}
-
-Af figur xx ses det at grafen er en væsentlig del af display’s brugergrænseflade. Grafen implementeres som en Windows Form komponent. Det vælges at få vist signalet som en kurve, og førsteaksen indstilles til tid i sekunder fra 0 til 7 sekunder, og andenaksen til en minimums værdi på 0 mmHg og en maksimum værdi på 250 mmHg, hvilket er givet i kravspecifikationen. 
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=1.0\textwidth]{Figurer/NulHovedGUI}
+	\caption{NulpunktsjusteringGUI og HovedGUI}
+	%\label{fig:Billede af systemets to forms}
+\end{figure}
+Af figur 3.23 ses det at grafen er en væsentlig del af display’s brugergrænseflade. Grafen implementeres som en Windows Form komponent. Det vælges at få vist signalet som en kurve, og førsteaksen indstilles til tid i sekunder fra 0 til 7 sekunder, og andenaksen til en minimums værdi på 0 mmHg og en maksimum værdi på 250 mmHg, hvilket er givet i kravspecifikationen. 
 
 \subsubsection{Observer - Strategy}
 Observer og strategy er to programmeringsmønstre. Der i samarbejde med hinanden er gode til at håndtere at sende data fa et lag til et andet lag. Det er valgt at bygge softwarekoden op efter disse to mønstre. Observer definerer et en til mange forhold mellem objekter således at en ændring i et objekts tilstand medfører at de mange objekter informeres om ændringer og dermed opdateres automatisk.
@@ -411,27 +446,35 @@ I projektet blev mønstrene i første omgang først benyttet fra logik-laget til
 
 \subsubsection{Samplefrekvens}
 Samplefrekvensen er som krav givet til 1000 Hertz. Hvilket svarer til at systemet modtager 1000 samples i sekunder. Varigheden af en sample er givet ved: 
+\begin{ceqn}
 \begin{equation}
 \frac{1}{f_s}=\frac{1}{1000}=0.001 sek
 \end{equation}
+\end{ceqn}
 Det har vist sig under arbejdet med softwaren, at systemet ikke kan følge med til at modtage så mange målinger i sekundet. Derfor er det valgt at skære i antallet af målinger pr. sekund der skal videre bearbejdes i logik-laget og udskrives i præsentations-laget. Antallet skæres ned til 50 målinger pr. sekund. Dette gøres ved at gennemsnittet af 20 målinger efter hinanden bestemmes, hvorefter gennemsnitsværdien returneres og gemmes i listen der sendes videre i systemet. Herefter findes så gennemsnittet af de næste 20 målinger og således fortsættende.   
 
 \subsubsection{Nulpunktsjustering}
 Formålet med en nulpunktsjustering er at flytte signalets offset enten op eller end, så det atmosfæriske tryk altid er placeret ved 0 volt på outputsignalet. Dette gøres ved at åbne for den tilsluttede transducer til systemet, så det atmosfæriske tryk måles. Ud fra denne værdi kan justeringsfaktoren så bestemmes ved, hvor x er det målte atmosfæriske tryk i volt modtaget gennem DAQ’en:
+\begin{ceqn}
 \begin{equation}
 faktor_{jus}=0-(x)
 \end{equation}
-Af ligningen ses det at justeringsfaktoren både vil kunne blive positiv og negativ, afhængig af om offset værdien skal rykkes op eller ned for at blive placeret i nul. Optimalt set vil det atmosfæriske tryk være en konstant værdi ved den samme måling, men det opleves at der er en smule støj på signalet og derfor vil den målte værdi være en tilnærmelse af det atmosfæriske tryk. Systemet ønskes nulpunktsjusteret for at sikre at alle de målte blodtrykssignaler har samme udgangspunkt. Hvilket gør at målingerne kan sammenlignes. Justeringsfaktoren skal lægges til samtlige samples fra DAQ’en som ønskes udskrevet i graf på display. 
+\end{ceqn}
+Af ligningen ses det at justeringsfaktoren både vil kunne blive positiv og negativ, afhængig af om offset værdien skal rykkes op eller ned for at blive placeret i nul. Optimalt set vil det atmosfæriske tryk være en konstant værdi ved den samme måling, men det opleves at der er en smule støj på signalet og derfor vil den målte værdi være en tilnærmelse af det atmosfæriske tryk. Systemet ønskes nulpunktsjusteret for at sikre at alle de målte blodtrykssignaler har samme udgangspunkt. Hvilket gør at målingerne kan sammenlignes. Systemet foretager automatisk nulpunktsjusteringen når systemet startes ved at retunerer den første værdi fra DAQ'en, når der trykkes på knappen FORETAGET. Denne værdi er justeringsfaktoren der lægges til samtlige samples i det indhentede blodtrykssignal.
 
 \subsubsection{Kalibrering}
 Ved kalibrering ønskes det at bestemme hardwarens visningsfejl. I dette projekt betyder det at kalibreringsfaktoren fra volt til millimeter kviksølv bestemmes. Denne bestemmes ved at tilkoble en væskesøjle til systemet. Væskesøjlen fyldes med vand til den vil give et kendt mængde tryk på systemet angivet i mmHg. Herefter kan output i volt fra hardwaren måles. kalibreringsfaktor er givet ved:
+\begin{ceqn}
 \begin{equation}
 faktor=\dfrac{x [mmHg]}{y [Volt]}
 \end{equation}
-x angiver trykket fra væskesøjlen, denne hardcodes til 50 mmHg. y angiver den målte spændingsoutput på hardwaren. Optimalt set er kalibreringsfaktoren givet ved: 
+\end{ceqn}
+x angiver trykket fra væskesøjlen, denne hardcodes til 50 mmHg. y angiver den målte spændingsoutput på hardwaren. Optimalt set er kalibreringsfaktoren givet ved:
+\begin{ceqn}
 \begin{equation}
 \dfrac{250 [mmHg]}{5 [V]}=50
 \end{equation}
+\end{ceqn}
 hvor 250 mmHg er det maksimale blodtryk systemet kan måle og 5 Volt er maks spændingen i volt. Grafisk vil det se ud som vist på figur 3.8 under hardware modultest. Af figur 3.8 kan det aflæses at den optimale outputspænding ved 50 mmHg er 1 Volt. Kalibreringsfaktoren skal ganges på samtlige sample-værdier der kommer fra DAQ’en og som ønskes udskrevet på graf i display. 
 Kaliberingen implementeres i softwaren ved brug af konfiguration. Forskeren beregner omsætningsværdien udfra ligning 3.16. Resultatet af denne beregning indtaster forsker i konfigurations xml-filen under App.settings. XML-filen kan tilgås uden opstart af systemet, derfor bliver kalibreringen uafhængig af hvornår systemet kører og kalibreringen kan dermed foretages på et vilkårligt tidspunkt. Værdien der ændres i XML-filen er den tilhørende "Value" til "KalibreringsKoefficient". Den er markeret med grøn firkant omkring på figur 3.24.
 \begin{figure}[H]
@@ -448,9 +491,11 @@ Det er vigtigt at pointere at nulpunktsjusteringsfaktoren lægges til samtlige v
 \cite{DSBsoft} Formålet med implementering af et digitalt filter er at fjerne støj fra det indhentede signal. Dette gøres ved at udglatte signalet. Til dette kan en række forskellige filtre benyttes. Vi har valgt at implementere et glidende middelværdifilter (moving average filter). Fordelen ved dette filter er at det er simpelt at forstå og at det er optimalt at bruge på signaler i tidsdomænet. Skulle signalet være vist i frekvensdomænet ville valget have faldet på et helt andet filter. 
 
 Det glidende middelværdifilter fungerer ved midling af en række punkter fra inputsignalet for at frembringe hvert punkt i outputsignalet. Hvilke punkter der tages fra inputsignalet vil flytte sig en plads for hvert beregnet outputsignal punkt, heraf kommer den glidende effekt. Matematisk er filtret givet ved:
+\begin{ceqn}
 \begin{equation}
 y[i]=\frac{1}{M}\cdot\sum\limits_{j=0}^{M-1} x[i+j]
 \end{equation}
+\end{ceqn}
 
 Hvor x[] er inputsignalet, y[] er outputsignalet og M er antallet af punkter der benyttes i det glidende middelværdifilter. Denne beregning benytter sig udelukkende af punkter placeres på den samme side af output sample nummeret, hvilket vil føre til en relativ forskydning mellem input og output. M sættes til 5. Implementeringen af filtret er vist i et aktivitetsdiagram på figur 3.25.
 
@@ -478,17 +523,27 @@ Systemet gør det muligt for forsker selv at vælge om signalet ønskes vist fil
 Analyse dækker over indhentningen af de systoliske-, diastoliske- og puls-værdi ud fra blodtrykssignalet. Dette er implementeret i en klasse kaldet Analyse. Heri er placeret metoder for henholdsvis systole og diastole. I en blodtrykskurve er den systoliske værdi givet ved maximum på kurven og den diastoliske er givet ved minimums værdien på kurven. \\
 Metoderne bestemmer derfor den maksimale værdi og den mindste værdi i listen, der medtages som parametre til metoderne. Listen der bruges som parametre er UILIST indeholdende 350 tal ad gangen. UILIST er listen der sendes fra logik-laget til præsentations-laget med de behandlede data, som vises i grafen. I præsentations-laget er implementeret en timer, der håndterer at de systoliske- og diastoliske værdier i display kun opdateres hvert 3 sekund. I løbet af 3 sekunder vil der være gennemløbet 3-5 blodtryksperioder, afhængig af pulsfrekvensen. Dermed vil samtlige systoliske og diastoliske værdier ikke blive udskrevet. Intervallet på 3 sekunder er valgt da det er passende tid til at kunne nå og aflæse den pågældende værdi.
 
-Pulsen bestemmes ved at tælle antallet af systoliske-værdier på 10 sekunder, hvorefter denne værdi ganges med 6. Da puls er angivet i slag pr. minut. Det er en udfordring at bestemme hvornår der præcist er gået 10 sekunder, da det er usikkert om den systoliske- og diastoliske værdi opdateres præcist hvert tredje sekund. Dette skyldes at der er implementeres en timer i programmet, som er baseret på tråde. Ved implementering af mange tråde kan det føre til et langsomt gennemløb af koden. Parametre som computerens processer og RAM størrelse spiller også ind på hvor hurtigt en kode kan gennemløbes. 
+I forhold til implementering af puls er der gjort en række overvejelser og mulige løsninger. Puls er defineret ved slag pr. minut og på en puls vil der være en systole og diastole. Pulsen må derfor kunne bestemmes ved at tælle antallet af systoliske værdier på 6 sekunder, antallet ganges så med 10 for at få den rette enhed. Udfordringer er dog opstået i forhold til at kunne bestemme præcist hvornår der er gået 6 sekunder i programmet. En anden mulighed er også at bestemme pulsen ved at finde antallet af samples mellem to systoliske værdier. Omregnes samples så til sekunder og ganges op til et minut, må dette være ligmed måleobjektets øjeblikkelige puls. Det er dog ikke lykkedes at omsætte overvejelserne til kode, og pulsen er dermed ikke blevet implementeret ved projekt aflevering.
+
+\subsubsection{Beregnings metode}
+Metoden updateListe() er den vigtigste metode i logik-laget. Den er placeret i logikklassen. Metoden har til ansvar at tage højde for nulpunktsjustering og kalibering ved beregning. Derudover har den til ansvar at lægge data i en liste med 300 pladser, der kan vises i graf på display. Til sidst tjekker metoden om radiobuttom for filtreret eller ufiltreret signal er checked og sender listen gennem filtret, hvis filtret signal er valgt inden listen med Notify() sendes til præsentationslaget. Metodens aktivitetsdiagram er givet ved:
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=1.0\textwidth]{Figurer/AktUpdateListe}
+	\caption{Aktivitetsdiagram for metoden updateListe()}
+	%\label{fig:Aktivitetsdiagram for metoden updateListe()}
+\end{figure}
 
 \subsubsection{Database}
-I systemet er der implementeret en lokal database. Formålet med databasen er at lagre de målte ufiltrerede blodtrykssignaler. Det er valgt at implementere databasen som typen SQL, da denne database-type indeholder de funktioner som er nødvendige for dette system. Data gemmes i tabeller i denne type database, derfor er relevante tabeller oprettet. Et blodtrykssignal indeholder en stor mængde datapunkter, derfor gemmes signalet i en BLOB (Binar Large OBject) hvor en række binære datapunkter gemmes som en enkelt enhed i databasen. Dette er valgt for at spare på data pladsen i databasen. 
-
-\textbf{Filnavnet som hvert enkelt signal gemmes under? Forsøgsnavn…}
+I systemet er der implementeret en lokal database. Databasen er oprettet gennem host webhotel10.iha.dk. Formålet med databasen er at lagre det målte blodtrykssignals rådata. Det er valgt at implementere databasen som typen SQL, da denne database-type indeholder de funktioner som er nødvendige for dette system. Data gemmes i denne type database i tabeller. Indledningsvis for at oprette den nødvendige tabel defineres en type til hver værdi. SQL-koden til oprettelse af tabel er vist på figur xx.
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.7\textwidth]{Figurer/SQLDatabase}
+	\caption{SQL-kode til oprettelse af tabeller i database}
+	%\label{fig:SQL-kode til oprettelse af tabeller i lokal database}
+\end{figure}
+Forsøgsnavnen referer til det forsøgsnavn der indtastes i GUI ved påbegyndelse af en ny måling. Dette er af typen NVARCHAR(20), hvilket betyder at forsøgsnavnet maksimalt kan være 20 tegn langt. Id er defineret som primær nøgle, det betyder at denne er unik for hver enkelt sekvens i database, og Id der vil referes til mellem tabeller i databasen, hvis flere tabeller var nødvendigt. \\  
+Et blodtrykssignal indeholder en stor mængde datapunkter, derfor gemmes signalet i en VARBINARY, hvor en række binære datapunkter gemmes som en enkelt enhed i databasen. Dette er valgt for at spare på data pladsen i databasen. Denne type besværliggør dog, at få vist hvilke værdier blodtrykssignalets datapunkter består af. \\
+Databasen er implementeret således at flere sekvens af den samme måling kan gemmes uden at systemet skal startes forfra. Dette er smart for forsker, hvis der testet flere ting på det samme signal.  
 
 \subsection{Modultest}
-\begin{enumerate}
-\item GUI test
-\item Test af tråde (observer strategy)
-\item Test af systolisk, diastolisk og puls-værdier
-\item Test af Gem i database
-\end{enumerate}
