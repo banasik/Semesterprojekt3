@@ -34,9 +34,11 @@ Vandfaldsmodellen \cite{ISE} er også benyttet under dette projekt. Softwareudvi
 
 
 \section{Projektstyring}
-Projektet er udarbejdet over et helt semester, hvor undervisningen og forelæsningerne delvist har udgjort grundlaget for teorien benyttet i dette projekt. Der blev i starten udarbejdet en tidsplan, som dog var mulig at ændre undervejs, men med faste deadlines, der skulle overholdes. Den endelige tidsplan kan ses i bilag. \\
-Projektgruppen har bestået af 6 gruppemedlemmer, som er blevet delt i 2 fokusområder, hardware og software. Fordelingen blev udarbejdet efter den enkeltes ønske. Gruppen har derfor været afhængig af at der var god kommunikation mellem de to undergrupper, derfor har hver arbejdsgang været i samarbejde. Da gruppen har været opdelt, har der været projektmøde hver uge, hvor gruppen har opdateret hinanden og vejleder. \\
-Under projektet har alle medlemmer været med til, at sikre en administrativ kæde af deadlines til individuelle opgaver, samt dagsordener til hvert møde. Disse deadlines har sikret at opgaverne er blevet opfyldt op til møderne, for at hindre langsomme arbejdsprocesser. Da der har været overlap mellem de forskellige opgaver er arbejdet foregået flydende for at sikre, at der blev testet. 
+Projektet er udarbejdet over et semester, hvor undervisningen og forelæsningerne delvist har udgjort grundlaget for teorien benyttet i projekt. Der blev i starten udarbejdet en tidsplan med enkelte faste deadlines og med mulighed for at sætte andre deadlines løbende i processen. Se Tidsplan under Bilag.\\ 
+Projektgruppen har bestået af 6 gruppemedlemmer, som er blevet delt i to fokusområder, hardware og software. Fordelingen blev udarbejdet efter den enkeltes ønske. Projektet  har  været afhængig af, at der var god kommunikation mellem de to undergrupper.
+Da gruppen har været opdelt, har der været projektmøde hver uge, hvor gruppen har opdateret hinanden og vejleder. Samtidigt har gruppen forsøgt at sidde samlet, så på den måde at kunne opdatere hinanden løbende.\\
+Under projektet har alle medlemmer været med til, at sikre en administrativ kæde af deadlines til individuelle opgaver, samt dagsordener til hvert møde. Disse deadlines har sikret at opgaverne er blevet opfyldt op til møderne og det har derfor været nemt at følge op på. Da der har været overlap mellem forskellige opgaver er der løbende blevet kørt og lavet adskillige teste for at sikre at opgaverne har været vellykket.  
+ 
 
 \section{Metoder}
 Til at kunne overskue arkitektur og designet af projektet, er flere forskellige arbejdsmetoder benyttet for at skabe det bedst mulige resultat. 
@@ -53,7 +55,7 @@ For at skabe et overblik og indsigt i koden, er der i UML udarbejdet et aktivite
 \newline  
 Til hardwaren er der blevet brugt Block Definition Diagram(BDD), som viser hvilke blokke et system indeholder og hvilke porte de har. BDD er lavet til at give et overblik over systemet. Ud fra BDD’et er et Internal Block Diagram(IDB) blevet lavet. Her vises, hvilke signaler, som findes i systemet og hvordan de sendes rundt. Her vises portene igen og der skal være overensstemmelse mellem BDD og IBD.    
 \newline 
-Til udarbejdelsen af kredsløb blev Analog Discovery brugt til at simulerer signalet, som i sidste ende skal komme fra transduceren. Først blev kredsløbet opbygget på et fumlebræt, hvor det blev testet for at afprøve om det lever op til kravene. Når det opfylder kravene, flyttes det over på et VEVO Board. VEVO Boardet bliver igen testet før aflevering. 
+Til udarbejdelsen af kredsløb blev Analog Discovery brugt til at simulerer signalet, som i sidste ende skal komme fra transduceren. Først blev kredsløbet opbygget på et fumlebræt, hvor det blev testet for at afprøve om det lever op til kravene. Når det opfylder kravene, flyttes det over på et Veroboard. Veroboardet bliver igen testet før aflevering. 
 
 \section{Systemarkitektur}
 
@@ -64,12 +66,10 @@ Til udarbejdelsen af kredsløb blev Analog Discovery brugt til at simulerer sign
 	\label{fig:Domaene Model}
 \end{figure}
 
-\subsection{Hardware}
+\section{Hardware}
 I hardwaredelen skal der ligge en forstærkning og et lavpasfilter. Det differentieret signal fra transduceren skal forstærkes og filtrers før det kan sendes ind i DAQ'en.
-\subsection{Software}
 
-\section{Problemidentifikation (design)}
-\subsection{Hardware}
+\subsection{Problemidentifikation (design)}
 \subsubsection{Forstærkning}
 Transduceren måler en trykændring, som den omsætter til en spænding. Dette er udtrykt ved et differentieret signal, som sendes ind i forstærker-blokken. \\
 Signalet fra transduceren er en lav spænding, som skal forstærkes op, for at passe med DAQ'ens input. Denne forstærkning udregnes ud fra det maksimale output fra transduceren og det maksimale input til DAQ'en. Se beregningerne under implementering.  
@@ -82,17 +82,15 @@ Aliasering \cite{DSB} er, hvor signalet bliver gentaget. Når man har signalet i
 Det skal sikres, at der ikke kommer overlap mellem signalet og et alias. Da det ellers kunne give anledning til misforståelser. Derfor laves et lavpasfilter, som sikre at der ikke ligger noget signal ved den halve samplingsfrekvens.\\
 Lavpasfilteret skal være et Sallen-Key Butterworth-filter med en knækfrekvens på 50 Hz og en samplingsfrekvens på 1kHz. Ud fra oplysninger givet til projektet, vides det at filteret skal dæmpe signalet med 20 dB, under antagelse af at den forekommende støj er mindre end signalet, også når det forekommer over knækfrekvensen.\\
 Ved en typisk blodtryksmåling forekommer der ikke signal over 50 Hz, samtidigt er signalet her aftaget med ca. 70 dB. For at få signalet, ved den halve samplingsfrekvens til at være $ 1/2 \cdot LSB $ (Least Significant Bit), skal det ydeligere dæmpes 20 dB. Derfor oplyses filteret til at være 50 Hz, da dette giver en minimum dæmpning på 20 dB pr. dekade.
-\subsection{Software}
 
-\section{Implementering}
-\subsection{Hardware}
+\subsection{Implementering}
 \subsubsection{Forstærkning}
 For at få den rette forstærkning er det blevet valgt, at benytte instrumentationsforstærkeren INA-114. Her kan transduceren sættes på med det differentierede signal. INA-114 er valgt da følgende gælder\cite{Instrumentation} for instrumentationsforstærkere: 
 \begin{itemize}
 	\item Differentielt input - single ended output 
 	\item Gain justering med ændring af kun én modstand 
 	\item Meget høj indgangsimpedans 
-	\item Stor Common Mode Rejection Ratio(CMRR)
+	\item Stor Common Mode Rejection Ratio (CMRR)
 \end{itemize}
 For at udregne den korrekte forstærkning, bruges følsomheden fra transduceren og eksistationsspændingen.
 Først udregnes det maksimale output fra transduceren:   
@@ -185,15 +183,7 @@ H(z)=\dfrac{62500000000}{610929\cdot \left( s^2+\dfrac{250000}{561}\cdot s + \df
 \end{figure}
 Ud fra den nye overføringsfunktion udregnes en nu $ \zeta $ for at kontrollere at værdien ikke har ændret sig. Denne udregnes til $ \zeta = 0.709 $. Derfor kan det konkluderes at filteret stadig har den ønskede funktionalitet. 
 
-\subsection{Software}
-
-\section{GUI-beskrivelse}
-\subsection{Algoritmer (grænseværdier)}
-\subsection{Filteret/Ufiltreret}
-\subsection{Lagring af data i Database}
-
-\section{Test}
-\subsection{Hardware}
+\subsection{Test}
 \subsubsection{Forstærkning}
 For at teste forstærkningen, sendes et differentieret signal ind vha. Analog Discovery. Her observeres der hvor meget signalet bliver forstærket. 
 På figur \ref{fig:forstaerkning} ses det signal, som sendes ind i forstærkningsblokken og det, der måles på udgangen af blokken. 
@@ -240,13 +230,25 @@ Ud fra grafen i figur \ref{fig:graf_vandtest} vides, hvad svaret til hver målin
 	\label{fig:vandtest_måling50}
 \end{figure}
 Ud fra figur \ref{fig:graf_vandtest} kendes udgangsspændingen også for de to andre målepunkter. Se under Modeltest i Dokumentationen for billeder af målingerne ved 10 mmHg og 100 mmHg. Målingen for 50 mmHg er her valgt ud, da denne måling ligger til baggrund for kalibreringen i softwaren. 
-\subsection{Software}
+
+\section{Software}
+\subsection{Problemidentifikation (design)}
+\subsection{Implementering}
+\subsection{Test}
+
+\subsection{Integrationstest}
+Til sidst i projekt forløbet blev en integrationstest udført. En integrationstest laves primært for at teste om softwaren fungerer korrekt og om enhederne/modulerne deri anvender hinanden. Testen retter sig mod afprøvning af det komplette program, med de eksterne systemer, i dette tilfælde sammen med hardwaren. 
+Softwaren er langsomt blevet sammensat af de forskellige enheder som fremvisning af graf, indhentning af data, kalibrering, nulpunktsjustering, digitalt filter og at gemme. Hver gang én enhed har været færdig er den blevet testen, hvorefter en ny færdig enhed er blevet sat på osv. Tilsidst er der blevet udført  en test hvor alle enheder sættes sammen, software og hardware,  og der testes derpå. Testen kan sammenlignes med en ”Big Bang” test, da det var første kan vi satte den færdige software sammen med hardwaren.  
+I dette tilfælde blev In Vitro maskinen i Cave Lab brugt til at skabe et blodtrykssignal. Dette blev sendt ind i vores system og sammenlignet med en anden ”rigtig” blodtryksmåler, som var tilkomplet samtidigt.  In vitro maskinen danner et tryk, som efterligner et hjerteslag.Trykket bliver skabt i vand, som presses igennem en falsk hjerteklap, derved er der opbygget en model af et hjerte som kan givet til blodtrykssignal. 
+Billede af opstilling
+Der startes med at laves en nulpunktsjustering på vores system, som bagefter viste en flot signal, som lå så konstant at det var svært at se cursoren. Samtidig stod systolisk- og diastolisktryk i tal på GUI. Her viste det sig, at vores system konstant afveg fra den anden blodtryksmåler med en værdi på 2, både på systolisk og diastolisk tryk. Da den konstant afveg, vurderes det at afvigelsen skyldes at vores sytem ikke var kalibreret eller at den anden blodtryksmåler ikke var nulpunktjusteret.  Der kunne ikke udføres en kaliberering da væskesøjlen var gået i stykker. Det blev også forsøgt at nulpunktjusterer den anden blodtryksmåler, men heller ikke dette kunne gøres.  Derfor blev resultatet af testen af vores system virker som det skal efter kravene stillet til det.  
+Billeder af vores måling kontra den anden blodtryksmåler : gerne sammensat i et billede. 
 
 \section{Resultater og diskussion}
 Resultatet af dette projektforløb er blevet en prototype af en hardwaredel og et softwaresystem, hvis egenskab er at detektere den systoliske- og diastoliske værdi ud fra et blodtrykssignal. Denne prototype er blevet udviklet til forskningsbrug. Det kunne være en mulighed at videreudvikle systemet således, at det kan detektere hypotension og hypertension og så alarmere. På denne måde kunne systemet altså bruges til patientbrug, på hospitaler, sygehuse, lægehuse osv. \\
 I starten af projektet var der stillet krav til både hardware- og softwaredelen, som alle er blevet opfyldt. Derudover er der blevet stillet nogle krav fra vejleder, som er forsøgt løst. Nogle er lykkes, andre er ikke (se problemrapport). Nogle af punkterne i accepttesten var ikke testbare, hvilket selvfølgelig bør opfyldes førend det ville være muligt at videreudvikle systemet. \\
 I de ikke-funktionelle krav, var målsætningen en MTTR (Mean Time To Restore) på maksimalt 5 timer. Dette var ikke testbart, da systemet stadig var prototype og ikke et færdigt produkt.
-Det tænkes ydermere, at det endelige produkts hardwaredele forefindes som en sammenkobling af alle dele, så forskeren kun skal styre en enkelt sammenkoblet hardware del, i stedet for fire dele (DAQ, VEVO Board og to batterier). Det ville gøre det lettere for forskeren at styrer og transportere hardwaren og hvis nogle af delene i hardware skulle gå i stykker, ville det være nemt for forskeren blot at udskifte hele hardwaren, i stedet for at skulle fejlfinde og udskifte den bestemte del. Dette er selvfølgelig under forudsætningen af tilstedeværende reservedele - forsker vil altså kunne gendanne systemet indenfor 5 timer. \\
+Det tænkes ydermere, at det endelige produkts hardwaredele forefindes som en sammenkobling af alle dele, så forskeren kun skal styre en enkelt sammenkoblet hardware del, i stedet for fire dele (DAQ, Veroboard og to batterier). Det ville gøre det lettere for forskeren at styrer og transportere hardwaren og hvis nogle af delene i hardware skulle gå i stykker, ville det være nemt for forskeren blot at udskifte hele hardwaren, i stedet for at skulle fejlfinde og udskifte den bestemte del. Dette er selvfølgelig under forudsætningen af tilstedeværende reservedele - forsker vil altså kunne gendanne systemet indenfor 5 timer. \\
 Da systemet stadig er en prototype, bestående af flere løse komponenter, der let kan frakobles, er risikoen for nedbrud relativt høj, hvilket ikke er optimalt for et færdigt produkt. En sammenkobling af alle løse komponenter, som nævnt før, skal sikre en længere Mean Time Between Failure. \\
 Som projektformuleringen beskriver, er der udviklede en hardwaredel og et softwareprogram, der sammen kan detektere et blodtryk. Prototypen kan på under tre sekunder vise systolisk- og diastolisk blodtryk via en graf. Formålet og projektformuleringen er dermed blevet indfriet.  \\
 Der er blevet arbejdet og designet en GUI, der i sidste ende har fået et relativt professionelt design, som vil være let, for en forsker, at benytte. Til videreudvikling vil det være nemt at implementere systemet, på f.eks. et sygehus, da de, som skal benytte systemet uden problemer vil kunne sætte sig ind i hvordan systemet håndteres. \\
@@ -289,10 +291,11 @@ I dette semester blev det valgt at skrive rapporten og dokumentationen i \LaTeX,
 
 
 \section{Perspektivering - Fremtidigt arbejde}
-I fremtiden vil blodtryksmåleren kunne udvides gennem flere muligheder. Da blodtryksmåleren er lavet til forskningsbrug, er der ingen idé i at udvide mod patienter.  En forlængelse af systemet kunne derimod være en metode, som skal kunne vise gemte målinger. \newline Et log-in vindue er en anden ting, som kunne forbedre systemet, for på den måde at skabe større sikkerhed for forskeren og dataen. Et log-in vindue vil gøre at, en forsker kan være sikker på at hans målinger og forskning ikke kan tilgås af andre. Det kræver en større udvidelse, hvor der skal laves et log-in vindue og en database, hvor password og brugernavn gemmes. Der skal også laves en metode, som kan tjekke om det indtastede password og brugernavn passer over ens med det i databasen. 
+I fremtiden vil blodtryksmåleren kunne udvides gennem flere muligheder. Da blodtryksmåleren er lavet til forskningsbrug, har der i projektforløbet ikke været nogle idéer til at udvikle den til patientbrug. Dette er dog ikke umuligt, da alle grundprincipperne omkring en god blodtryksmåler er opfyldt, og der ville kunne arbejdes på usability til sygeplejeskerne. Softwaren skal også opdateres til patientjounaler og lign. Men igen, er det overhovedet ikke umuligt at optimere blodtryksmåleren til patientbrug. Det vil her være en god idé også at lave en alarm til blodtryksmåleren, som viser når blodtrykket er for lavt/højt. En anden forlængelse af systemet kunne være en metode, som skal kunne vise gemte målinger. Dette vil være nyttigt hos både forskere og til en udvidet patient-blodtryksmåler, da det skaber overblik og perspektiv for forskeren/lægen. \newline Et log-in vindue er en anden ting, som kunne forbedre systemet, for på den måde at skabe større sikkerhed for forskeren og dataene. Et log-in vindue vil gøre at en forsker kan være sikker på, at hans målinger og forskning ikke kan tilgås af andre. Dette kræver en større udvidelse, hvor der skal laves et log-in vindue og en database, hvor password og brugernavn gemmes. Der skal også laves en metode, som kan tjekke om det indtastede password og brugernavn passer over ens med det i databasen. 
 \newline
 Generelt skal de standarter, som findes for blodtryksmålere undersøges grundigere. Specielt brugergrænsefladen, men også resten af systemet som enheder og visning af graf, skal rettes til efter de passende standarter.
 \newline 
-Hvis systemet ydeligere skulle tilpasses forskning, kunne det gøres gennem en bedre navngivning af data i tabellen eller et bedre overblik over, hvordan data bliver gemt f.eks. gennem en liste for de gemte målinger. På den måde vil det blive nemmere for forskeren at finde frem til gamle målinger.   
+Hvis systemet ydeligere skulle tilpasses forskning, kunne det gøres gennem en bedre navngivning af data i tabellen eller et bedre overblik over, hvordan data bliver gemt f.eks. gennem en liste for de gemte målinger. På den måde vil det blive nemmere for forskeren at finde frem til gamle målinger.
+I fremtidigt arbejde skal systemet også være i stand til at vægte de enkelte værdier som fås i blodtryksmåleren. Dette betyder at systemet skal kunne vurdere integriteten af tallene, og se hvilket tal der skal lægges mest vægt på, ud af de fem, som derefter summeres, for at give en.   
 \newline 
-I forhold til hardware er målet, at det hele skal samles i en kasse. Så det på den måde ikke er muligt at ændre eller stille ved det. Derved skal filteret og forstærkningen laves på en printplade. Samtidigt skal det ved kassen være en plads til batterierne, hvor det er muligt at kunne skifte dem, når nødvendigt. Derved fås en kasse, som nemt kan flyttes rundt på og som ikke er i fare for at gå i stykker.   
+I forhold til hardware er målet, at det hele skal samles i en kasse. Så det på den måde ikke er muligt at ændre eller stille ved det. Derved skal filteret og forstærkningen laves på en printplade. Samtidigt skal det ved kassen være en plads til batterierne, hvor det er muligt at kunne skifte dem, når nødvendigt. Derved fås et samlet system, som nemt kan flyttes rundt på og som ikke er i fare for at gå i stykker. Dette system kan også, i stedet for udskiftelige batterier, have et genopladeligt lithiumbatteri, som vil kunne lætte besværet ved ofte at udskifte batterier.

@@ -1,11 +1,9 @@
-
-\chapter{Indledning}
-Rundt om i hele verden, måles der i dag blodtryk. Hvorfor? Fordi blodtrykket kan fortælle utrolig meget omkring modstanden i en persons blodåre, hvilket kan være utrolig vigtigt, da forsnævret, sammentrukne eller overforkalket årer kan føre til hypertension, der kan føre til f.eks. akut myokardieinfarkt. Der forskes nu til dages meget inden for blodtryk og hvad blodtrykket egentlig kan fortælle noget om. I forbindelse med en forskers forskning, udarbejdes der i dette semesterprojekt en blodtryksmåler til forskningsbrug. Ved et blodtrykssignal kan der detekteres systoliske- og diastoliske værdier, der som baggrund kan benyttes af forskeren til at analysere på blodtrykket. Formålet med dette projekt er at hjælpe forskningen inden for blodtryk. \\
-Det bliver valgt at denne blodtryksmåler skal kunne modtage en spænding fra en transducer, nulpunktsjustere og kalibere efter forskerens ønske. Signalet skal vises i en graf, på et display, hvor værdier for puls, systoliske- og diastoliske tryk vises. Her fra starter og gemmer forskeren sine målinger. \\
-I kravspecifikationen findes de krav, der er blevet stillet for projektet. Herunder er også de krav, som er blevet stillet mellem os og vejleder. \\
-Under systemarkitekturen findes informationer om, hvordan software- og hardwaredelen er opbygget.  I afsnittet integrationstest kan der læses om, hvordan projektet er blevet testet. \\
-Projektet har overvejende anvendt viden fra kurserne Sundhedsvidenskab, Programmering, Analog signalbehandling, Digital signalbehandling og Indledende System Engineering fra Ingeniørhøjskolen på Århus Universitet. Sidstnævnte kursus har især været baggrund for arbejdsprocesserne og arbejdsmetoderne, som også kommer til udtryk i rapporten i form af diverse diagrammer og procesbeskrivelser. \\
-Dette projekt består af to dele - en projektrapport og en projektdokumentation. Projektrapporten (dette dokument) give indblik i udarbejdningsprocessen af projektet og består af problemformulering, systembeskrivelse, patofysiologi, konklusion m.m. Her bliver projektvalg og -erfaringer omkring styrker og svagheder i arbejdsprocessen beskrevet. Projektdokumentationen giver indblik i baggrunden for og tilblivelsen af projektet og slutresultatet, samt dokumentationen for arbejdsprocessen. \\
+\chapter{Indledning} 
+Rundt om i hele verden, måles der i dag blodtryk. Hvorfor? Fordi blodtrykket kan fortælle utrolig meget omkring modstanden i en persons blodårer, hvilket kan være virkelig vigtigt, da forsnævret, sammentrukne eller overforkalket årer kan føre til hypertension, der kan føre til f.eks. akut myokardieinfarkt. Der forskes nu til dages meget inden for blodtryk og hvad blodtrykket egentlig kan fortælle noget om. I forbindelse med en forskers forskning, udarbejdes der i dette semesterprojekt en blodtryksmåler til forskningsbrug. Ved et blodtrykssignal kan der detekteres systoliske- og diastoliske værdier, der som baggrund kan benyttes af forskeren til at analysere på blodtrykket. Formålet med dette projekt er at hjælpe forskningen inden for blodtryk. \\
+Det bliver valgt at denne blodtryksmåler skal kunne modtage en spænding fra en transducer, nulpunktsjustere og kalibere efter forskerens ønske. Signalet skal vises i en graf, på et display, hvor værdier for puls, systoliske- og diastoliske tryk vises. Her starter og gemmer forskeren sine målinger. \\
+I kravspecifikationen findes de krav, der er blevet stillet for projektet. Herunder er også de krav, som er blevet stillet mellem os og vejleder. Under systemarkitekturen findes informationer om, hvordan software- og hardwaredelen er opbygget.  I afsnittet integrationstest kan der læses om, hvordan projektet er blevet testet. \\
+Projektet har overvejende anvendt viden fra kurserne Sundhedsvidenskab, Kardiovaskulær instrumentering, Programmering, Analog signalbehandling, Digital signalbehandling og Indledende System Engineering fra Ingeniørhøjskolen på Århus Universitet. Sidstnævnte kursus har især været baggrund for arbejdsprocesserne og arbejdsmetoderne, som også kommer til udtryk i rapporten i form af diverse diagrammer og procesbeskrivelser. \\
+Dette projekt består af to dele - en projektrapport og en projektdokumentation. Projektrapporten (dette dokument) giver indblik i udarbejdningsprocessen af projektet og består af problemformulering, systembeskrivelse, anatomi, konklusion m.m. Her bliver projektvalg og -erfaringer omkring styrker og svagheder i arbejdsprocessen beskrevet. Projektdokumentationen giver indblik i baggrunden for og tilblivelsen af projektet og slutresultatet, samt dokumentationen for arbejdsprocessen. \\
 
 \newpage
 \subsubsection{Versionshistorik}
@@ -13,7 +11,7 @@ Dette projekt består af to dele - en projektrapport og en projektdokumentation.
 \begin{longtabu} to \linewidth{@{}l l l X[j]@{}}
     Version &    Dato &    Ansvarlig &    Beskrivelse\\[-1ex]
     \midrule
-    0.1 &   04-11-2015	&   MHNK  &   Oprettelse af LaTex dokumenter \\
+    0.1 &   04-11-2015	&   MHNK  &   Oprettelse af \LaTeX dokumenter \\
     0.2 &   11-11-2015	&   ABH  &   Udviklingsværktøjer og krav \\
     0.3 &   11-11-2015	&   DHC  &   Metoder \\
     0.4 &   18-11-2015	&   ABH  &   Systembeskrivelse  \\
@@ -21,15 +19,14 @@ Dette projekt består af to dele - en projektrapport og en projektdokumentation.
     0.6 &   24-11-2015	&   MHNK  &   Blodtryk \\
     0.7 &   24-11-2015	&   AJF  &   Projektgennemførelse og -styring \\
     0.8 &   24-11-2015	&   JMM  &   Projektformulering og afgrænsning \\
-    1.0 &   01-12-2015	&   MBA, MHNK  &   Referencelister i LaTex \\
-    1.1 &   02-12-2015	&   MBA, MHNK  &   Figurlister i LaTex \\
+    1.0 &   01-12-2015	&   MBA, MHNK  &   Referencelister i \LaTeX \\
+    1.1 &   02-12-2015	&   MBA, MHNK  &   Figurlister i \LaTeX \\
     1.2 &   02-12-2015	&   MHNK  &   Resume \\
     1.3 &   07-12-2015	&   MHNK  &   Abstract \\
     1.4 &   09-12-2015	&   MHNK  &   Konklusion \\
     1.5 &   11-12-2015	&   ABH  &   Tilrette krav og systembeskrivelse ift. endelig løsning \\
     1.6 &   13-12-2015	&   MHNK  &   Indledning \\
-    1.7 &   13-12-2015	&   MHNK  &   Udfyldelse af accepttest efter gennemgang og godkendelse \\
-    1.7 &   13-12-2015	&   MBA, MHNK  &   Opnåede resultater \\
+    1.7 &   13-12-2015	&   MBA  &   Opnåede resultater \\
     1.8 &   13-12-2015	&   MHNK  &   Resultater og diskussion \\
    
     	
