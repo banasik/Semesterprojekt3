@@ -14,23 +14,22 @@ namespace Blodtryksmålersystem
 {
     public partial class HovedGUI : Form, IObserver
     {
-        private Logik logik;
-        private List<double> guiliste;
+        private Logik logik;        
         private Analyse diaSystole;
+        private List<double> guiliste;
         private System.Timers.Timer myTimer;
         private string Forsøgsnavn;
-
         public HovedGUI(Logik logik_)
         {
             InitializeComponent();
             logik = logik_;
             diaSystole = new Analyse();
+
             logik.Attach(this);
             myTimer = new System.Timers.Timer();
             myTimer.Enabled = true;
             myTimer.Interval = 3000;
             myTimer.Elapsed += myTimer_Elapsed;
-            logik.Attach(this);
             Chart.ChartAreas[0].AxisY.Minimum = 0;
             Chart.ChartAreas[0].AxisY.Maximum = 250;
         }
@@ -41,19 +40,16 @@ namespace Blodtryksmålersystem
             {
                 textDia.Text = Convert.ToInt32(logik.DiastoleVærdi).ToString();
                 textSys.Text = Convert.ToInt32(logik.SystoleVærdi).ToString();
-            };
-            
+            };            
             textDia.BeginInvoke(action);
         }
 
         private void textForsøgsnavn_TextChanged(object sender, EventArgs e)
         {
-
             StartKnap.Enabled = true;
             StartKnap.BackColor = Color.DarkSeaGreen;
             Forsøgsnavn = Convert.ToString(textForsøgsnavn.Text);
         }
-
         private delegate void UpdateUICallback();
         private void updateChart()
         {
@@ -63,13 +59,11 @@ namespace Blodtryksmålersystem
                 this.Invoke(d);
             }
             else
-            {
-                
+            {                
                 {
                     Chart.Series["Series1"].Points.DataBindY(guiliste); 
                     logik.getDia();
-                    logik.getSys();
-                    
+                    logik.getSys();                    
                 }
             }
         }
@@ -85,7 +79,6 @@ namespace Blodtryksmålersystem
         }
         private void StopKnap_Click(object sender, EventArgs e)
         {
-
             logik.stopReadDataLogik();
             myTimer.Close();
         }
@@ -94,21 +87,17 @@ namespace Blodtryksmålersystem
             logik.ClearData();
             StopGemKnap.Enabled = true;
         }
-
         private void StopGemKnap_Click(object sender, EventArgs e)
         {
             int id = logik.gemData(Forsøgsnavn);
             textFilnavn.Text = Forsøgsnavn + '_' + Convert.ToString(id);
-            //StopGemKnap.Enabled = false;
         }
-
         public void Gennemsnit(List<double> graf)
         {
             guiliste = graf;
             
             updateChart();
         }
-
         private void filtreret_CheckedChanged(object sender, EventArgs e)
         {
             if (filtreret.Checked)
