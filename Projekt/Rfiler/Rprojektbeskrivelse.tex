@@ -233,7 +233,7 @@ Ud fra figur \ref{fig:graf_vandtest} kendes udgangsspændingen også for de to a
 
 \section{Software}
 \subsection{Design}
-Overordnet set ønskes det at udvikle et system, der kan interagerer med en forsker. Diagrammet herunder viser at forskerens opgave består i at starte en måling, foretage en nulpunktsjustering og gemme de ønskede rådata, samt uafhængigt af systemet at bestemme en kalibreringskoefficient, hvis det ønskes. Diagrammet er en simpel illustration, som viser systemets adfærd gennem alle fem Use Cases. For yderligere præcisering af Use Cases se dokumentationen under Kravspecifikation. Formålet med dette diagram er at skabe et overblik over det samlede system.
+Overordnet set ønskes det at udvikle et system, der kan interagerer med en forsker. Diagrammet herunder viser at forskerens opgave består i at starte en måling, foretage en nulpunktsjustering og gemme de ønskede rådata, samt uafhængigt af systemet at bestemme en kalibreringskoefficient, hvis det ønskes. Diagrammet er en simpel illustration, som viser systemets adfærd gennem alle fem Use Cases. For yderligere præcisering af Use Cases se dokumentationen under Kravspecifikation. Formålet med dette diagram er at skabe et overblik over det samlede system. I de efterfølgende diagrammer dækker Transducer-blokken over alt hardware og DAQ'en. 
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=0.7\textwidth]{Figurer/OverordnetSD}
@@ -242,17 +242,17 @@ Overordnet set ønskes det at udvikle et system, der kan interagerer med en fors
 \end{figure}
 
 \subsubsection{Problemidentifikation}
-Første step i softwaredesignet er at klarlægge, hvilke klasser systemet skal bestå af. Til dette er en domænemodel udarbejdet med udgangspunkt i de fem Use Cases. Modellen har til formål at vise, hvilke dele systemet skal holde styr på. 
+Første step i softwaredesignet er at klarlægge, hvilke klasser systemet skal bestå af. Til dette er en domænemodel udarbejdet med udgangspunkt i de fem Use Cases. Modellen har til formål at vise, hvilke dele systemet skal holde styr på. Det ses at systemet primært vil centrere sig omkring selve den indhentede blodtryksmåling, da det er denne skal skal analyseres og bearbejdes. Samt omkring display hvorfra Forskeren får vist målingerne.  
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=1.0\textwidth]{Figurer/DomaneModel}
 	\caption{Domænemodel}
 	\label{fig:Domaenemodel}
 \end{figure}
-Hardwarekomponenterne er medtaget for at vise signalets vej fra måleobjekt til systemet. 
+Analyse dækker over bestemmelse af systoliske, diastoliske og puls værdier. Hardwarekomponenterne er medtaget for at vise signalets vej fra måleobjekt til systemet. 
 
 \subsubsection{Klasseidentifikation}
-Domænemodel leder hen til udarbejdelse af en applikationsmodel. Denne model har til formål at vise hver enkelt klasses individuelle formål, samt hvilke domæne klasser der kommer i spil ved den pågældende Use Case. 
+Domænemodel leder hen til udarbejdelse af en applikationsmodel. Denne model har til formål at vise hver enkelt klasses individuelle formål, samt hvilke domæne og boundary klasser der kommer i spil ved den pågældende Use Case. 
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=1.0\textwidth]{Figurer/Applikationsmodel}
@@ -260,7 +260,7 @@ Domænemodel leder hen til udarbejdelse af en applikationsmodel. Denne model har
 	\label{fig:Applikationsmodellen}
 \end{figure}
 \subsubsection{Metodeidentifikation}
-Klasserne i applikationsmodellen er med til at definere, hvilke blokke sekvensdiagrammer må indeholde. Dermed også med til at definere hvilke metoder, der er nødvendige for at få udført de ønskede handlinger mellem blokkene. Sekvensdiagrammer for hver enkelt Use Case kan ses i dokumenationen under Softwaredesign. 
+Klasserne i applikationsmodellen er med til at definere, hvilke blokke sekvensdiagrammer må indeholde. Dermed også med til at definere hvilke metoder i softwaresystemet, der er nødvendige for at få udført de ønskede handlinger mellem blokkene. Sekvensdiagrammer for hver enkelt Use Case kan ses i dokumenationen under Softwaredesign. 
 
 \subsection{Implementering}
 På baggrund af designfasen for softwaren kan implementeringen påbegyndes. Softwaredesignet viser at systemet skal implementeres med en GUI-applikation, hvor aktøren kan interagere med systemet. Derudover er det kendt at softwaren skal indeholde en række klasser, hvori funktionaliteter som kalibrering, nulpunktsjustering, digitalt filter og indhentning af systolisk, diastoliske og puls værdier skal placeres. I det følgende beskrives de overvejelser, der er gjort i forhold til implementering af disse funktionaliteter og softwaresystemet. 
@@ -268,7 +268,7 @@ På baggrund af designfasen for softwaren kan implementeringen påbegyndes. Soft
 Implementeringen af softwaren sker i Visual Studio 2013 i sproget C\#. Dette er valgt da programmet er et godt værktøj til at arbejde med GUI-applikationer, samt til håndtering af tråde og trådkommunikation. Tråde benyttes i softwaren da systemet, der skal implementeres, er et eventdrevet system. Det vil sige, at systemet skal kunne håndtere mange handlinger på en gang. Handlingerne igangsættes af events, der kommer af aktørens interaktion med systemet. Trådkommunikationen fungerer således, at en tråd kan sende et signal ud, som andre tråde kan reagere på.
 
 \subsubsection{Klasse implementering}
-På baggrund af designmodellerne er det besluttet at opbygge systemkoden efter principperne i en trelagsmodel\cite{3lagsmodel}. Trelagsmodellen indeholder et præsentations-lag, et logik-lag og et data-lag. Alt kommunikation i trelagsmodellen skal gå igennem logik-laget. Fordelen ved tralagsmodellen er, at den skaber et godt overblik i koden, og det fremstår tydeligt hvad hver enkelt klasse specifikke ansvar er. Et overordnet klassediagram over systemet er udarbejdet, se figur \ref{fig:KlassediagramSW}. Hvilke metoder hver enkelt klasse indeholder kan ses i Bilag under "Klassediagram". 
+På baggrund af designmodellerne er det besluttet at opbygge systemkoden efter principperne i en trelagsmodel\cite{3lagsmodel}. Trelagsmodellen indeholder et præsentations-lag, et logik-lag og et data-lag. Alt kommunikation i trelagsmodellen skal gå igennem logik-laget. Fordelen ved trelagsmodellen er, at den skaber et godt overblik i koden, og det fremstår tydeligt hvad hver enkelt klasses specifikke ansvar er. Et overordnet klassediagram over systemet er udarbejdet, se figur \ref{fig:KlassediagramSW}. Hvilke metoder hver enkelt klasse indeholder kan ses i Bilag under "Klassediagram". 
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=1.0\textwidth]{Figurer/Klassediagram}
@@ -285,10 +285,10 @@ Det er et krav at Forsker indtaster et Forsøgsnavn inden en måling kan startes
 	\caption{NulpunktsjusteringGUI og HovedGUI}
 	\label{fig:FormsSW}
 \end{figure}
-Af figur \ref{fig:FormsSW} ses det, at grafen er en væsentlig del af displays HovedGUI. Det vælges at få vist signalet i grafen, som en kurve, og førsteaksen indstilles til samples fra 0-300, og andenaksen til værdier fra 0 til 250 mmHg, hvilket er givet i kravspecifikationen. 
+Af figur \ref{fig:FormsSW} ses det, at grafen er en væsentlig del af displays HovedGUI. Det vælges at få vist signalet i grafen, som en kurve. Førsteaksen indstilles til samples fra 0-300, og andenaksen til værdier fra 0-250 mmHg, hvilket er givet i kravspecifikationen. 
 
 \subsubsection{Observer - Strategy}
-Observer og Strategy er to programmeringsmønstre, det er valgt at opbygge softwarekoden efter. Grundet at de i samarbejde med hinanden er gode til, at håndtere en overførelse af data fra et lag til et andet. Observer definerer et "en til mange"\ relation mellem objekter således, at en ændring i et objekts tilstand medfører, at de mange objekter informeres om ændringer og dermed opdateres automatisk. Dette implementeret med to interfaces IObserver og ISubject. I disse interface er generelle metoder Notify(), Attach() og Gennemsnit() placeret, hvis ansvar er at flytte data fra en klasse til en anden, når metoden kaldes. Mønstret opbygges som en push.
+Observer og Strategy er to programmeringsmønstre, det er valgt at opbygge softwarekoden efter. Grundet at de i samarbejde med hinanden er gode til, at håndtere en overførelse af data fra et lag til et andet. Observer definerer et "en til mange"\ relation mellem objekter således, at en ændring i et objekts tilstand medfører, at de mange objekter informeres om ændringer og dermed opdateres automatisk. Dette implementeres med to interfaces IObserver og ISubject. I disse interface er generelle metoder Notify(), Attach() og Gennemsnit() placeret, hvis ansvar er at flytte data fra en klasse til en anden, når metoden kaldes. Mønstret opbygges som en push.
 
 Strategy mønstret indkapsler algoritmer og gør at metoder oprettet i interface kan overskrives i klasser der arver fra interfacet. Således at den nødvendige funktion kan tilføjes i den enkelt klasse.
 
@@ -325,7 +325,7 @@ Kaliberingen implementeres i softwaren ved brug af konfiguration. Forskeren bere
 Det er vigtigt at pointere, at nulpunktsjusteringsfaktoren lægges til samtlige værdier i signalet før kalibreringskoefficienten ganges på. Dette udføres i kodens logik-lag.
 
 \subsubsection{Digitalt Filter}
-\cite{DSBsoft} Formålet med implementering af et digitalt filter er at fjerne støj fra det indhentede signal. Dette gøres ved at udglatte signalet. Til dette kan en række forskellige filtre benyttes. I projektet er det valgt at implementere et glidende middelværdifilter (moving average filter).\\ Fordelen ved dette filter er, at det er simpelt at forstå og det er optimalt at bruge på signaler i tidsdomænet. Skulle signalet være vist i frekvensdomænet ville valget have faldet på et andet filter. 
+\cite{DSBsoft} Formålet med implementering af et digitalt filter er at fjerne støj fra det indhentede signal. Dette gøres ved at udglatte signalet. I projektet er det valgt at implementere et glidende middelværdifilter (moving average filter).\\ Fordelen ved dette filter er, at det er simpelt at forstå og det er optimalt at bruge på signaler i tidsdomænet.
 
 Det glidende middelværdifilter fungerer ved midling af en række punkter fra inputsignalet for, at frembringe hvert punkt i outputsignalet. Hvilke punkter, der tages fra inputsignalet, vil flytte sig én plads for hvert beregnet outputpunkt, heraf kommer den glidende effekt. Matematisk er filteret givet ved:
 \begin{ceqn}
@@ -340,7 +340,7 @@ Systemet gør det muligt for Forsker at vælge på GUI om det filtrerede eller u
 
 \subsubsection{Analyse}
 Analyse dækker over bestemmelsen af de systoliske, diastoliske og puls værdier ud fra blodtrykssignalet. Dette er implementeret i en klasse kaldet Analyse. I en blodtrykskurve er den systoliske værdi givet ved maksimum på kurven og den diastoliske er givet ved minimumsværdien på kurven. \\
-Metoder hvori den maksimale værdi og den mindste værdi i listen der udskrives i grafen er derfor implementeret. Værdierne udskrives i labels på GUI. I præsentations-laget er implementeret en timer, der håndterer at de systoliske og diastoliske værdier på GUI opdateres hvert 3. sekund. Intervallet på 3 sekunder er valgt, da det er passende tid til at aflæse den pågældende værdi.
+Metoder hvori den maksimale værdi og den mindste værdi bestemmes er implementeret. Værdierne bestemmes ud fra listen der vises på grafen. Værdierne udskrives i labels på GUI. I præsentations-laget er implementeret en timer, der håndterer at de systoliske og diastoliske værdier på GUI opdateres hvert 3. sekund. Intervallet på 3 sekunder er valgt, da det er passende tid til at aflæse den pågældende værdi.
 
 I forhold til implementering af puls er der gjort en række overvejelser om mulige løsninger. Puls er defineret ved slag pr. minut og på en pulsperiode vil der være en systole og diastole. Pulsen må derfor kunne bestemmes ved at tælle antallet af systoliske værdier på 6 sekunder. Antallet ganges med 10 for at få den rette enhed. En anden mulighed er også at bestemme pulsen ved at finde antallet af samples mellem to systoliske værdier. Omregnes samples til sekunder og ganges op til et minut, må dette være lig med Måleobjektets øjeblikkelige puls. Det er ikke lykkedes at implementere puls ved projektets aflevering.
 
