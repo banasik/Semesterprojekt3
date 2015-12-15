@@ -555,7 +555,7 @@ Programmet startes ved tryk på Start knappen på GUI'en. Det starter følgende 
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=1.0\textwidth]{FigurerProgram/StartKnap}
-	\caption{Kode for eventet StartKnap\_Click()}
+	\caption{Kode for eventet StartKnapClick()}
 \end{figure}
 Følgende metoder bliver kaldt i opstillet rækkefølge
 
@@ -600,7 +600,7 @@ I Logiklaget bliver der kaldt DAQData.Attach(this), derved bliver Logik objektet
 	\caption{Kode for metoden Attach(), denne bruges på samme måde i klasserne IndhentDAQData som i Logik}
 \end{figure}
 
-Med Logik som liggende i observers listen, kaldes der metoden Gennemsnit med \textit{graf} som parameter.
+Med Logik som liggende i observers listen, kaldes der metoden Gennemsnit med graf som parameter.
 
 \begin{figure}[H]
 	\centering
@@ -618,7 +618,7 @@ Metoden Gennemsnit bliver kaldt i Logiklaget. Her bliver listen lagt i en queue,
 \end{figure}
 
 \textbf{Fra Logik til GUI}
-I starten blev metoden StartTraad() kaldt hvis IsRunning = true.
+I starten blev metoden StartTraad() kaldt hvis IsRunning \= true.
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=1.0\textwidth]{FigurerProgram/StartTraad}
