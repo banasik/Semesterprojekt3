@@ -1,0 +1,13 @@
+C:\Users\matim_000\Documents\Semesterprojekt3\Projekt\Software Kode NY\Blodtryksmålersystem\bin\Debug\Blodtryksmålersystem.exe.config
+C:\Users\matim_000\Documents\Semesterprojekt3\Projekt\Software Kode NY\Blodtryksmålersystem\bin\Debug\Blodtryksmålersystem.exe
+C:\Users\matim_000\Documents\Semesterprojekt3\Projekt\Software Kode NY\Blodtryksmålersystem\bin\Debug\Blodtryksmålersystem.pdb
+C:\Users\matim_000\Documents\Semesterprojekt3\Projekt\Software Kode NY\Blodtryksmålersystem\bin\Debug\NationalInstruments.DAQmx.dll
+C:\Users\matim_000\Documents\Semesterprojekt3\Projekt\Software Kode NY\Blodtryksmålersystem\bin\Debug\NationalInstruments.Common.Native.dll
+C:\Users\matim_000\Documents\Semesterprojekt3\Projekt\Software Kode NY\Blodtryksmålersystem\bin\Debug\NationalInstruments.DAQmx.xml
+C:\Users\matim_000\Documents\Semesterprojekt3\Projekt\Software Kode NY\Blodtryksmålersystem\obj\Debug\Blodtryksmålersystem.HovedGUI.resources
+C:\Users\matim_000\Documents\Semesterprojekt3\Projekt\Software Kode NY\Blodtryksmålersystem\obj\Debug\Blodtryksmålersystem.NulpunktsjusteringGUI.resources
+C:\Users\matim_000\Documents\Semesterprojekt3\Projekt\Software Kode NY\Blodtryksmålersystem\obj\Debug\LogikLag.Properties.Resources.resources
+C:\Users\matim_000\Documents\Semesterprojekt3\Projekt\Software Kode NY\Blodtryksmålersystem\obj\Debug\Blodtryksmålersystem.csproj.GenerateResource.Cache
+C:\Users\matim_000\Documents\Semesterprojekt3\Projekt\Software Kode NY\Blodtryksmålersystem\obj\Debug\Blodtryksmålersystem.exe
+C:\Users\matim_000\Documents\Semesterprojekt3\Projekt\Software Kode NY\Blodtryksmålersystem\obj\Debug\Blodtryksmålersystem.pdb
+C:\Users\matim_000\Documents\Semesterprojekt3\Projekt\Software Kode NY\Blodtryksmålersystem\obj\Debug\Blodtryksmålersystem.csprojResolveAssemblyReference.cache
