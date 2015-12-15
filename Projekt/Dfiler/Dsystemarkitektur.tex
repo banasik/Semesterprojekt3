@@ -549,6 +549,7 @@ Et blodtrykssignal indeholder en stor mængde datapunkter, derfor gemmes signale
 Databasen er implementeret således, at flere sekvenser af den samme måling kan gemmes uden at systemet skal startes forfra. Dette er smart for Forsker, hvis der testet flere ting på det samme signal.  
 
 \subsection{Modultest}
+
 Koden der bliver kigget igennem er fra når der bliver trykket Start på GUI'en og til at der bliver en graf på charten. Der er brugt debugging i Visual Studios for at sikre at koden bliver udført i korrekt rækkefølge. Stor del af koden i DAQlaget er taget fra et eksempel fra National Instruments. Gennemgangen af hvad der sker i Datalaget, nærmere DAQlaget, hvor oprettelsen til DAQ’en samt sampleliste sker, vil blive overfladisk. Koden i DAQlaget er tilpasset til vores solution. Her er der tale om samplerate og samples per channel. Samples per channel er testet igennem ved at debugge på det kode der tilføjer sampleværdier til råData listen. Her kan der checkes om listens count er på 10 eller 20, hvis sampleraten er henholdsvis 10 eller 20.
 \textbf{Fra DAQ til Logik}
 Programmet startes ved tryk på Start knappen på GUI'en. Det starter følgende event.
