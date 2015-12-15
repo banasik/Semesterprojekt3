@@ -11,7 +11,6 @@ namespace LogikLag
         private const int AVG_LENGTH = 5;
         public Filter()
         {
-
         }
         public List<double> Filtrering(List<double> data)
         {
@@ -26,14 +25,11 @@ namespace LogikLag
                     sum = sum + data[index];
                     innerLoopCounter += 1;
                     index += 1;
-
                 }
                 avgPoints.Add(sum / AVG_LENGTH);
                 sum = 0;
             }
             return avgPoints;
-
         }
-
     }
 }

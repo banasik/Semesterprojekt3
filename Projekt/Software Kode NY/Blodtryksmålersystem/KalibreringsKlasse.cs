@@ -9,10 +9,8 @@ namespace LogikLag
 {
     class Kalibrering
     {
-
         public Kalibrering()
         {
-
         }
         public double Kalibrer()
         {

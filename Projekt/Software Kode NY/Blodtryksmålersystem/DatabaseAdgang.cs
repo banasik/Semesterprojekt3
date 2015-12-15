@@ -14,12 +14,10 @@ namespace Data
         private const String DB = "F15ST2ITS2201404492";
         private DateTime Datostempel;
         private int GemtId = 0;
-
         public DatabaseAdgang()
         {
             conn = new SqlConnection("Data Source=webhotel10.iha.dk;Initial Catalog=" + DB + ";Persist Security Info=True;User ID=" + DB + ";Password=" + DB + "");        
         }
-
             public int gemData(string Forsøgsnavn, List<double> Rådata)
         {
             Datostempel = DateTime.Now;

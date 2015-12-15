@@ -40,25 +40,6 @@ namespace Data
             dataList = new List<double>();
             observers = new List<IObserver>();
         }
-
-        //Skraldespanden
-        //protected override void Dispose(bool disposing)
-        //{
-        //    if (disposing)
-        //    {
-        //        if (components != null)
-        //        {
-        //            components.Dispose();
-        //        }
-        //        if (myTask != null)
-        //        {
-        //            runningTask = null;
-        //            myTask.Dispose();
-        //        }
-        //    }
-        //    Dispose(disposing);
-        //}
-
         public void indhentData()
         {
             if (runningTask == null)

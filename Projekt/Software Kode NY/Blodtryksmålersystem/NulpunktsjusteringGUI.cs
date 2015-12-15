@@ -18,7 +18,6 @@ namespace Blodtryksmålersystem
         {
             InitializeComponent();
             logik = new Logik();
-            
         }
 
         private void ForetagNulKnap_Click(object sender, EventArgs e)
@@ -27,16 +26,6 @@ namespace Blodtryksmålersystem
             var hovedgui = new HovedGUI(logik);
             hovedgui.Show();
             this.Hide();
-            
-        }
-
-        private void NejKnapNul_Click(object sender, EventArgs e)
-        {
-           
-            var hovedgui = new HovedGUI(logik);
-            hovedgui.Show();
-            this.Hide();
-            
         }
     }
 }

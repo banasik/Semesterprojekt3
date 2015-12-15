@@ -9,27 +9,21 @@ namespace LogikLag
 {
     public class Analyse
     {
-
         public double Diastole_ { get; set; }
         public double Systole_ { get; set; }
-       
         public Analyse()
         {
         }
-
         public void Diastole(List<double> diastoleListe)
         {
-                Diastole_ = diastoleListe.Min();
+            Diastole_ = diastoleListe.Min();
         }
         public void Systole(List<double> systoleListe)
         {
             Systole_ = systoleListe.Max();
-        }
-        
+        }        
         public void Puls()
         {
-
         }
-
     }
 }
