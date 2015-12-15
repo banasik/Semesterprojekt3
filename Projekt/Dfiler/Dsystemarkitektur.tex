@@ -150,7 +150,7 @@ Derved fås en overføringsfunktion, som hedder:
 H(z)=\frac{\left(\dfrac{1}{\sqrt{R1\cdot R2 \cdot C1\cdot C2}}\right)^2}{s^2+ \left( \dfrac{1}{C2} \cdot \left( \dfrac{R1+R2}{R1\cdot R2}\right) \cdot s \right) +\left( \dfrac{1}{\sqrt{R1\cdot R2 \cdot C1\cdot C2}}\right)^2 }
 \end{equation}
 \end{ceqn}
-Da det bliver oplyst at $ R1=R2 $, kan funktionen reduceres. Den kan samtidig simplificeres. I sidste ende fås følgende overføringsfunktion, se "Beregninger til overføringsfunktion"\ under Bilag for nærmere udregninger.
+Da det bliver oplyst at $ R1=R2 $, kan funktionen reduceres. Den kan samtidig simplificeres. I sidste ende fås følgende overføringsfunktion, se Bilag nr. 9 for nærmere udregninger.
 \begin{ceqn}
 \begin{equation}
 H(z)=\dfrac{\dfrac{1}{C1 \cdot C2\cdot R^2}}{s^2+s\cdot \dfrac{2}{R\cdot C2}+ \dfrac{1}{C1\cdot C2\cdot R^2}}
@@ -411,7 +411,7 @@ Det er valgt kun at udarbejde aktivitetsdiagrammer for metoder, hvor det menes a
 \subsubsection{Klasse implementering}
 På baggrund af designmodellerne er det besluttet at opbygge systemkoden efter principperne i en trelagsmodel\cite{3lagsmodel}. Trelagsmodellen indeholder et præsentations-lag, et logik-lag og et data-lag. Præsentations-laget består af de klasser som systemets aktører har tilgang til. Logik-laget er det analyserende lag. Det er i dette lag at signalet behandles. Logik-laget har tilgang til de andre lag som det eneste. Det betyder at præsentations-laget og data-laget ikke kan kommunikere sammen, derved skal denne kommunikation foregå gennem logik-laget. Data-laget er tilgangen til den implementerede database og til indhentning af blodtrykssignalet fra hardwaren.
 
-Fordelen ved trelagsmodellen er, at den skaber et godt overblik i koden, og giver en kode med lav kobling, da hver enkelt klasse har hvert sit specifikke ansvar. Hvilket gør at koden er let at vedligeholde og ændre, hvis funktionaliteter ønskes opbygget anderledes. Et overordnet klassediagram over systemet er udarbejdet på baggrund af præcisering af applikationsmodellen, se figur \ref{fig:KlassediagramSW}. Hvilke metoder hver enkelt klasse indeholder kan ses i Bilag under "Klassediagram". 
+Fordelen ved trelagsmodellen er, at den skaber et godt overblik i koden, og giver en kode med lav kobling, da hver enkelt klasse har hvert sit specifikke ansvar. Hvilket gør at koden er let at vedligeholde og ændre, hvis funktionaliteter ønskes opbygget anderledes. Et overordnet klassediagram over systemet er udarbejdet på baggrund af præcisering af applikationsmodellen, se figur \ref{fig:KlassediagramSW}. Hvilke metoder hver enkelt klasse indeholder kan ses i Bilag nr. 13. 
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=1.0\textwidth]{Figurer/Klassediagram}
@@ -422,7 +422,7 @@ Fordelen ved trelagsmodellen er, at den skaber et godt overblik i koden, og give
 \subsubsection{Brugergrænseflade}
 Displayet (GUI) er Forskerens indgang til systemet. Derfor er det vigtigt at den er opbygget efter forskerens logik. Til at klarlægge dette er principperne om en god brugergrænseflade taget i mente. Brugen af disse kommer til udtryk ved, at det tydeligt fremgår af hver knap eller label, hvad dens formål er, samt at størrelsen af det enkelte komponent er tilstrækkelig stor til at det ikke er til at overse. Komponenterne på displayet er logisk placeret, det vil sige, at de dele som forsker først skal forholde sig til og eventuelt udfylde er placeret i venstre side af display. 
 
-Det er et krav at Forsker indtaster et Forsøgsnavn inden en måling kan startes, derfor er komponenterne implementeres således at knappen ”Start måling” først bliver aktiveret, når der er indtastet noget i tekstboksen til Forsøgsnavn. Systoliske, diastoliske og puls værdi er placeret efter hvilken rækkefølge der typisk ses på standard blodtryksapparater. 
+Det er et krav at Forsker indtaster et Forsøgsnavn inden en måling kan startes, derfor er komponenterne implementeres således at knappen ”Start Måling” først bliver aktiveret, når der er indtastet noget i tekstboksen til Forsøgsnavn. Systoliske, diastoliske og puls værdi er placeret efter hvilken rækkefølge der typisk ses på standard blodtryksapparater. 
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=1.0\textwidth]{Figurer/NulHovedGUI}
