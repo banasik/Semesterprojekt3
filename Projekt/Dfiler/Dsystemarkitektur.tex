@@ -550,132 +550,152 @@ Et blodtrykssignal indeholder en stor mængde datapunkter, derfor gemmes signale
 Databasen er implementeret således, at flere sekvenser af den samme måling kan gemmes uden at systemet skal startes forfra. Dette er smart for Forsker, hvis der testet flere ting på det samme signal.  
 
 \subsection{Modultest}
-Koden der bliver kigget igennem er fra når der bliver trykket Start på GUI'en og til at der bliver en graf på charten. Der er brugt debugging i Visual Studios for at sikre at koden bliver udført i korrekt rækkefølge. Stor del af koden i DAQlaget er taget fra et eksempel fra National Instruments. Gennemgangen af hvad der sker i Datalaget, nærmere DAQlaget, hvor oprettelsen til DAQ’en samt sampleliste sker, vil blive overfladisk. Koden i DAQlaget er tilpasset til vores solution. Her er der tale om samplerate og samples per channel. Samples per channel er testet igennem ved at debugge på det kode der tilføjer sampleværdier til råData listen. Her kan der checkes om listens count er på 10 eller 20, hvis sampleraten er henholdsvis 10 eller 20.
-\textbf{Fra DAQ til Logik}
-Programmet startes ved tryk på Start knappen på GUI'en. Det starter følgende event.
+I teorien burde man, for at teste, skrive et testprogram, som tester én metode af gangen. Dette er vi dog ikke i stand til, derfor er det valgt at gribe test af softwaren an vha. debugging. Et modul er forsøgt færdiggjort og testet, før det er blevet sat sammen med andre moduler. På den måde er der blevet testet løbende gennem udviklingsprocessen. \\ \newline
+Koden, der bliver kigget igennem, er fra når der bliver trykket Start Måling på GUI og til at der udskrives en graf på charten. Der er brugt debugging i Visual Studio for at sikre koden bliver udført i korrekt rækkefølge. En stor del af koden i IndhentDAQData-klassen er taget fra et eksempel fra National Instruments. Se Bilag nr. 16. \\
+Gennemgangen af hvad der sker i Datalaget, nærmere IndhentDAQData-klassen, hvor oprettelsen til DAQ’en, samt sampleliste sker, vil blive overfladisk. Koden i IndhentDAQData-klassen er tilpasset solution. Her er der tale om en samplerate og samples pr. channel. \\
+Samples pr. channel er testet igennem ved at debugge på det kode, der tilføjer sampleværdier til råData-listen. Her kan der checkes om listens count er på 10 eller 20, hvis samples pr. channel er henholdsvis 10 eller 20.\\
+\newpage
+\textbf{Fra DAQ til Logik}\\
+Programmet startes ved tryk på Start Måling-knappen på GUI. Det starter følgende event, figur \ref{fig:StartKnapClick}.
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=1.0\textwidth]{FigurerProgram/StartKnap}
+	\includegraphics[width=0.5\textwidth]{FigurerProgram/StartKnap}
 	\caption{Kode for eventet StartKnapClick()}
+	\label{fig:StartKnapClick}
 \end{figure}
-Følgende metoder bliver kaldt i opstillet rækkefølge
+Følgende metoder bliver kaldt i opstillet rækkefølge:
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=1.0\textwidth]{FigurerProgram/IndhentDataLogik}
+	\includegraphics[width=0.5\textwidth]{FigurerProgram/IndhentDataLogik}
 	\caption{Kode for Logik metoden indhentDataLogik()}
+	\label{fig:IndhentDAQData_logik}
 \end{figure}
 
-Herfra starter data acquisition i DAQ laget.
-\\ IndhentData() opretter en virtual channel samt sørger for kald til InitializeDataTable() og håndterer tråde.
+Herfra starter data acquisition i IndhentDAQData-klasse.
+\\ IndhentData() opretter en virtual channel, samt sørger for kald til InitializeDataTable() og håndterer tråde. Al kode, metoder og klasser kan ses i Bilag nr. 14 "Softwarekode pdf". 
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=1.0\textwidth]{FigurerProgram/indhentDataDaq}
-	\caption{kode for IndhentDAQData metoden indhentData() kan ses i REFERENCE}
-\end{figure}
-
-\begin{figure}[H]
-	\centering
-	\includegraphics[width=1.0\textwidth]{FigurerProgram/InitiDaq}
-	\caption{Kode for InitializeDataTable() kan ses i REFERENCE}
+	\includegraphics[width=0.3\textwidth]{FigurerProgram/indhentDataDaq}
+	\caption{Kode for IndhentDAQData metoden indhentData() }
+	\label{fig:IndhentDataDAQ}
 \end{figure}
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=1.0\textwidth]{FigurerProgram/CallBackDaq}
-	\caption{Kode for IndhentDAQData metoden AnalogInCallBack() kan ses i REFERENCE}
+	\includegraphics[width=0.7\textwidth]{FigurerProgram/InitiDaq}
+	\caption{Kode for InitializeDataTable()}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.8\textwidth]{FigurerProgram/CallBackDaq}
+	\caption{Kode for IndhentDAQData metoden AnalogInCallBack()}
+	\label{fig:CallBackDAQ}
 \end{figure}
 
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=1.0\textwidth]{FigurerProgram/dtdDaq}
 	\caption{Kode for IndhentDAQData metoden DataToDataTable()}
+	\label{fig:dtdDAQ}
 \end{figure}
 
-I Logiklaget bliver der kaldt DAQData.Attach(this), derved bliver Logik objektet tilføjet som observer til subjectet IndhentDAQData.
+I Logik-laget bliver der kaldt DAQData.Attach(this), derved bliver Logik objektet tilføjet som observer til subjectet IndhentDAQData-klassen.
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=1.0\textwidth]{FigurerProgram/AttachDaq}
+	\includegraphics[width=0.4\textwidth]{FigurerProgram/AttachDaq}
 	\caption{Kode for metoden Attach(), denne bruges på samme måde i klasserne IndhentDAQData som i Logik}
+	\label{fig:AttachDAQ}
 \end{figure}
 
-Med Logik som liggende i observers listen, kaldes der metoden Gennemsnit med graf som parameter.
+Med Logik-objektet som liggende i observers-listen, kaldes der metoden Gennemsnit med graf som parameter.
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=1.0\textwidth]{FigurerProgram/NotifyDaq}
+	\includegraphics[width=0.7\textwidth]{FigurerProgram/NotifyDaq}
 	\caption{Kode for metoden Notify() i IndhentDAQData klassen}
+	\label{fig:NotifyDAQ}
 \end{figure}
 
-Metoden Gennemsnit bliver kaldt i Logiklaget. Her bliver listen lagt i en queue, hvorfra metoden updateListe henter alle samples fra med queue.Dequeue(). updateListe() kører på en tråd for sig selv.
-\\Her slutter gennemgangen af hvordan sample værdierne bliver skubbet op til Logiklaget.
+Metoden Gennemsnit bliver kaldt i Logik-klasse. Her bliver listen lagt i en kø (queue), hvorfra metoden updateListe henter alle samples fra, med metoden queue.Dequeue(). Metoden updateListe() kører på en tråd for sig selv.
+\\Her slutter gennemgangen af, hvordan sampleværdierne bliver skubbet op til Logik-klassen.
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=1.0\textwidth]{FigurerProgram/GennemsnitLogik}
-	\caption{Kode for metoden Gennemsnit() i Logik klassen}
+	\includegraphics[width=0.5\textwidth]{FigurerProgram/GennemsnitLogik}
+	\caption{Kode for metoden Gennemsnit() i Logik-klassen}
+	\label{fig:GennemsnitLogik}
 \end{figure}
 
 \textbf{Fra Logik til GUI}
 I starten blev metoden StartTraad() kaldt hvis IsRunning \= true.
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=1.0\textwidth]{FigurerProgram/StartTraad}
+	\includegraphics[width=0.5\textwidth]{FigurerProgram/StartTraad}
 	\caption{Kode for Logik metoden StartTraad()}
+	\label{fig:StartTraad}
 \end{figure}
 
 Metoden updateListe() kører derved på tråden updateUI.
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=1.0\textwidth]{FigurerProgram/updateUI}
+	\includegraphics[width=0.5\textwidth]{FigurerProgram/updateUI}
 	\caption{Kode for tråden updateUI}
+	\label{fig:UpdateUI}
 \end{figure}
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=1.0\textwidth]{FigurerProgram/updateListe}
+	\includegraphics[width=0.8\textwidth]{FigurerProgram/updateListe}
 	\caption{Kode for logik metoden updateListe()}
+	\label{fig:UpdateListe}
 \end{figure}
 
-Hvis der fra GUI laget er sat true eller false til en Radiobutton, skal der filtreres eller ikke filtreres. I tilfælde af filtrering, sendes listen først ned til Filter klassen, som parameter og bliver derefter returneret op igen til Logik klassen.
+Hvis der fra HovedGUI-klassen vælges true eller false til en Radiobutton, skal signalet være filtreret eller ufiltreret. I tilfælde af filtrering, sendes UILISTE først gennem Filter-klassen, som parameter, før den bliver returneret til Logik-klassen.
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=1.0\textwidth]{FigurerProgram/FiltreringLogik}
+	\includegraphics[width=0.5\textwidth]{FigurerProgram/FiltreringLogik}
 	\caption{Kode for metoden FiltreringLogik()}
+	\label{fig:FiltreringLogik}
 \end{figure}
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=1.0\textwidth]{FigurerProgram/Filter}
+	\includegraphics[width=0.7\textwidth]{FigurerProgram/Filter}
 	\caption{Kode for klassen Filter(). Her bliver summen af 5 værdier divideret med 5}
+	\label{fig:Filter}
 \end{figure}
 
-Fra updateListe() bliver Notify() kaldt, med en liste som parameter, der bliver sendt op til GUI Laget.
+Fra metoden updateListe() bliver Notify() kaldt, med UILISTE som parameter, der bliver sendt op til HovedGUI-klassen.
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=1.0\textwidth]{FigurerProgram/NotifyLogik}
-	\caption{Kode for metoden Notify() i Logik klassen. Læg mærke til at det er magen til kode, som nede i DAQ klassen}
+	\includegraphics[width=0.5\textwidth]{FigurerProgram/NotifyLogik}
+	\caption{Kode for metoden Notify() i Logik-klassen}
+	\label{fig:NotifyLogik}
 \end{figure}
 
-I GUI Laget bliver Gennemsnitsmetoden kaldt via observer pattern.
+I HovedGUI-klassen bliver Gennemsnitsmetoden kaldt via Observer mønsteret.
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=1.0\textwidth]{FigurerProgram/GennemsnitGUI}
+	\includegraphics[width=0.5\textwidth]{FigurerProgram/GennemsnitGUI}
 	\caption{Kode for metoden i GUI Laget Gennemsnit()}
+	\label{fig:GennemsnitGUI}
 \end{figure}
 
-Til sidst bliver charten i GUI'en opdateret ved at updateChart() hele tiden kalder sig selv.
+Til sidst bliver grafen (charten) i GUI opdateret ved at metoden updateChart() konstant kalder sig selv.
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=1.0\textwidth]{FigurerProgram/updateChart}
+	\includegraphics[width=0.75\textwidth]{FigurerProgram/updateChart}
 	\caption{Kode for metoden i GUI Laget updateChart()}
+	\label{fig:updateChart}
 \end{figure}
 
 \subsection{Integrationstest}
