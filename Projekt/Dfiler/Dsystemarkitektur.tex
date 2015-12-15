@@ -318,7 +318,7 @@ Første step i softwaredesignet er at klarlægge, hvilke klasser systemet skal b
 Diagrammet viser forskerens interaktion med displayet, samt hvilke handlinger interaktionen starter i systemet. Hardwarekomponenterne er medtaget for at vise signalets vej fra måleobjekt til systemet. 
 
 \subsubsection{Klasseidentifikation}
-Ud fra domænemodellen kan et klassediagram udarbejdes, dette diagram tager også udgangspunkt i de fem Use Cases. Hensigten med et klassediagram er at klarlægge hver klasses individuelle formål. 
+Ud fra domænemodellen kan en applikationsmodel udarbejdes, dette diagram tager også udgangspunkt i de fem Use Cases. Hensigten med et klassediagram er at klarlægge hver klasses individuelle formål. 
 
 \begin{figure}[H]
 	\centering
@@ -462,10 +462,10 @@ faktor_{jus}=0-(x)
 \end{equation}
 \end{ceqn}
 Af ligningen ses det, at justeringsfaktoren både vil kunne blive positiv og negativ, afhængig af om offsetværdien skal rykkes op eller ned for at blive placeret i nul. Optimalt set vil det atmosfæriske tryk være en konstant værdi ved den samme måling, men det opleves, at der er en smule støj på signalet og derfor vil den målte værdi være en tilnærmelse af det atmosfæriske tryk. Systemet ønskes nulpunktsjusteret for at sikre, at alle de målte blodtrykssignaler har samme udgangspunkt. Hvilket gør at målingerne kan sammenlignes.\\
-Systemet foretager nulpunktsjusteringen ved at retunerer gennemsnittet af de første 20 målinger fra DAQ'en, når der trykkes på knappen FORETAG. Denne værdi er justeringsfaktoren, der lægges til samtlige samples i det indhentede blodtrykssignal.
+Systemet foretager nulpunktsjusteringen ved at retunerer gennemsnittet af de første 20 målinger fra DAQ'en, når der trykkes på knappen Foretag. Denne værdi er justeringsfaktoren, der lægges til samtlige samples i det indhentede blodtrykssignal.
 
 \subsubsection{Kalibrering}
-Ved kalibrering ønskes det at bestemme hardwarens visningsfejl. I dette projekt betyder det, at kalibreringsfaktoren fra volt til millimeter kviksølv bestemmes. Denne bestemmes ved at tilkoble en væskesøjle til systemet. Væskesøjlen fyldes med vand til markering, så den vil give et kendt tryk (mmHg). Herefter kan output i volt fra hardwaren måles. Kalibreringskoefficienten er givet ved:
+Ved kalibrering ønskes det at bestemme hardwarens visningsfejl. I dette projekt betyder det, at kalibreringskoefficienten fra volt til millimeter kviksølv bestemmes. Denne bestemmes ved at tilkoble en væskesøjle til systemet. Væskesøjlen fyldes med vand til markering, så den vil give et kendt tryk (mmHg). Herefter kan output i volt fra hardwaren måles. Kalibreringskoefficienten er givet ved:
 \begin{ceqn}
 \begin{equation}
 koef=\dfrac{x [mmHg]}{y [Volt]}
