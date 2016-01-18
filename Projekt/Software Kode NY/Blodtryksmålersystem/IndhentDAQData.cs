@@ -51,13 +51,13 @@ namespace Data
 
                     // Create a virtual channel
                     myTask.AIChannels.CreateVoltageChannel("Dev1/ai0", "",
-                        (AITerminalConfiguration)(-1), Convert.ToDouble(-3.00),
-                        Convert.ToDouble(3.00), AIVoltageUnits.Volts);
+                        (AITerminalConfiguration)(-1), Convert.ToDouble(-5.00),
+                        Convert.ToDouble(5.00), AIVoltageUnits.Volts);
 
                     // Configure the timing parameters
                     // Her bliver samplerate sat til 1000 samt samples per channel til 20
                     myTask.Timing.ConfigureSampleClock("", Convert.ToDouble(1000),
-                        SampleClockActiveEdge.Rising, SampleQuantityMode.ContinuousSamples,10);
+                        SampleClockActiveEdge.Rising, SampleQuantityMode.ContinuousSamples,20);
 
                     // Verify the Task
                     myTask.Control(TaskAction.Verify);

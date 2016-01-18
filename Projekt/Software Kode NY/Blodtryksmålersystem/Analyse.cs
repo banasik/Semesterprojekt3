@@ -24,6 +24,7 @@ namespace LogikLag
         }        
         public void Puls()
         {
+
         }
     }
 }
